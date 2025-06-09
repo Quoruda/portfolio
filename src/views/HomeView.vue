@@ -28,9 +28,7 @@
       <section class="about" id="about" ref="about">
         <h2>À propos de moi</h2>
         <p>
-          Développeur web passionné par le front-end, j'aime créer des interfaces modernes et interactives. J'ai une forte expérience avec Vue.js, JavaScript, CSS et je suis toujours à la recherche de nouvelles techniques pour améliorer mes compétences.
-          <br><br>
-          En plus de mes compétences techniques, je suis également très organisé et capable de travailler en équipe. Je suis quelqu'un qui apprend rapidement et j'aime les défis.
+          Étudiant passionné par la programmation, je suis actuellement en formation en développement d'applications.
         </p>
       </section>
 
@@ -272,7 +270,7 @@ export default {
 .content {
   max-width: 1100px;
   margin: 0 auto;
-  padding-top: 40px;
+  padding-top: 40px ;
   position: relative;
   z-index: 2;
 }
@@ -596,7 +594,7 @@ section:nth-child(5) {
   width: auto;
   height: auto;
   max-height: 400px;
-  max-width: 800px;
+  max-width: min(800px, 95%);
   display: block;
   margin: 20px auto;
   border-radius: 14px;
@@ -605,20 +603,7 @@ section:nth-child(5) {
   background-color: #000; /* fallback */
 }
 
-.project img{
-  width: 100%;
-  max-height: 400px;
-  max-width: 800px;
-  display: block;
-  margin: 20px auto;
-  border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background: rgba(255, 255, 255, 0.05);
-  object-fit: contain;
-}
-
-.project video:hover, .project img:hover {
+.project video:hover{
   transform: scale(1.02);
   box-shadow: 0 12px 30px rgba(204, 122, 102, 0.5);
 }
@@ -652,7 +637,7 @@ section:nth-child(5) {
 .project p {
   font-weight: 300;
   font-size: 1.1rem;
-  max-width: 800px;
+  max-width: min(800px, 95%);
   margin: 0 auto;
   line-height: 1.6;
   color: #ccc;

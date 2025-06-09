@@ -2,9 +2,10 @@
 
 import {defineComponent} from "vue";
 import CodeBlock from "@/components/CodeBlock.vue";
+import ImageComponent from "@/components/ImageComponent.vue";
 
 export default defineComponent({
-  components: {CodeBlock}
+  components: {ImageComponent, CodeBlock}
 })
 </script>
 
@@ -33,7 +34,7 @@ export default defineComponent({
       Cette application est une interface graphique développée en Python avec <strong>tkinter</strong>, qui permet de lancer et configurer les macros.
     </p>
 
-    <img src="https://placehold.co/300x200" alt="Capture d'écran de l'application">
+    <ImageComponent src="https://placehold.co/1200x800" alt="Capture d'écran de l'application"/>
 
     <h3>Ajout d’une couche IA</h3>
 
@@ -59,7 +60,7 @@ export default defineComponent({
       Cependant, elle peut encore faire des erreurs, tant sur le plan du code que de la compréhension de la demande. Le choix a donc été fait d’en faire un <strong>assistant à la création de macros</strong>, permettant de tester et sauvegarder le code uniquement s’il est valide.
     </p>
 
-    <img src="@/assets/images/catia_app_v3.png" alt="Capture d'écran de l'application">
+    <ImageComponent :src="require('@/assets/images/catia_app_v3.png')" alt="Capture d'écran de l'application"/>
 
     <p>
       Grâce à cette nouvelle interface, les utilisateurs peuvent facilement discuter avec l’IA pour créer ou modifier des macros existantes.
@@ -77,7 +78,7 @@ export default defineComponent({
       L’IA utilisée repose sur un modèle <strong>Mistral</strong>. Voici le schéma de la première version de l’architecture du projet, dans laquelle l’utilisateur envoie une requête à l’IA, qui génère du code en utilisant la façade de pycatia, lequel est ensuite exécuté dans CATIA V5.
     </p>
 
-    <img src="@/assets/images/catia_agent_schema.png" alt="Schéma de l'architecture du projet">
+    <ImageComponent :src="require('@/assets/images/catia_agent_schema.png')" alt="Schéma de l'architecture du projet"/>
 
     <p>
       Cette première version présentait un inconvénient : le nombre de fonctions dans la façade était trop important, ce qui entraînait des oublis ou des utilisations incorrectes par l’IA.
@@ -88,11 +89,11 @@ export default defineComponent({
       L’<strong>embedding</strong> est une technique qui transforme des données en vecteurs, facilitant leur comparaison. Elle permet de faire une recherche sémantique, c’est-à-dire une recherche basée sur le sens des mots et leur contexte, plus précise qu’une recherche par mots-clés. Cela permet de mieux capter l’intention de l’utilisateur, quelle que soit la formulation ou la langue utilisée.
     </p>
 
-    <img src="@/assets/images/catia_agent_schema_rag.png" alt="Schéma de l'architecture du projet RAG">
+    <ImageComponent :src="require('@/assets/images/catia_agent_schema_rag.png')" alt="Schéma de l'architecture du projet RAG"/>
 
     <p>
       L'IA ne génère pas le code entier à chaque fois, seulement les fonctions qu'il modifie. Mon programme récupère les fonctions modifié dans le code et les remplace par le code généré par IA. Cela permet d'éviter que l'IA semme des erreur dans le code à des endroit ou il n'a meme pas fait de modification.
-      Voici un exemple de réponse
+      Voici un exemple de réponse que l'IA pourrait donner
     </p>
 
     <CodeBlock
@@ -103,6 +104,13 @@ function hello() {
   console.log('Hello World!')
 }`
 "/>
+
+    <h3>La facade</h3>
+
+    <p>
+
+
+    </p>
 
 
     <h3>Conclusion</h3>
