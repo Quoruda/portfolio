@@ -5,7 +5,8 @@ import CodeBlock from "@/components/CodeBlock.vue";
 import ImageComponent from "@/components/ImageComponent.vue";
 
 export default defineComponent({
-  components: {ImageComponent, CodeBlock}
+  components: {ImageComponent, CodeBlock},
+
 })
 </script>
 
@@ -34,7 +35,7 @@ export default defineComponent({
       Cette application est une interface graphique développée en Python avec <strong>tkinter</strong>, qui permet de lancer et configurer les macros.
     </p>
 
-    <ImageComponent src="https://placehold.co/1200x800" alt="Capture d'écran de l'application"/>
+    <ImageComponent :src="require('@/assets/images/catia_app_v2.png')" alt="Capture d'écran de l'application"/>
 
     <h3>Ajout d’une couche IA</h3>
 
@@ -97,7 +98,7 @@ export default defineComponent({
     </p>
 
     <CodeBlock
-        language="javascript"
+        language="json"
         :code="
 `
 function hello() {

@@ -1,0 +1,22 @@
+[
+    {
+        "type": "import",
+        "name": "os",
+        "content": "import os"
+    },
+    {
+        "type": "function",
+        "name": "take_and_save_screenshot",
+        "content": "def take_and_save_screenshot():\n    screenshot = app.take_screenshot()\n    download_path = os.path.join(os.path.expanduser('~'), 'Downloads')\n    screenshot_path = os.path.join(download_path, 'capture_ecran.png')\n    screenshot.save(screenshot_path)\n    app.wait_confirmation(f\"La capture d'écran a été enregistrée dans votre dossier de téléchargement sous le nom 'capture_ecran.png'.\")\n"
+    },
+    {
+        "type": "function",
+        "name": "main",
+        "content": "def main():\n    take_and_save_screenshot()\n"
+    },
+    {
+        "type": "response",
+        "name": "info",
+        "content": "J'ai créé une macro qui prend une capture d'écran et l'enregistre dans votre dossier de téléchargement sous le nom 'capture_ecran.png'. La macro est prête à être exécutée."
+    }
+]

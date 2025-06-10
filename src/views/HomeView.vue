@@ -337,6 +337,7 @@ h3{
 
 p{
   backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 
 
@@ -643,6 +644,8 @@ section:nth-child(5) {
   color: #ccc;
   text-align: justify;
   user-select: none;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 
 strong {
