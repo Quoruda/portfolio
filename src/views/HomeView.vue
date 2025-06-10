@@ -187,7 +187,8 @@ export default {
       },
       sections: [
         {id: "about", title: "À propos"},
-        {id: "projects", title: "Mes projets"}
+        {id: "skills", title: "Compétences"},
+        {id: "projects", title: "Mes projets"},
       ],
     };
   },
