@@ -31,7 +31,7 @@ export default {
 .image-component{
   width: 100%;
   height: auto;
-  max-width: min(800px, 95%);
+  max-width: min(800px, 92%);
   max-height: 400px;
   display: block;
   margin: 15px auto;
@@ -40,7 +40,7 @@ export default {
 .image-component img{
   width: auto;
   height: auto;
-  max-width: min(800px, 95%);
+  max-width: min(800px, 92%);
   max-height: 400px;
   display: block;
   border-radius: 14px;

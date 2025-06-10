@@ -51,7 +51,7 @@ export default {
 <style scoped>
 .code-block {
   border-radius: 14px;
-  max-width: 800px;
+  max-width: min(800px, 92%);
   margin: 20px auto;
   background: rgba(45, 45, 45, 0.8);
   backdrop-filter: blur(2px);
