@@ -1,5 +1,7 @@
 <script>
 
+import json_output from '@/assets/agent_example_output.json?raw';
+
 import {defineComponent} from "vue";
 import CodeBlock from "@/components/CodeBlock.vue";
 import ImageComponent from "@/components/ImageComponent.vue";
@@ -7,16 +9,25 @@ import ImageComponent from "@/components/ImageComponent.vue";
 export default defineComponent({
   components: {ImageComponent, CodeBlock},
 
+  data() {
+    return {
+      json_output
+    };
+  },
+
 })
 </script>
 
 <template>
   <div class="projet-stage">
+
     <h3>Introduction</h3>
     <p>
+      Au cours de mon stage de 2 mois chez Magna Steyr France, j’ai eu l’opportunité de travailler sur un projet très intéressant alliant automatisation et intelligence artificielle.
       Ma mission était de développer des macros pour automatiser des processus dans CATIA V5, un logiciel de conception assistée par ordinateur (CAO) utilisé dans l'industrie aéronautique, automobile, etc., à l’aide de la bibliothèque Python <strong>pycatia</strong>.
       Ces macros avaient pour but d'améliorer l'efficacité des ingénieurs en automatisant des tâches répétitives et en réduisant les erreurs humaines.
       À mon arrivée, il n’existait pas de liste préétablie de macros à développer. J’ai donc dû identifier les besoins au cours de mon stage et me fixer des objectifs de manière autonome.
+      Les employés présents n'étaient pas développeurs, ni familier avec la programmation mais ouvert à ce sujet, ils avait déjà tenté de créer des macros avec des IA génératives, mais sans grand succès.
     </p>
 
     <h3>Prise en main</h3>
@@ -37,18 +48,25 @@ export default defineComponent({
 
     <ImageComponent :src="require('@/assets/images/catia_app_v2.png')" alt="Capture d'écran de l'application"/>
 
+    <h3>Un nouvel objectif</h3>
+
+    <p>
+      Au fur et à mesure de mon stage, j'ai réalisé que les macros créées étaient utiles, mais que je ne pourrais pas en créer suffisamment pour répondre à tous les besoins des ingénieurs.
+      Étant donné qu'il n'y avait pas de développeur, la maintenance et l'ajout de nouvelles macros seraient difficiles après mon départ.
+      L'idée de créer une facade à pycatia m'est alors venue, afin de simplifier l'utilisation de pycatia et de permettre aux ingénieurs de créer leurs propres macros.
+      Cela nécessiterait tout de même de toucher un peu au code, mais cela permettrait de réduire considérablement la complexité et d'éviter les erreurs.
+    </p>
+
+    <ImageComponent :src="'nothing'" alt="Comparaison entre un code pycatia et la facade"/>
+
+
     <h3>Ajout d’une couche IA</h3>
 
     <p>
-      Au cours du stage, j’ai constaté qu’un besoin de maintenance et d’ajout de macros persisterait après mon départ.
-      J’ai donc décidé de consacrer la suite du stage au développement d’une fonctionnalité d’IA permettant de générer des macros à partir de descriptions en langage naturel.
-      Le problème est que les IA génératives, comme ChatGPT, manquent de connaissances spécifiques sur CATIA et ne peuvent pas produire du code fonctionnel de manière fiable.
-      J’ai donc dû trouver une solution pour que l’IA génère du code valide dans la majorité des cas.
-    </p>
-
-    <p>
-      Mon choix s’est porté sur la création d’une <strong>façade</strong> à <em>pycatia</em> : une bibliothèque Python simplifiant l’utilisation de pycatia en encapsulant les appels dans des fonctions plus accessibles.
-      En fournissant à l’IA un prompt décrivant son rôle ainsi que les fonctions de la façade, j’ai obtenu de bons résultats. Pour le démontrer, j’ai intégré cette IA à l’application, sous forme d’une macro interactive capable de répondre en direct à la demande de l’utilisateur.
+      Après avoir commencé à développer la façade, une idée m'est venue: peut être que l'IA générative pourrait être capable d'utiliser la facade pour générer du code fonctionnel.
+      Jusqu'à présent, les IA génératives avaient été utilisées pour générer du code, mais le résultat était souvent erroné dès que le code devait interragir avec CATIA V5. Cela est dû à leurs manque de connaissance sur CATIA et la complexité de son API.
+      Mais peut être que si l'IA avait accès à une bibliothèque simplifiée, elle pourrait générer du code fonctionnel.
+      En fournissant à l’IA un prompt décrivant son rôle et comportement ainsi que les fonctions de la façade, j’ai obtenu de bons résultats. Pour le démontrer, j’ai intégré cette IA à l’application, sous forme d’une macro interactive capable de répondre en direct à la demande de l’utilisateur.
     </p>
 
     <video width="640" height="360" controls muted>
@@ -59,12 +77,16 @@ export default defineComponent({
     <p>
       Cette fonctionnalité prouve qu’une IA peut être utilisée pour générer du code fonctionnel, ouvrant ainsi la voie à de nouvelles possibilités d’automatisation dans CATIA V5.
       Cependant, elle peut encore faire des erreurs, tant sur le plan du code que de la compréhension de la demande. Le choix a donc été fait d’en faire un <strong>assistant à la création de macros</strong>, permettant de tester et sauvegarder le code uniquement s’il est valide.
+      Le reste de mon stage a été consacré au remplissage de la facade et l'intégration de l'IA dans l'application.
     </p>
 
     <ImageComponent :src="require('@/assets/images/catia_app_v3.png')" alt="Capture d'écran de l'application"/>
 
     <p>
       Grâce à cette nouvelle interface, les utilisateurs peuvent facilement discuter avec l’IA pour créer ou modifier des macros existantes.
+      Elle est séparée en deux grandes parties:<br>
+      La partie de gauche dédié au code avec un éditeur de code python, des boutons pour exécuter/sauvegarder/importer le code et un bouton permettant d'afficher la liste des fonctions de la facade.<br>
+      La partie de droite dédiée à l'IA, avec un éditeur de texte pour discuter avec l'IA, des propositions de prompt prédéfinis.<br>
       Ci-dessous, un exemple où l’utilisateur demande à l’IA de créer une macro prenant une capture de chaque pièce individuellement, afin d’utiliser les images comme illustrations dans un document.
     </p>
 
@@ -76,7 +98,11 @@ export default defineComponent({
     <h3>À propos de l'IA</h3>
 
     <p>
-      L’IA utilisée repose sur un modèle <strong>Mistral</strong>. Voici le schéma de la première version de l’architecture du projet, dans laquelle l’utilisateur envoie une requête à l’IA, qui génère du code en utilisant la façade de pycatia, lequel est ensuite exécuté dans CATIA V5.
+      L’IA utilisée repose sur un modèle de l'entreprise française <strong>Mistral</strong>, qui crée des modèles open-source et qui fait partie des rare à fournir une clé d'API gratuitement, parfait pour réaliser des tests.
+      Différent modèles open-source de cette entreprise ont été testés. La première utilisait codestral un modèle de langage spécialisé dans le code, mais rapidement remplacé par devstral son remplaçant officiel.
+      Le choix s'est finalement porté sur mistral-small, un modèle de langage généraliste, car il s'est avéré plus performant pour comprendre la demande de l'utilisateur, faire des propositions pour mené à bien la tâche et générer du code fonctionnel.
+      Voici le schéma de la première version de l’architecture du projet, dans laquelle l’utilisateur envoie une requête à l’IA, qui génère du code en utilisant la façade de pycatia, lequel est ensuite exécuté dans CATIA V5.
+
     </p>
 
     <ImageComponent :src="require('@/assets/images/catia_agent_schema.png')" alt="Schéma de l'architecture du projet"/>
@@ -98,28 +124,17 @@ export default defineComponent({
     </p>
 
     <CodeBlock
-        language="json"
-        :code="
-`
-function hello() {
-  console.log('Hello World!')
-}`
-"/>
-
-    <h3>La facade</h3>
-
-    <p>
-
-
-    </p>
+        language="javascript"
+        :code="JSON.stringify(json_output, null, 2)"/>
 
 
     <h3>Conclusion</h3>
 
-    <p>
-      Ce projet m’a permis de découvrir un environnement logiciel complexe, de développer des outils concrets pour les ingénieurs, et d’explorer l’intégration de l’IA générative dans des cas d’usage industriels.
-      La mise en place d’une interface interactive et l’expérimentation avec un assistant IA démontrent le potentiel de ces technologies dans le domaine de l’automatisation technique.
-    </p>
+   <p>
+      Ce projet a été une expérience enrichissante, me permettant de découvrir le monde de la CAO et d’appliquer mes compétences en programmation pour résoudre des problèmes concrets.
+      J’ai appris à travailler avec des API complexes, à développer des interfaces utilisateur et à intégrer des modèles d’IA dans des applications réelles.
+      L’utilisation de l’IA générative pour créer du code fonctionnel ouvre de nouvelles perspectives pour l’automatisation dans CATIA V5, et j’espère que ce projet pourra être utilisé par les ingénieurs de Magna Steyr France pour améliorer leur efficacité et réduire les erreurs humaines.
+   </p>
 
   </div>
 </template>

@@ -28,7 +28,7 @@
       <section class="about" id="about" ref="about">
         <h2>À propos de moi</h2>
         <p>
-          Étudiant passionné par la programmation, je suis actuellement en formation en développement d'applications.
+          Étudiant passionné par la programmation, je suis actuellement en deuxième année de BUT Informatique à l'IUT Belfort-Montbéliard. J’aime apprendre de nouvelles choses et je m’efforce de progresser chaque jour dans les différents domaines de l’informatique. Au cours de mes études, j’ai eu l’occasion de travailler sur plusieurs projets qui m’ont permis de mettre en pratique mes connaissances. En parallèle, je développe aussi quelques petits projets personnels de mon côté pour approfondir mes compétences.
         </p>
       </section>
 
@@ -120,6 +120,17 @@ export default {
           links_color: "#3498db"
         },
         {
+          name: "Language de Programmation",
+          id: "programming-language",
+          description: "Un langage de programmation minimaliste avec un interpréteur en Rust.",
+          image: "https://raw.githubusercontent.com/Quoruda/Quoruda/refs/heads/main/images/Krab.png",
+          link: "#",
+          background_color: "#231e2b",
+          colors: ["#f48fb1", "#ffd180", "#81ecec"],
+          links_color: "#ff8fa3"
+        },
+          /*
+        {
           name: "Application ToDo",
           id: "todo-app",
           description: "Une application de gestion de tâches avec Vuex.",
@@ -128,16 +139,6 @@ export default {
           background_color: "#0f1c24",
           colors: ["#00e1ff", "#ffb300", "#5e60ce"],
           links_color: "#3498db"
-        },
-        {
-          name: "Blog personnel",
-          id: "blog",
-          description: "Blog responsive utilisant Vue Router et Markdown.",
-          image: "https://placehold.co/300x200",
-          link: "#",
-          background_color: "#231e2b",
-          colors: ["#f48fb1", "#ffd180", "#81ecec"],
-          links_color: "#ff8fa3"
         },
         {
           name: "Dashboard Statistiques",
@@ -158,7 +159,7 @@ export default {
           colors: ["#d4af37", "#f8f1e5", "#8a6fdf"], 
           background_color: "#0e0c0b",              
           links_color: "#f5c469"                   
-        }
+        }*/
       ],
       experienceLevels: ["Avancé", "Intermédiaire", "Avancé", "Intermédiaire", "Débutant", "Intermédiaire"],
       skills: ["Vue.js", "JavaScript", "HTML5", "CSS3", "Git", "Node.js"],
