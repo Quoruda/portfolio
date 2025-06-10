@@ -32,6 +32,31 @@
         </p>
       </section>
 
+      <!-- Skills section with enlarged descriptions -->
+      <section class="skills" id="skills" ref="skills">
+        <h2>Compétences</h2>
+        <ul>
+          <li>
+            <strong>🛠️ Réaliser un développement d'application</strong>Concevoir, développer, tester et mettre en œuvre une application répondant à un besoin client, en appliquant les principes algorithmiques et en garantissant la qualité du code.
+          </li>
+          <li>
+            <strong>🚀 Optimiser des applications</strong>Analyser la performance d’un programme, sélectionner et appliquer des algorithmes ou méthodes adaptés pour améliorer son efficacité, sa rapidité et sa consommation de ressources.
+          </li>
+          <li>
+            <strong>🌐 Administrer des systèmes informatiques communicants complexes</strong>Installer, configurer et gérer des environnements informatiques (postes, serveurs, réseaux) assurant la communication entre systèmes, tout en garantissant leur stabilité et leur sécurité.
+          </li>
+          <li>
+            <strong>📊 Gérer des données de l'information</strong>Mettre en place et piloter des processus de gestion de l’information: collecte, structuration, stockage, intégrité, sécurité et exploitation des données.
+          </li>
+          <li>
+            <strong>📅 Conduire un projet</strong>Piloter toutes les phases d’un projet informatique : recueil des besoins, planification, coordination des ressources, suivi et livraison, dans le respect des délais et de la qualité attendue.
+          </li>
+          <li>
+            <strong>👥 Collaborer au sein d'une équipe informatique</strong>Travailler en équipe en adap­tant ses compétences de communication, en collaborant activement avec les membres du groupe et en s'insérant dans un environnement professionnel multifonctionnel.
+          </li>
+        </ul>
+      </section>
+
       <!-- Projects section with enlarged descriptions -->
       <section class="projects" id="projects" ref="projects">
         <h2>Mes Projets</h2>
@@ -40,9 +65,17 @@
             <img :src="project.image" :alt="project.name" />
             <h3>{{ project.name }}</h3>
             <p>{{ project.description }}
-              <br><br>
-              <!-- Stack used for the project -->
-              Stack utilisé: {{ project.stack }}
+              <br>
+              <span class="skills-project">
+                <span v-for="skill in project.skills" :key="skill" class="skill-icon">
+                  <strong v-if="skill === 1">🛠</strong>
+                  <strong v-else-if="skill === 2">🚀</strong>
+                  <strong v-else-if="skill === 3">🌐</strong>
+                  <strong v-else-if="skill === 4">📊</strong>
+                  <strong v-else-if="skill === 5">📅</strong>
+                  <strong v-else-if="skill === 6">👥</strong>
+                </span>
+              </span>
             </p>
             <a :href="project.link" target="_blank" class="btn">Voir le projet</a>
           </div>
@@ -53,33 +86,15 @@
         <h2>{{getNameProject}}</h2>
 
         <ProjetStage v-if="getIdProject === 'stage'" />
+        <ProjetLanguage v-else-if="getIdProject === 'programming-language'" />
         <div v-else-if="selected_project >= 0">
             Nothing to display for this project.
         </div>
 
       </section>
 
-      <!-- Skills section with enlarged descriptions -->
-      <section class="skills" id="skills" ref="skills">
-        <h2>Compétences</h2>
-        <ul>
-          <li
-              v-for="(skill, index) in skills"
-              :key="index"
-              :class="{ 'hover-effect': hoveredIndex === index }"
-              @mouseover="hoveredIndex = index"
-              @mouseleave="hoveredIndex = -1"
-          >
-            {{ skill }}
-            <!-- Experience level -->
-
-            <span v-if="hoveredIndex === index">(Expérience: {{ experienceLevels[index] }})</span>
-          </li>
-        </ul>
-      </section>
-
       <!-- Contact section with enlarged description -->
-      <section class="contact">
+      <section class="contact" hidden="hidden">
         <h2>Contact</h2>
         <form @submit.prevent="submitForm" class="contact-form">
           <!-- Name input field -->
@@ -91,6 +106,8 @@
           <button type="submit" >Envoyer</button>
         </form>
       </section>
+
+
     </div>
   </div>
 </template>
@@ -99,10 +116,11 @@
 
 import ParticlesComponent from "@/components/ParticlesComponent.vue";
 import ProjetStage from "@/components/ProjetStage.vue";
+import ProjetLanguage from "@/components/ProjetLanguage.vue";
 
 export default {
   name: 'HomeView',
-  components: {ProjetStage, ParticlesComponent},
+  components: {ProjetLanguage, ProjetStage, ParticlesComponent},
   data() {
     
     return {
@@ -114,20 +132,21 @@ export default {
           id: "stage",
           description: "Projet de stage en développement d'application.",
           image: "https://www.magna.com/images/default-source/brand/stock-photography/1920x960-menu-photos-02.jpg?Status=Temp&sfvrsn=b9bedceb_4",
-          link: "#",
           colors: ["#ff9800", "#e74c3c", "#9b59b6"],
           background_color: "#1a1d23",
-          links_color: "#3498db"
+          links_color: "#3498db",
+          skills: [1,3,4]
         },
         {
           name: "Language de Programmation",
           id: "programming-language",
           description: "Un langage de programmation minimaliste avec un interpréteur en Rust.",
           image: "https://raw.githubusercontent.com/Quoruda/Quoruda/refs/heads/main/images/Krab.png",
-          link: "#",
           background_color: "#231e2b",
           colors: ["#f48fb1", "#ffd180", "#81ecec"],
-          links_color: "#ff8fa3"
+          links_color: "#ff8fa3",
+          skills: []
+
         },
           /*
         {
@@ -161,8 +180,6 @@ export default {
           links_color: "#f5c469"                   
         }*/
       ],
-      experienceLevels: ["Avancé", "Intermédiaire", "Avancé", "Intermédiaire", "Débutant", "Intermédiaire"],
-      skills: ["Vue.js", "JavaScript", "HTML5", "CSS3", "Git", "Node.js"],
       form: {
         name: '',
         email: '',
@@ -199,15 +216,27 @@ export default {
     },
 
     scrollToSection(section){
-      const element = document.getElementById(section);
-      if (element) {
+      //wait for 0.5s
+        const element = document.getElementById(section);
         element.scrollIntoView({ behavior: 'smooth' });
-      }
     },
 
     select_project(index){
       this.selected_project=index
-      this.scrollToSection("project")
+      //update page
+      this.$forceUpdate();
+      //block scrolling
+      document.body.style.overflow = 'hidden';
+
+      //wait 0.1s
+      setTimeout(() => {
+        //scroll to project section
+        this.scrollToSection("project")
+        //unblock scrolling
+        document.body.style.overflow = '';
+      }, 100);
+
+
     }
 
   },
@@ -217,6 +246,18 @@ export default {
 
 <style >
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+
+.skills-project{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.skill-icon{
+  font-size: 32px;
+  font-style: normal;
+}
 
 .navbar {
   position:fixed;
@@ -341,12 +382,15 @@ p{
   -webkit-backdrop-filter: blur(2px);
 }
 
+.description{
+  max-width: min(800px, 80%);
+}
 
 /* ABOUT */
-.about p {
+.about p{
   font-weight: 300;
   font-size: 1.1rem;
-  max-width: 800px;
+  max-width: min(800px, 92%);
   margin: 0 auto;
   line-height: 1.6;
   color: #ccc;
@@ -456,44 +500,6 @@ p{
   box-shadow: 0 6px 18px rgba(204, 122, 102, 0.5);
 }
 
-/* COMPETENCES - badges */
-.skills ul {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  padding: 0;
-  list-style: none;
-}
-
-.skills li {
-  background: #cc7a66;
-  padding: 8px 20px;
-  border-radius: 48px;
-  color: white;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: default;
-  box-shadow: 0 2px 8px rgba(204, 122, 102, 0.3);
-  transition: transform 0.2s ease;
-  user-select: none;
-}
-
-.skills li.hover-effect {
-  transform: scale(1.1);
-  box-shadow: 0 4px 14px rgba(204, 122, 102, 0.45);
-}
-
-/* EXPERIENCE LEVEL */
-.skills li span {
-  font-weight: 300;
-  font-size: 0.85rem;
-  margin-left: 6px;
-  font-style: italic;
-  opacity: 0.8;
-  user-select: none;
-}
-
 /* FORMULAIRE CONTACT */
 .contact-form {
   max-width: 100%;
@@ -596,7 +602,7 @@ section:nth-child(5) {
   width: auto;
   height: auto;
   max-height: 400px;
-  max-width: min(800px, 95%);
+  max-width: min(800px, 92%);
   display: block;
   margin: 20px auto;
   border-radius: 14px;
@@ -639,7 +645,7 @@ section:nth-child(5) {
 .project p {
   font-weight: 300;
   font-size: 1.1rem;
-  max-width: min(800px, 95%);
+  max-width: min(800px, 92%);
   margin: 0 auto;
   line-height: 1.6;
   color: #ccc;
@@ -651,6 +657,39 @@ section:nth-child(5) {
 
 strong {
   font-weight: 600;
+}
+
+/* SKILLS */
+.skills ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: min(850px, 90%);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.skills li {
+  font-size: 1.05rem;
+  color: #ddd;
+  font-weight: 300;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.skills li:hover {
+  transform: translateY(-5px);
+}
+
+.skills strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.15rem;
+  color: #ffae8a;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 
