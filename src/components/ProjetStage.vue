@@ -26,7 +26,7 @@ export default defineComponent({
     </p>
 
     <video width="640" height="360" controls muted>
-      <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" type="video/mp4">
+      <source src="@/assets/videos/jupyter_notebook_demo.mp4" type="video/mp4">
       Votre navigateur ne supporte pas la balise vidéo.
     </video>
 
