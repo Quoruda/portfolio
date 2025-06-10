@@ -274,6 +274,7 @@ export default {
 
 .nav-list {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
   list-style: none;
