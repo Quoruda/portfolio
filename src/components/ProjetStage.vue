@@ -60,6 +60,16 @@ export default defineComponent({
       Bien qu’une certaine base en <strong>programmation</strong> reste nécessaire, cette approche réduit considérablement la <strong>complexité</strong> et limite les risques d’<strong>erreurs</strong>.
     </p>
 
+    <p>Dans cet exemple montrant des fonctions Pycatia on peut voir que les valeur définissant la propriété de couleur est inversé entre la fonction de récupération et celle de modification.<br>
+      C'est un petit détail qui peut être rapidement source d'erreur surtout si ce n'est pas la seule exception qui à ce problème.
+    </p>
+    <code-block :code="'' +
+     '#récupérer la couleur\n' +
+     'get_real_color(inheritance: int, red: int, green: int, blue: int)\n' +
+      '#modifier la couleur\n' +
+      'set_real_color(red: int, green: int, blue: int, inheritance: int)'
+" language="python"></code-block>
+
     <ImageComponent :src="'nothing'" alt="Comparaison entre un code pycatia et la facade" />
 
     <h3>Ajout d’une couche IA</h3>
@@ -128,6 +138,18 @@ export default defineComponent({
       Cela permet une <strong>recherche sémantique</strong> — basée sur le <strong>sens</strong> et non sur des mots-clés exacts — et améliore la <strong>compréhension de la demande</strong>, quelle que soit sa formulation.
     </p>
 
+    <ImageComponent src="https://www.couchbase.com/blog/wp-content/uploads/2024/02/image1-1.png" alt="Schéma de l'architecture du projet RAG" />
+
+    <p>
+      Voici le <strong>schéma de l’architecture du projet en utilisant le RAG</strong>.
+      Le processus est le suivant : <br>
+      1. L’utilisateur envoie une requête.
+      2. On transforme la requête en <strong>embedding</strong>.
+      3. On recherche les <strong>fonctions les plus pertinentes</strong> dans la base de données, en utilisant l’<strong>embedding</strong>.
+      4. On envoie une requête à l’IA, qui génère du code en lui rappelant les fonctions les plus pertinentes.
+      5. On récupère le code python pour Catia généré par l’IA.
+    </p>
+
     <ImageComponent :src="require('@/assets/images/catia_agent_schema_rag.png')" alt="Schéma de l'architecture du projet RAG" />
 
     <p>
@@ -138,7 +160,7 @@ export default defineComponent({
       <strong>Exemple de réponse générée</strong> :
     </p>
 
-    <CodeBlock language="javascript" :code="JSON.stringify(json_output, null, 2)" />
+    <CodeBlock language="json" :code="JSON.stringify(json_output, null, 2)" />
 
     <h3>Conclusion</h3>
     <p>
