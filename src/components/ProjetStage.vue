@@ -11,7 +11,7 @@ export default defineComponent({
 
   data() {
     return {
-      json_output
+      json_output: JSON.stringify(json_output),
     };
   },
 
@@ -65,12 +65,31 @@ export default defineComponent({
     </p>
     <code-block :code="'' +
      '#récupérer la couleur\n' +
-     'get_real_color(inheritance: int, red: int, green: int, blue: int)\n' +
+     'get_real_color() -> (inheritance: int, red: int, green: int, blue: int)\n' +
       '#modifier la couleur\n' +
       'set_real_color(red: int, green: int, blue: int, inheritance: int)'
 " language="python"></code-block>
 
-    <ImageComponent :src="'nothing'" alt="Comparaison entre un code pycatia et la facade" />
+    <p>Les deux code suivant montre la différence entre l'utilisation purement de pycatia et seulement avec la facade.</p>
+
+    <code-block :code="'#pycatia\ncaa = catia()\n'+
+'document = caa.active_document\n'+
+'part = document.part\n'+
+'bodies = part.bodies\n'+
+'selection = caa.active_window.selection\n'+
+'selection.clear()\n'+
+'for body in bodies:\n'+
+'    selection.add(body)\n'+
+'selection.vis_properties.set_real_color(255, 0, 0, 0)\n'+
+'selection.clear()\n'" language="python"></code-block>
+
+    <code-block :code="'#facade\npart = get_active_part()\n'+
+
+'bodies = get_bodies_of_part(part)\n'+
+'set_color(bodies, (255, 0, 0, 0))'" language="python"></code-block>
+
+    <p>On peut remarquer que le code avec Pycatia nécessite de préparer la sélection avant de pouvoir modifier la couleur, alors que la façade permet de modifier directement les corps sans avoir à gérer la sélection.</p>
+
 
     <h3>Ajout d’une couche IA</h3>
     <p>
@@ -160,7 +179,7 @@ export default defineComponent({
       <strong>Exemple de réponse générée</strong> :
     </p>
 
-    <CodeBlock language="json" :code="JSON.stringify(json_output, null, 2)" />
+    <CodeBlock language="json" :code="json_output" />
 
     <p>
       Dans cet exemple, l'IA répond sous forme de JSON avec 4 objets:<br>
