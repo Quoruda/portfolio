@@ -135,7 +135,7 @@ export default {
           colors: ["#ff9800", "#e74c3c", "#9b59b6"],
           background_color: "#1a1d23",
           links_color: "#3498db",
-          skills: [1,3,4]
+          skills: [1,4,5]
         },
         {
           name: "Language de Programmation",
