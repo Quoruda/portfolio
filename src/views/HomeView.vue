@@ -2,17 +2,23 @@
   <div class="home-view" :style="{ backgroundColor: currentBackgroundColor }">
 
     <nav class="navbar">
-        <ul class="nav-list">
-          <li v-for="section in sections" :key="section.id" class="nav-item">
-            <a
-              @click="scrollToSection(section.id)"
-              class="nav-link"
-            >
-              {{ section.title }}
-            </a>
-          </li>
-        </ul>
+      <button class="burger" @click="mobileMenuOpen = !mobileMenuOpen">
+        <span :class="{ open: mobileMenuOpen }"></span>
+        <span :class="{ open: mobileMenuOpen }"></span>
+        <span :class="{ open: mobileMenuOpen }"></span>
+      </button>
+      <ul :class="['nav-list', { open: mobileMenuOpen }]">
+        <li
+            v-for="section in sections"
+            :key="section.id"
+            class="nav-item"
+            @click="scrollToSection(section.id); mobileMenuOpen = false"
+        >
+          <a class="nav-link">{{ section.title }}</a>
+        </li>
+      </ul>
     </nav>
+
     <div class="particles" v-for="(project, index) in projects" :key="index">
       <ParticlesComponent :particles_colors=project.colors  :links_color=project.links_color  v-if="index===selected_project"/>
     </div>
@@ -190,6 +196,7 @@ export default {
         {id: "skills", title: "Compétences"},
         {id: "projects", title: "Mes projets"},
       ],
+      mobileMenuOpen: false,
     };
   },
 
@@ -229,6 +236,7 @@ export default {
       //block scrolling
       document.body.style.overflow = 'hidden';
 
+
       //wait 0.1s
       setTimeout(() => {
         //scroll to project section
@@ -261,6 +269,7 @@ export default {
 }
 
 .navbar {
+  height: 30px;
   position:fixed;
   top: 0;
   left: 0;
@@ -693,6 +702,89 @@ strong {
   font-weight: 600;
   letter-spacing: 0.5px;
 }
+
+/* Burger button */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 28px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1100;
+}
+.burger span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.burger span.open:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.burger span.open:nth-child(2) {
+  opacity: 0;
+}
+.burger span.open:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+@media (max-width: 600px) {
+  .burger {
+    display: flex;
+    position: absolute;
+    top: 16px;
+    right: 20px;
+  }
+
+  .nav-list {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90vw;
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    flex-direction: column;
+    border-radius: 16px;
+    padding: 12px 16px; /* Ajout de padding intérieur */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    gap: 6px; /* Moins d'espace entre les boutons */
+  }
+
+
+  .nav-list.open {
+    display: flex;
+  }
+
+  .nav-item {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-link {
+    display: block;
+    color: #fff;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+    text-align: center;
+  }
+
+
+  .nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+
 
 
 </style>
