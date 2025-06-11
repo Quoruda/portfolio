@@ -162,6 +162,16 @@ export default defineComponent({
 
     <CodeBlock language="json" :code="JSON.stringify(json_output, null, 2)" />
 
+    <p>
+      Dans cet exemple, l'IA répond sous forme de JSON avec 4 objets:<br>
+      - 2 objets de type <strong>function</strong> contenant le nom de la fonction et son code.<br>
+      - 1 objet de type <strong>response</strong> contenant le message de l'IA destiné à l'utilisateur<br>
+      - 1 objet de type <strong>import</strong> contenant les imports nécessaires à l'exécution du code généré
+
+      Ce format permet de <strong>structurer la réponse</strong> de l’IA et de faciliter son traitement par le programme.
+      D'autres formats était possibles, comme le <strong>XML</strong>, mais le JSON est plus léger et plus facile à manipuler en Python.
+    </p>
+
     <h3>Conclusion</h3>
     <p>
       Ce projet a été une <strong>expérience extrêmement enrichissante</strong>. Il m’a permis de découvrir l’univers de la <strong>CAO</strong> tout en mobilisant mes compétences en <strong>programmation</strong> pour répondre à des problématiques concrètes.
