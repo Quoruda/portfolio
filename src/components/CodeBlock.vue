@@ -52,6 +52,7 @@ export default {
 
 <style scoped>
 .code-block {
+  max-height: 800px;
   border-radius: 14px;
   max-width: min(800px, 92%);
   margin: 20px auto;
