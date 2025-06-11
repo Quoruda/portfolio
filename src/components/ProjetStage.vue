@@ -45,7 +45,11 @@ export default defineComponent({
 
     <p>
       J’ai commencé par développer des <strong>macros simples</strong>, puis conçu une <strong>interface graphique</strong> servant de <strong>bibliothèque de macros</strong>, permettant aux utilisateurs de les exécuter facilement.
-      Cette interface a été développée avec <strong>tkinter</strong>, et permet de lancer et configurer les macros de manière intuitive.
+      Cette interface a été développée avec <strong>Tkinter</strong> et permet de lancer et configurer les macros de manière intuitive.
+    </p>
+    <p>
+      Le choix de <strong>Tkinter</strong> s’explique par sa simplicité d’intégration et sa légèreté. Contrairement à des bibliothèques comme <strong>PyQt</strong>, Tkinter est inclus par défaut dans Python, ce qui facilite le déploiement de l’application sans avoir à gérer de dépendances supplémentaires.
+      Bien que plus basique en termes de rendu graphique, il offre suffisamment de souplesse pour créer une interface claire, fonctionnelle et maintenable. Étant donné que l’objectif était de concevoir un outil rapidement opérationnel et facile à transmettre, Tkinter constituait le choix le plus pragmatique dans le contexte du stage.
     </p>
 
     <ImageComponent :src="require('@/assets/images/catia_app_v2.png')" alt="Capture d'écran de l'application" />
@@ -60,19 +64,19 @@ export default defineComponent({
       Bien qu’une certaine base en <strong>programmation</strong> reste nécessaire, cette approche réduit considérablement la <strong>complexité</strong> et limite les risques d’<strong>erreurs</strong>.
     </p>
 
-    <p>Dans cet exemple montrant des fonctions Pycatia on peut voir que les valeur définissant la propriété de couleur est inversé entre la fonction de récupération et celle de modification.<br>
-      C'est un petit détail qui peut être rapidement source d'erreur surtout si ce n'est pas la seule exception qui à ce problème.
+    <p>Dans cet exemple montrant des fonctions pycatia, on peut voir que les valeurs définissant la propriété de couleur sont inversées entre la fonction de récupération et celle de modification.<br>
+      C’est un petit détail qui peut rapidement devenir source d’erreurs, surtout s’il ne s’agit pas de la seule exception présentant ce type de problème.
     </p>
     <code-block :code="'' +
-     '#récupérer la couleur\n' +
+     '# récupérer la couleur\n' +
      'get_real_color() -> (inheritance: int, red: int, green: int, blue: int)\n' +
-      '#modifier la couleur\n' +
+      '# modifier la couleur\n' +
       'set_real_color(red: int, green: int, blue: int, inheritance: int)'
 " language="python"></code-block>
 
-    <p>Les deux code suivant montre la différence entre l'utilisation purement de pycatia et seulement avec la facade.</p>
+    <p>Les deux codes suivants montrent la différence entre une utilisation directe de pycatia et l’utilisation avec la façade.</p>
 
-    <code-block :code="'#pycatia\ncaa = catia()\n'+
+    <code-block :code="'# pycatia\ncaa = catia()\n'+
 'document = caa.active_document\n'+
 'part = document.part\n'+
 'bodies = part.bodies\n'+
@@ -83,13 +87,11 @@ export default defineComponent({
 'selection.vis_properties.set_real_color(255, 0, 0, 0)\n'+
 'selection.clear()\n'" language="python"></code-block>
 
-    <code-block :code="'#facade\npart = get_active_part()\n'+
-
+    <code-block :code="'# façade\npart = get_active_part()\n'+
 'bodies = get_bodies_of_part(part)\n'+
 'set_color(bodies, (255, 0, 0, 0))'" language="python"></code-block>
 
-    <p>On peut remarquer que le code avec Pycatia nécessite de préparer la sélection avant de pouvoir modifier la couleur, alors que la façade permet de modifier directement les corps sans avoir à gérer la sélection.</p>
-
+    <p>On remarque que le code utilisant pycatia nécessite de préparer la sélection avant de pouvoir modifier la couleur, alors que la façade permet de modifier directement les corps sans avoir à gérer la sélection.</p>
 
     <h3>Ajout d’une couche IA</h3>
     <p>
@@ -118,7 +120,7 @@ export default defineComponent({
     <p>
       Grâce à cette interface, les utilisateurs peuvent interagir avec l’<strong>IA</strong> pour <strong>créer ou modifier des macros</strong>.
       Elle se compose de deux zones principales :
-      <br>– La partie gauche est dédiée au <strong>code</strong>, avec un <strong>éditeur Python</strong>, des boutons d'<strong>exécution</strong>, de <strong>sauvegarde</strong> et d’<strong>importation</strong>, ainsi qu’un affichage des fonctions disponibles.
+      <br>– La partie gauche est dédiée au <strong>code</strong>, avec un <strong>éditeur Python</strong>, des boutons d’<strong>exécution</strong>, de <strong>sauvegarde</strong> et d’<strong>importation</strong>, ainsi qu’un affichage des fonctions disponibles.
       <br>– La partie droite est réservée à l’<strong>IA</strong>, avec un <strong>éditeur de texte</strong> pour la conversation et des <strong>prompts prédéfinis</strong>.
     </p>
     <p>
@@ -153,6 +155,14 @@ export default defineComponent({
       Grâce à l’<strong>embedding</strong>, le système sélectionne automatiquement les <strong>fonctions les plus pertinentes</strong> à partir de la requête utilisateur, réduisant drastiquement les erreurs.
     </p>
     <p>
+      J’ai fait le choix d’un système <strong>RAG</strong> plutôt que d’un <strong>fine-tuning</strong> de modèle, principalement pour des raisons de <strong>temps</strong>, de <strong>ressources</strong> et de <strong>quantité de données disponibles</strong>.
+      Le fine-tuning aurait nécessité un corpus conséquent d’exemples annotés, ainsi qu’un environnement technique adapté à l’entraînement de modèles. Ce n’était pas compatible avec les contraintes du stage. À l’inverse, le RAG permet de s’appuyer sur un <strong>modèle préexistant</strong> tout en adaptant dynamiquement ses réponses via une base de connaissances.
+    </p>
+    <p>
+      Cette approche présente également l’avantage d’être <strong>facilement maintenable</strong> : la mise à jour ou l’ajout de fonctions dans la base ne nécessite pas de réentraîner un modèle. C’est donc une solution souple, efficace et bien plus adaptée à un contexte de développement rapide comme celui du projet.
+    </p>
+
+    <p>
       L’<strong>embedding</strong> transforme les données (ici, les fonctions) en <strong>vecteurs</strong> pour en faciliter la comparaison.
       Cela permet une <strong>recherche sémantique</strong> — basée sur le <strong>sens</strong> et non sur des mots-clés exacts — et améliore la <strong>compréhension de la demande</strong>, quelle que soit sa formulation.
     </p>
@@ -162,17 +172,17 @@ export default defineComponent({
     <p>
       Voici le <strong>schéma de l’architecture du projet en utilisant le RAG</strong>.
       Le processus est le suivant : <br>
-      1. L’utilisateur envoie une requête.
-      2. On transforme la requête en <strong>embedding</strong>.
-      3. On recherche les <strong>fonctions les plus pertinentes</strong> dans la base de données, en utilisant l’<strong>embedding</strong>.
-      4. On envoie une requête à l’IA, qui génère du code en lui rappelant les fonctions les plus pertinentes.
-      5. On récupère le code python pour Catia généré par l’IA.
+      1. L’utilisateur envoie une requête.<br>
+      2. On transforme la requête en <strong>embedding</strong>.<br>
+      3. On recherche les <strong>fonctions les plus pertinentes</strong> dans la base de données, en utilisant l’<strong>embedding</strong>.<br>
+      4. On envoie une requête à l’IA, qui génère du code en se basant sur ces fonctions.<br>
+      5. On récupère le code Python pour CATIA généré par l’IA.
     </p>
 
     <ImageComponent :src="require('@/assets/images/catia_agent_schema_rag.png')" alt="Schéma de l'architecture du projet RAG" />
 
     <p>
-      L'<strong>IA</strong> ne génère pas systématiquement tout le code : elle se concentre sur les <strong>fonctions à modifier</strong>.
+      L’<strong>IA</strong> ne génère pas systématiquement tout le code : elle se concentre sur les <strong>fonctions à modifier</strong>.
       Mon programme extrait ces fonctions du code existant et les <strong>remplace uniquement si nécessaire</strong>, limitant les risques d’introduire des erreurs dans des parties non modifiées.
     </p>
     <p>
@@ -182,25 +192,32 @@ export default defineComponent({
     <CodeBlock language="json" :code="json_output" />
 
     <p>
-      Dans cet exemple, l'IA répond sous forme de JSON avec 4 objets:<br>
-      - 2 objets de type <strong>function</strong> contenant le nom de la fonction et son code.<br>
-      - 1 objet de type <strong>response</strong> contenant le message de l'IA destiné à l'utilisateur<br>
-      - 1 objet de type <strong>import</strong> contenant les imports nécessaires à l'exécution du code généré
-
+      Dans cet exemple, l’IA répond sous forme de JSON avec 4 objets :<br>
+      - 2 objets de type <strong>function</strong> contenant le nom de la fonction et son code ;<br>
+      - 1 objet de type <strong>response</strong> contenant le message de l’IA destiné à l’utilisateur ;<br>
+      - 1 objet de type <strong>import</strong> contenant les imports nécessaires à l’exécution du code généré.
+    </p>
+    <p>
       Ce format permet de <strong>structurer la réponse</strong> de l’IA et de faciliter son traitement par le programme.
-      D'autres formats était possibles, comme le <strong>XML</strong>, mais le JSON est plus léger et plus facile à manipuler en Python.
+      D’autres formats étaient possibles, comme le <strong>XML</strong>, mais le JSON est plus léger et plus facile à manipuler en Python.
+    </p>
+    <p>
+      Il est important de noter que cette couche IA constitue avant tout un <strong>proof of concept</strong>. La démonstration technique fonctionne et a montré que l’IA est capable de produire du code pertinent basé sur des requêtes utilisateur réelles.
+      Cependant, toutes les fonctionnalités de <strong>CATIA</strong> ne sont pas encore couvertes par la façade, et l’usage de l’IA repose sur des <strong>clés API</strong> nécessitant un <strong>abonnement externe</strong> à l’entreprise.
+    </p>
+    <p>
+      Ce projet met néanmoins en évidence un <strong>besoin fort</strong> en développement logiciel au sein de l’équipe, et ouvre la voie à une intégration potentielle plus poussée de l’automatisation par IA dans les outils internes.
     </p>
 
     <h3>Conclusion</h3>
     <p>
       Ce projet a été une <strong>expérience extrêmement enrichissante</strong>. Il m’a permis de découvrir l’univers de la <strong>CAO</strong> tout en mobilisant mes compétences en <strong>programmation</strong> pour répondre à des problématiques concrètes.
-      J’ai appris à <strong>manipuler des API complexes</strong>, à <strong>développer des interfaces ergonomiques</strong>, et à <strong>intégrer des modèles d’IA</strong> dans un outil utilisé en entreprise.
+      J’ai appris à <strong>manipuler des API complexes</strong>, à <strong>développer des interfaces ergonomiques</strong> et à <strong>intégrer des modèles d’IA</strong> dans un outil utilisé en entreprise.
     </p>
     <p>
       L’intégration de l’<strong>IA générative</strong> ouvre de <strong>nouvelles perspectives</strong> pour l’<strong>automatisation</strong> dans <strong>CATIA V5</strong>.
-      J’espère que cette solution aidera les ingénieurs de <strong>Magna Steyr France</strong> à <strong>améliorer leur productivité</strong>, tout en <strong>limitant les erreurs humaines</strong>.
+      Les macros développées, ainsi que l’interface, ont déjà permis un <strong>gain de temps considérable</strong> sur certaines tâches courantes. La centralisation des outils et la simplicité d’exécution permettent aux ingénieurs d’adopter ces automatisations sans effort d’apprentissage majeur.
     </p>
 
   </div>
-
 </template>
