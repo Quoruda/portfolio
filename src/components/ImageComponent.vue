@@ -1,7 +1,7 @@
 <template>
   <div class="image-container">
     <img
-        :src="src"
+        :src="currentSrc"
         :alt="alt"
         loading="lazy"
         class="image-component"
@@ -36,35 +36,82 @@ export default {
     caption: {
       type: String,
       default: ''
+    },
+    timeout: {
+      type: Number,
+      default: 15000 // 15 secondes par défaut
     }
   },
   data() {
     return {
       isLoaded: false,
       hasError: false,
-      errorMessage: "Problème de chargement de l'image"
+      errorMessage: "Problème de chargement de l'image",
+      loadingTimer: null,
+      currentSrc: ''
     }
+  },
+  mounted() {
+    // Initialisation de la source avec éventuel timestamp pour éviter le cache
+    this.currentSrc = this.src;
+    this.startLoadingTimeout();
+    
+    // Vérifier si l'image est déjà en cache du navigateur
+    const img = new Image();
+    img.src = this.currentSrc;
+    if (img.complete) {
+      this.imageLoaded();
+    }
+  },
+  beforeUnmount() {
+    this.clearLoadingTimeout();
   },
   methods: {
     imageLoaded() {
       this.isLoaded = true;
       this.hasError = false;
+      this.clearLoadingTimeout();
+      this.$emit('image-loaded', true);
     },
     handleImageError(e) {
       this.isLoaded = false;
       this.hasError = true;
+      this.clearLoadingTimeout();
+      this.errorMessage = "Problème de chargement de l'image";
       console.error("Erreur de chargement de l'image:", e);
+      this.$emit('image-error', { error: e, src: this.currentSrc });
     },
     retryLoading() {
       this.isLoaded = false;
       this.hasError = false;
+      this.errorMessage = "Problème de chargement de l'image"; // Réinitialisation du message par défaut
 
       // Crée une nouvelle instance d'image avec timestamp pour éviter le cache
       const timestamp = new Date().getTime();
-      const imgElement = this.$el.querySelector('img');
-      imgElement.src = this.src.includes('?')
+      this.currentSrc = this.src.includes('?')
           ? `${this.src}&t=${timestamp}`
           : `${this.src}?t=${timestamp}`;
+      
+      this.startLoadingTimeout();
+      this.$emit('retry-loading', this.currentSrc);
+      
+      console.log("Tentative de rechargement de l'image:", this.currentSrc);
+    },
+    startLoadingTimeout() {
+      this.clearLoadingTimeout();
+      this.loadingTimer = setTimeout(() => {
+        if (!this.isLoaded) {
+          this.hasError = true;
+          this.errorMessage = "Délai de chargement dépassé. Vérifiez votre connexion ou l'URL de l'image.";
+          this.$emit('image-timeout');
+        }
+      }, this.timeout);
+    },
+    clearLoadingTimeout() {
+      if (this.loadingTimer) {
+        clearTimeout(this.loadingTimer);
+        this.loadingTimer = null;
+      }
     }
   }
 }
@@ -145,6 +192,7 @@ export default {
   color: #d45d45;
   text-align: center;
   padding: 15px;
+  max-width: 80%;
 }
 
 .retry-button {
@@ -152,15 +200,23 @@ export default {
   color: #333;
   border: none;
   border-radius: 4px;
-  padding: 6px 12px;
+  padding: 8px 16px;
   cursor: pointer;
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .retry-button:hover {
   background-color: #d45d45;
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.retry-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 @keyframes spin {
