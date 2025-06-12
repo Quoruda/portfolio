@@ -5,9 +5,10 @@ import json_output from '@/assets/agent_example_output.json?raw';
 import {defineComponent} from "vue";
 import CodeBlock from "@/components/CodeBlock.vue";
 import ImageComponent from "@/components/ImageComponent.vue";
+import VideoComponent from "@/components/VideoComponent.vue";
 
 export default defineComponent({
-  components: {ImageComponent, CodeBlock},
+  components: {VideoComponent, ImageComponent, CodeBlock},
 
   data() {
     return {
@@ -51,10 +52,8 @@ export default defineComponent({
       Pour expérimenter avec <strong>pycatia</strong> et observer les effets du code, j’ai utilisé <strong><a href="https://jupyter.org/" target="_blank">Jupyter Notebook</a></strong>, un environnement interactif idéal pour exécuter et tester du code Python par cellules.
     </p>
 
-    <video width="640" height="360" controls muted>
-      <source src="@/assets/videos/jupyter_notebook_demo.mp4" type="video/mp4">
-      Votre navigateur ne supporte pas la balise vidéo.
-    </video>
+    <VideoComponent :video-src="require('@/assets/videos/jupyter_notebook_demo.mp4')"/>
+
 
     <p>
       J’ai commencé par développer des <strong>macros simples</strong>, puis conçu une <strong>interface graphique</strong> servant de <strong>bibliothèque de macros</strong>, permettant aux utilisateurs de les exécuter facilement.
@@ -117,10 +116,8 @@ export default defineComponent({
       J’ai donc intégré cette IA à l’application, sous la forme d’une <strong>macro interactive</strong> répondant directement aux demandes des utilisateurs.
     </p>
 
-    <video width="640" height="360" controls muted>
-      <source src="@/assets/videos/ia_interactive_demo.mp4" type="video/mp4">
-      Votre navigateur ne supporte pas la balise vidéo.
-    </video>
+    <video-component :video-src="require('@/assets/videos/ia_interactive_demo.mp4')" />
+
 
     <p>
       Cette fonctionnalité démontre qu’une <strong>IA peut générer du code pertinent</strong>, ouvrant la voie à de nouvelles formes d’<strong>automatisation</strong> dans <strong>CATIA V5</strong>.
@@ -140,10 +137,7 @@ export default defineComponent({
       <strong>Exemple</strong> : un utilisateur demande à l’IA de créer une macro générant une <strong>capture d’écran</strong> pour chaque pièce, afin d’utiliser les images dans un document.
     </p>
 
-    <video width="640" height="360" controls muted>
-      <source src="@/assets/videos/ia_creation_macro_spielberg.mp4" type="video/mp4">
-      Votre navigateur ne supporte pas la balise vidéo.
-    </video>
+    <VideoComponent :video-src="require('@/assets/videos/ia_creation_macro_spielberg.mp4')" />
 
     <h3>À propos de l’IA</h3>
     <p>
