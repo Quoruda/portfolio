@@ -661,7 +661,7 @@ strong {
   list-style: none;
   padding: 0;
   margin: 0 auto;
-  max-width: min(850px, 90%);
+  max-width: min(800px, 90%);
   display: flex;
   flex-direction: column;
   gap: 22px;
