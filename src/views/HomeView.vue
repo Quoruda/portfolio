@@ -141,7 +141,7 @@ export default {
           colors: ["#ff9800", "#e74c3c", "#9b59b6"],
           background_color: "#1a1d23",
           links_color: "#3498db",
-          skills: [1,4,5]
+          skills: [1,2,5]
         },
         {
           name: "Language de Programmation",
@@ -289,6 +289,7 @@ export default {
   list-style: none;
   margin: 0;
   padding: 0;
+
 }
 
 .nav-item {
@@ -637,6 +638,10 @@ section:nth-child(5) {
   gap: 14px;
 }
 
+.project a{
+  color: #ffae8a;
+}
+
 .project li {
   background: #273542;
   padding: 14px 20px;
@@ -748,13 +753,13 @@ strong {
     left: 50%;
     transform: translateX(-50%);
     width: 90vw;
-    background: rgba(255, 255, 255, 0.07);
+    background: rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     flex-direction: column;
     border-radius: 16px;
     padding: 12px 16px; /* Ajout de padding intérieur */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     gap: 6px; /* Moins d'espace entre les boutons */
   }
@@ -762,11 +767,17 @@ strong {
 
   .nav-list.open {
     display: flex;
+    background: rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
   }
 
   .nav-item {
     width: 100%;
     text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
   }
 
   .nav-link {
@@ -776,6 +787,8 @@ strong {
     border-radius: 8px;
     transition: background 0.3s ease;
     text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
   }
 
 
@@ -783,6 +796,7 @@ strong {
     background: rgba(255, 255, 255, 0.1);
   }
 }
+
 
 
 
