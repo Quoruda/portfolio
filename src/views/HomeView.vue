@@ -383,7 +383,8 @@ h3{
   font-weight: 600;
   font-size: 1.8rem;
   color: #b87333;
-  margin-bottom: 15px;;
+  margin-top: 20px;
+  margin-bottom: 10px;
   text-align: center;
   user-select: none;
 }
@@ -647,7 +648,6 @@ section:nth-child(5) {
   line-height: 1.6;
   color: #ccc;
   text-align: justify;
-  user-select: none;
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
 }
