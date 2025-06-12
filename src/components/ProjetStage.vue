@@ -64,7 +64,7 @@ export default defineComponent({
       Bien que plus basique en termes de rendu graphique, il offre suffisamment de souplesse pour créer une interface claire, fonctionnelle et maintenable. Étant donné que l’objectif était de concevoir un outil rapidement opérationnel et facile à transmettre, Tkinter constituait le choix le plus pragmatique dans le contexte du stage.
     </p>
 
-    <ImageComponent :src="require('@/assets/images/catia_app_v2.png')" alt="Capture d'écran de l'application" />
+    <ImageComponent :src="require('@/assets/images/catia_app_v2.png')" alt="Capture d'écran de l'application" caption="Capture d'écran de la bibliothèque de macro"/>
 
     <h3>Un nouvel objectif</h3>
     <p>
@@ -125,7 +125,7 @@ export default defineComponent({
       C’est pourquoi j’ai choisi d’en faire un <strong>assistant à la création de macros</strong>, qui ne permet l’exécution ou la sauvegarde du code que s’il est <strong>valide</strong>.
     </p>
 
-    <ImageComponent :src="require('@/assets/images/catia_app_v3.png')" alt="Capture d'écran de l'application" />
+    <ImageComponent :src="require('@/assets/images/catia_app_v3.png')" alt="Capture d'écran de l'application" caption="Capture d'écran de l'éditeur de macro"/>
 
     <p>
       Grâce à cette interface, les utilisateurs peuvent interagir avec l’<strong>IA</strong> pour <strong>créer ou modifier des macros</strong>.
@@ -152,7 +152,7 @@ export default defineComponent({
       Voici le <strong>schéma de l’architecture initiale</strong> du projet : l’utilisateur envoie une requête, l’IA génère du code utilisant la façade <strong>pycatia</strong>, puis ce code est exécuté dans <strong>CATIA V5</strong>.
     </p>
 
-    <ImageComponent :src="require('@/assets/images/catia_agent_schema.png')" alt="Schéma de l'architecture du projet" />
+    <ImageComponent :src="require('@/assets/images/catia_agent_schema.png')" alt="Schéma de l'architecture du projet" caption="Schéma de l'architecture de l'agent sans RAG"/>
 
     <p>
       Cette première version avait une limite : la façade contenait <strong>trop de fonctions</strong>, rendant leur utilisation par l’IA <strong>aléatoire</strong> ou <strong>incorrecte</strong>.
@@ -174,7 +174,7 @@ export default defineComponent({
       Cela permet une <strong><a href="https://fr.wikipedia.org/wiki/Recherche_s%C3%A9mantique" target="_blank">recherche sémantique</a></strong> — basée sur le <strong>sens</strong> et non sur des mots-clés exacts — et améliore la <strong>compréhension de la demande</strong>, quelle que soit sa formulation.
     </p>
 
-    <ImageComponent src="https://www.couchbase.com/blog/wp-content/uploads/2024/02/image1-1.png" alt="Schéma de l'architecture du projet RAG" />
+    <ImageComponent src="https://www.couchbase.com/blog/wp-content/uploads/2024/02/image1-1.png" alt="Schéma de l'architecture du projet RAG" caption="Schéma de l'embeddings"/>
 
     <p>
       Le choix du modèle d’embedding a été déterminant dans la qualité des résultats obtenus avec le système RAG. Mon objectif initial était d’utiliser un modèle local pour des raisons de performance (éviter des requêtes multiples) et indépendance technique.
@@ -192,7 +192,7 @@ export default defineComponent({
       5. On récupère le code Python pour CATIA généré par l’IA.
     </p>
 
-    <ImageComponent :src="require('@/assets/images/catia_agent_schema_rag.png')" alt="Schéma de l'architecture du projet RAG" />
+    <ImageComponent :src="require('@/assets/images/catia_agent_schema_rag.png')" alt="Schéma de l'architecture du projet RAG" caption="Schéma de l'architecture de l'agent avec RAG" />
 
     <p>
       L’<strong>IA</strong> ne génère pas systématiquement tout le code : elle se concentre sur les <strong>fonctions à modifier</strong>.

@@ -1,14 +1,14 @@
 <template>
   <div class="image-container">
     <img
-      :src="src"
-      :alt="alt"
-      loading="lazy"
-      class="image-component"
-      @error="handleImageError"
-      @load="imageLoaded"
-      :class="{ 'image-loaded': isLoaded }"
-      v-show="isLoaded"
+        :src="src"
+        :alt="alt"
+        loading="lazy"
+        class="image-component"
+        @error="handleImageError"
+        @load="imageLoaded"
+        :class="{ 'image-loaded': isLoaded }"
+        v-show="isLoaded"
     />
     <div class="image-placeholder" v-show="!isLoaded">
       <div class="loading-spinner" v-if="!hasError"></div>
@@ -17,6 +17,7 @@
         <button @click="retryLoading" class="retry-button">Réessayer</button>
       </div>
     </div>
+    <figcaption v-if="caption" class="image-caption">{{ caption }}</figcaption>
   </div>
 </template>
 
@@ -31,6 +32,10 @@ export default {
     alt: {
       type: String,
       default: 'Image'
+    },
+    caption: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -58,8 +63,8 @@ export default {
       const timestamp = new Date().getTime();
       const imgElement = this.$el.querySelector('img');
       imgElement.src = this.src.includes('?')
-        ? `${this.src}&t=${timestamp}`
-        : `${this.src}?t=${timestamp}`;
+          ? `${this.src}&t=${timestamp}`
+          : `${this.src}?t=${timestamp}`;
     }
   }
 }
@@ -68,15 +73,19 @@ export default {
 <style scoped>
 .image-container {
   position: relative;
+  max-height: 600px;
   min-height: 150px;
   width: 100%;
   display: flex;
-  justify-content: center;
-  margin: 20px 0;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+  margin-top: 20px;
 }
 
 .image-component {
   max-width: min(800px, 92%);
+  max-height: 600px;
   border-radius: 14px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -99,12 +108,24 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+  max-height: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgba(45, 45, 45, 0.1);
   border-radius: 14px;
   min-height: 150px;
+}
+
+.image-caption {
+  margin-top: 4px;
+  max-width: min(800px, 92%);
+  text-align: center;
+  color: #ccc;
+  font-size: 1rem;
+  font-style: italic;
+  padding: 0 10px;
+  line-height: 1.4;
 }
 
 .loading-spinner {
