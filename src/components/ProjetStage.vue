@@ -12,7 +12,7 @@ export default defineComponent({
 
   data() {
     return {
-      json_output: JSON.stringify(json_output),
+      json_output: JSON.stringify(json_output, 0, 2),
     };
   },
 
