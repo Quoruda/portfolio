@@ -68,7 +68,7 @@ export default {
 
 .image-component {
   max-width: min(800px, 92%);
-  max-height: 600px;
+  max-height: 500px;
   border-radius: 14px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;

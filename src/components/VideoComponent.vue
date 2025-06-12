@@ -41,6 +41,7 @@ export default {
 }
 
 .video-component video{
+  margin: 0 auto;
   width: auto;
   height: auto;
   max-height: 400px;
