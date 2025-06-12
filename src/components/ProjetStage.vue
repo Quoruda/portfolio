@@ -52,7 +52,7 @@ export default defineComponent({
       Pour expérimenter avec <strong>pycatia</strong> et observer les effets du code, j’ai utilisé <strong><a href="https://jupyter.org/" target="_blank">Jupyter Notebook</a></strong>, un environnement interactif idéal pour exécuter et tester du code Python par cellules.
     </p>
 
-    <VideoComponent :video-src="require('@/assets/videos/jupyter_notebook_demo.mp4')"/>
+    <VideoComponent :video-src="require('@/assets/videos/jupyter_notebook_demo.mp4')" caption="Vidéo démonstration de Jupyter Notebook"/>
 
 
     <p>
@@ -116,7 +116,7 @@ export default defineComponent({
       J’ai donc intégré cette IA à l’application, sous la forme d’une <strong>macro interactive</strong> répondant directement aux demandes des utilisateurs.
     </p>
 
-    <video-component :video-src="require('@/assets/videos/ia_interactive_demo.mp4')" />
+    <video-component :video-src="require('@/assets/videos/ia_interactive_demo.mp4')" caption="Vidéo démonstration de l'IA interactive" />
 
 
     <p>
@@ -137,7 +137,7 @@ export default defineComponent({
       <strong>Exemple</strong> : un utilisateur demande à l’IA de créer une macro générant une <strong>capture d’écran</strong> pour chaque pièce, afin d’utiliser les images dans un document.
     </p>
 
-    <VideoComponent :video-src="require('@/assets/videos/ia_creation_macro_spielberg.mp4')" />
+    <VideoComponent :video-src="require('@/assets/videos/ia_creation_macro_spielberg.mp4')" caption="Vidéo démonstration de création macro"/>
 
     <h3>À propos de l’IA</h3>
     <p>

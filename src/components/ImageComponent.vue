@@ -7,6 +7,7 @@
       class="image-component"
       @error="onImageError"
     >
+    <span v-if="caption" class="image-caption">{{ caption }}</span>
     <button v-if="hasError" @click="reloadImage">Recharger l'image</button>
   </div>
 </template>
@@ -22,6 +23,10 @@ export default {
     alt: {
       type: String,
       default: 'Image'
+    },
+    caption: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -31,7 +36,7 @@ export default {
     }
   },
   mounted() {
-    this.currentSrc = '/' + this.src;
+    this.currentSrc = this.src;
   },
   methods: {
     onImageError() {
@@ -41,7 +46,7 @@ export default {
       this.hasError = false
       this.currentSrc = ''
       this.$nextTick(() => {
-        this.currentSrc = '/' + this.src
+        this.currentSrc = this.src
       })
     }
   }
@@ -75,6 +80,18 @@ export default {
   transform: scale(1.02);
   box-shadow: 0 12px 30px rgba(204, 122, 102, 0.5);
 }
+
+.image-caption {
+  margin-top: 4px;
+  max-width: min(800px, 92%);
+  text-align: center;
+  color: #ccc;
+  font-size: 1rem;
+  font-style: italic;
+  padding: 0 10px;
+  line-height: 1.4;
+}
+
 
 @keyframes fadeIn {
   from { opacity: 0; }
