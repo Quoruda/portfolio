@@ -134,57 +134,58 @@ export default {
       selected_project: 0,
       projects: [
         {
-          name: "Stage",
+          name: "Stage chez MSFR",
           id: "stage",
-          description: "Projet de stage en développement d'application.",
+          description: "Stage de 2 mois durant lequel j'ai travaille sur un projet qui allie automatisation et IA générative.",
           image: "https://www.magna.com/images/default-source/brand/stock-photography/1920x960-menu-photos-02.jpg?Status=Temp&sfvrsn=b9bedceb_4",
           colors: ["#ff9800", "#e74c3c", "#9b59b6"],
           background_color: "#1a1d23",
           links_color: "#3498db",
           skills: [1,2,5]
         },
-        {
-          name: "Language de Programmation",
-          id: "programming-language",
-          description: "Un langage de programmation minimaliste avec un interpréteur en Rust.",
-          image: "https://raw.githubusercontent.com/Quoruda/Quoruda/refs/heads/main/images/Krab.png",
-          background_color: "#231e2b",
-          colors: ["#f48fb1", "#ffd180", "#81ecec"],
-          links_color: "#ff8fa3",
-          skills: []
+        /*
+   {
+     name: "Language de Programmation",
+     id: "programming-language",
+     description: "Un langage de programmation minimaliste avec un interpréteur en Rust.",
+     image: "https://raw.githubusercontent.com/Quoruda/Quoruda/refs/heads/main/images/Krab.png",
+     background_color: "#231e2b",
+     colors: ["#f48fb1", "#ffd180", "#81ecec"],
+     links_color: "#ff8fa3",
+     skills: []
 
-        },
-          /*
-        {
-          name: "Application ToDo",
-          id: "todo-app",
-          description: "Une application de gestion de tâches avec Vuex.",
-          image: "https://placehold.co/300x200",
-          link: "#",
-          background_color: "#0f1c24",
-          colors: ["#00e1ff", "#ffb300", "#5e60ce"],
-          links_color: "#3498db"
-        },
-        {
-          name: "Dashboard Statistiques",
-          id: "dashboard",
-          description: "Tableau de bord interactif pour visualiser des données avec Chart.js.",
-          image: "https://placehold.co/300x200",
-          link: "#",
-          colors: ["#00ffbf", "#a3ff00", "#ffe082"],
-          background_color: "#11241c",              
-          links_color: "#00e676"                    
-        },
-        {
-          name: "Galerie d’Art Interactif",
-          id: "art-gallery",
-          description: "Une galerie visuelle immersive, avec animations douces et transitions artistiques.",
-          image: "https://placehold.co/300x200",
-          link: "#",
-          colors: ["#d4af37", "#f8f1e5", "#8a6fdf"], 
-          background_color: "#0e0c0b",              
-          links_color: "#f5c469"                   
-        }*/
+   },
+
+   {
+     name: "Application ToDo",
+     id: "todo-app",
+     description: "Une application de gestion de tâches avec Vuex.",
+     image: "https://placehold.co/300x200",
+     link: "#",
+     background_color: "#0f1c24",
+     colors: ["#00e1ff", "#ffb300", "#5e60ce"],
+     links_color: "#3498db"
+   },
+   {
+     name: "Dashboard Statistiques",
+     id: "dashboard",
+     description: "Tableau de bord interactif pour visualiser des données avec Chart.js.",
+     image: "https://placehold.co/300x200",
+     link: "#",
+     colors: ["#00ffbf", "#a3ff00", "#ffe082"],
+     background_color: "#11241c",
+     links_color: "#00e676"
+   },
+   {
+     name: "Galerie d’Art Interactif",
+     id: "art-gallery",
+     description: "Une galerie visuelle immersive, avec animations douces et transitions artistiques.",
+     image: "https://placehold.co/300x200",
+     link: "#",
+     colors: ["#d4af37", "#f8f1e5", "#8a6fdf"],
+     background_color: "#0e0c0b",
+     links_color: "#f5c469"
+   }*/
       ],
       form: {
         name: '',
