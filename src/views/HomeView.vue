@@ -609,25 +609,6 @@ section:nth-child(5) {
   }
 }
 
-
-.project video{
-  width: auto;
-  height: auto;
-  max-height: 400px;
-  max-width: min(800px, 92%);
-  display: block;
-  margin: 20px auto;
-  border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-color: #000; /* fallback */
-}
-
-.project video:hover{
-  transform: scale(1.02);
-  box-shadow: 0 12px 30px rgba(204, 122, 102, 0.5);
-}
-
 .project ul {
   list-style: none;
   padding: 0;
