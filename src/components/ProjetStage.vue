@@ -23,19 +23,32 @@ export default defineComponent({
 
     <h3>Introduction</h3>
     <p>
-      Au cours de mon stage de <strong>deux mois</strong> chez <strong>Magna Steyr France</strong>, j’ai eu l’opportunité de travailler sur un projet mêlant <strong>automatisation</strong> et <strong>intelligence artificielle</strong>.
-      Ma mission consistait à développer des <strong>macros</strong> pour automatiser des processus dans <strong>CATIA V5</strong>, un logiciel de <strong>conception assistée par ordinateur (CAO)</strong> utilisé notamment dans les industries <strong>aéronautique</strong> et <strong>automobile</strong>.
-      Pour cela, j’ai utilisé la bibliothèque Python <strong>pycatia</strong>. Ces macros visaient à améliorer l’efficacité des ingénieurs en automatisant des <strong>tâches répétitives</strong> et en limitant les <strong>erreurs humaines</strong>.
+      Durant mon stage chez <strong><a href="https://grandparis.ccibusiness.fr/msfr-magna-steyr-france" target="_blank">Magna Steyr France</a></strong>, j’ai conçu un assistant intelligent pour <strong><a href="https://www.3ds.com/fr/products/catia/catia-v5" target="_blank">CATIA V5</a></strong> mêlant <strong>automatisation, interface <a href="https://fr.wikipedia.org/wiki/Python_(langage)" target="_blank">Python</a></strong> et <strong>intelligence artificielle générative</strong>.
     </p>
     <p>
-      À mon arrivée, <strong>aucune liste prédéfinie</strong> de macros n’existait. J’ai donc <strong>identifié les besoins</strong> au fil du stage et <strong>défini mes objectifs</strong> de manière autonome.
-      Les employés n’étaient ni développeurs ni familiers avec la programmation, mais restaient ouverts à ce type de solutions. Ils avaient déjà tenté de créer des macros avec des <strong>IA génératives</strong>, mais sans résultats probants.
+      Le but : permettre aux ingénieurs — non développeurs — de créer ou adapter des <strong>macros personnalisées</strong> simplement, grâce à une interface graphique intuitive et un assistant IA intégré.
     </p>
+    <p>
+      Le projet combine des compétences en <strong>programmation Python</strong>, <strong>UX</strong>, <strong><a href="https://fr.wikipedia.org/wiki/Interface_de_programmation" target="_blank">API</a> industrielle</strong> et <strong>intelligence artificielle</strong>, avec une finalité concrète : <strong>gagner du temps</strong>, <strong>réduire les erreurs</strong> et <strong>favoriser l’autonomie</strong> des utilisateurs dans leurs outils de travail.
+    </p>
+
+
+    <h3>Contexte</h3>
+    <p>
+      Mon stage de <strong>deux mois</strong> chez <strong>Magna Steyr France</strong> s’est déroulé au sein d’un service technique utilisant <strong>CATIA V5</strong>, un logiciel de <strong><a href="https://fr.wikipedia.org/wiki/Conception_assist%C3%A9e_par_ordinateur" target="_blank">CAO</a></strong> essentiel dans les secteurs <strong>automobile</strong> et <strong>aéronautique</strong>.
+    </p>
+    <p>
+      L’équipe faisait face à de nombreuses <strong>tâches répétitives</strong> et avait tenté plusieurs solutions de scripting (<a href="https://cao.centralesupelec.fr/index.php?page=scripting.htm" target="_blank">CatScript</a>, <a href="https://fr.wikipedia.org/wiki/VBScript" target="_blank">VBScript</a>) sans succès, en raison de la complexité de l’environnement CATIA. Avant même ma prise de poste, ils avaient découvert la bibliothèque Python <strong><a href="https://pycatia.readthedocs.io/en/latest/" target="_blank">pycatia</a></strong>, et c’est naturellement devenu le **sujet de mon stage**.
+    </p>
+    <p>
+      Mon rôle a donc consisté à explorer pycatia, à évaluer ses capacités pour automatiser efficacement les tâches, puis à développer une solution robuste. Rapidement, le projet a évolué vers la conception d’une <strong>interface graphique</strong> centralisée et l’intégration d’une <strong><a href="https://fr.wikipedia.org/wiki/Intelligence_artificielle_g%C3%A9n%C3%A9rative">IA générative</a></strong>, afin de rendre la création et la modification de macros accessibles aux ingénieurs non-développeurs.
+    </p>
+
 
     <h3>Prise en main</h3>
     <p>
       J’ai d’abord dû me familiariser avec l’<strong>environnement CAO</strong>, un domaine doté de ses propres <strong>concepts</strong> et <strong>terminologies</strong>.
-      Pour expérimenter avec <strong>pycatia</strong> et observer les effets du code, j’ai utilisé <strong>Jupyter Notebook</strong>, un environnement interactif idéal pour exécuter et tester du code Python par cellules.
+      Pour expérimenter avec <strong>pycatia</strong> et observer les effets du code, j’ai utilisé <strong><a href="https://jupyter.org/" target="_blank">Jupyter Notebook</a></strong>, un environnement interactif idéal pour exécuter et tester du code Python par cellules.
     </p>
 
     <video width="640" height="360" controls muted>
@@ -48,7 +61,7 @@ export default defineComponent({
       Cette interface a été développée avec <strong>Tkinter</strong> et permet de lancer et configurer les macros de manière intuitive.
     </p>
     <p>
-      Le choix de <strong>Tkinter</strong> s’explique par sa simplicité d’intégration et sa légèreté. Contrairement à des bibliothèques comme <strong>PyQt</strong>, Tkinter est inclus par défaut dans Python, ce qui facilite le déploiement de l’application sans avoir à gérer de dépendances supplémentaires.
+      Le choix de <strong>Tkinter</strong> s’explique par sa simplicité d’intégration et sa légèreté. Contrairement à des bibliothèques comme <strong><a href="https://fr.wikipedia.org/wiki/PyQt" target="_blank">PyQt</a></strong>, Tkinter est inclus par défaut dans Python, ce qui facilite le déploiement de l’application sans avoir à gérer de dépendances supplémentaires.
       Bien que plus basique en termes de rendu graphique, il offre suffisamment de souplesse pour créer une interface claire, fonctionnelle et maintenable. Étant donné que l’objectif était de concevoir un outil rapidement opérationnel et facile à transmettre, Tkinter constituait le choix le plus pragmatique dans le contexte du stage.
     </p>
 
@@ -60,7 +73,7 @@ export default defineComponent({
       En l’absence de développeurs, la <strong>maintenance</strong> et l’<strong>évolution</strong> du projet seraient également compliquées après mon départ.
     </p>
     <p>
-      C’est alors que m’est venue l’idée de créer une <strong>façade pour pycatia</strong> : une couche d’<strong>abstraction simplifiée</strong> permettant aux ingénieurs de créer leurs propres macros plus facilement.
+      C’est alors que m’est venue l’idée de créer une <strong><a href="https://refactoring.guru/fr/design-patterns/facade" target="_blank">façade</a>  pour pycatia</strong> : <strong> une <a href="	https://fr.wikipedia.org/wiki/Abstraction_(informatique)" target="_blank">couche d’abstraction</a> simplifiée</strong> permettant aux ingénieurs de créer leurs propres macros plus facilement.
       Bien qu’une certaine base en <strong>programmation</strong> reste nécessaire, cette approche réduit considérablement la <strong>complexité</strong> et limite les risques d’<strong>erreurs</strong>.
     </p>
 
@@ -134,12 +147,12 @@ export default defineComponent({
 
     <h3>À propos de l’IA</h3>
     <p>
-      L’IA utilisée s’appuie sur un modèle développé par l’entreprise française <strong>Mistral</strong>, spécialisée dans les <strong>modèles open-source</strong>.
+      L’IA utilisée s’appuie sur un modèle développé par l’entreprise française <strong><a href="https://fr.wikipedia.org/wiki/Mistral_AI" target="_blank">Mistral AI</a></strong>, spécialisée dans les <strong>modèles open-source</strong>.
       Elle fournit des <strong>clés API gratuites</strong>, idéales pour les phases de test.
     </p>
     <p>
-      Plusieurs modèles ont été testés. J’ai d’abord utilisé <strong>Codestral</strong>, un modèle spécialisé dans le code, rapidement remplacé par son successeur <strong>DevStral</strong>.
-      Finalement, c’est <strong>Mistral-small</strong>, un modèle <strong>généraliste</strong>, qui s’est révélé le plus performant, notamment pour <strong>comprendre les demandes</strong>, <strong>proposer des solutions</strong> et <strong>générer du code fiable</strong>.
+      Plusieurs modèles ont été testés. J’ai d’abord utilisé <strong><a href="https://mistral.ai/fr/news/codestral" target="_blank">Codestral</a></strong>, un modèle spécialisé dans le code, rapidement remplacé par son successeur <strong><a href="https://mistral.ai/fr/news/devstral" target="_blank">Devstral</a></strong>.
+      Finalement, c’est <strong><a href="https://mistral.ai/news/mistral-small-3-1" target="_blank">Mistral-small</a></strong>, un modèle <strong>généraliste</strong>, qui s’est révélé le plus performant, notamment pour <strong>comprendre les demandes</strong>, <strong>proposer des solutions</strong> et <strong>générer du code fiable</strong>.
     </p>
     <p>
       Voici le <strong>schéma de l’architecture initiale</strong> du projet : l’utilisateur envoie une requête, l’IA génère du code utilisant la façade <strong>pycatia</strong>, puis ce code est exécuté dans <strong>CATIA V5</strong>.
@@ -151,11 +164,11 @@ export default defineComponent({
       Cette première version avait une limite : la façade contenait <strong>trop de fonctions</strong>, rendant leur utilisation par l’IA <strong>aléatoire</strong> ou <strong>incorrecte</strong>.
     </p>
     <p>
-      Pour pallier cela, j’ai implémenté une architecture fondée sur le principe du <strong>RAG (Retrieval-Augmented Generation)</strong>.
-      Grâce à l’<strong>embedding</strong>, le système sélectionne automatiquement les <strong>fonctions les plus pertinentes</strong> à partir de la requête utilisateur, réduisant drastiquement les erreurs.
+      Pour pallier cela, j’ai implémenté une architecture fondée sur le principe du <strong><a href="https://datascientest.com/retrieval-augmented-generation-tout-savoir" target="_blank">RAG (Retrieval-Augmented Generation)</a></strong>.
+      Grâce à l’<strong><a href="https://generationia.flint.media/p/c-est-quoi-un-embedding" target="_blank">embedding</a></strong>, le système sélectionne automatiquement les <strong>fonctions les plus pertinentes</strong> à partir de la requête utilisateur, réduisant drastiquement les erreurs.
     </p>
     <p>
-      J’ai fait le choix d’un système <strong>RAG</strong> plutôt que d’un <strong>fine-tuning</strong> de modèle, principalement pour des raisons de <strong>temps</strong>, de <strong>ressources</strong> et de <strong>quantité de données disponibles</strong>.
+      J’ai fait le choix d’un système <strong>RAG</strong> plutôt que d’un <strong><a href="https://datascientest.com/fine-tuning-tout-savoir" target="_blank">fine-tuning</a></strong> de modèle, principalement pour des raisons de <strong>temps</strong>, de <strong>ressources</strong> et de <strong>quantité de données disponibles</strong>.
       Le fine-tuning aurait nécessité un corpus conséquent d’exemples annotés, ainsi qu’un environnement technique adapté à l’entraînement de modèles. Ce n’était pas compatible avec les contraintes du stage. À l’inverse, le RAG permet de s’appuyer sur un <strong>modèle préexistant</strong> tout en adaptant dynamiquement ses réponses via une base de connaissances.
     </p>
     <p>
@@ -164,10 +177,16 @@ export default defineComponent({
 
     <p>
       L’<strong>embedding</strong> transforme les données (ici, les fonctions) en <strong>vecteurs</strong> pour en faciliter la comparaison.
-      Cela permet une <strong>recherche sémantique</strong> — basée sur le <strong>sens</strong> et non sur des mots-clés exacts — et améliore la <strong>compréhension de la demande</strong>, quelle que soit sa formulation.
+      Cela permet une <strong><a href="https://fr.wikipedia.org/wiki/Recherche_s%C3%A9mantique" target="_blank">recherche sémantique</a></strong> — basée sur le <strong>sens</strong> et non sur des mots-clés exacts — et améliore la <strong>compréhension de la demande</strong>, quelle que soit sa formulation.
     </p>
 
     <ImageComponent src="https://www.couchbase.com/blog/wp-content/uploads/2024/02/image1-1.png" alt="Schéma de l'architecture du projet RAG" />
+
+    <p>
+      Le choix du modèle d’embedding a été déterminant dans la qualité des résultats obtenus avec le système RAG. Mon objectif initial était d’utiliser un modèle local pour des raisons de performance (éviter des requêtes multiples) et indépendance technique.
+      J’ai testé plusieurs modèles de la collection <a href="https://www.sbert.net/index.html" target="_blank">sentence-transformers</a>, comme <a href="https://www.sbert.net/docs/sentence_transformer/pretrained_models.html" target="_blank">all-mpnet-base-v2</a>, mais les résultats étaient souvent inconstants : une requête utilisateur bien formulée pouvait aboutir à une mauvaise correspondance une fois sur trois.
+      Finalement, j’ai opté pour <a href="https://docs.mistral.ai/capabilities/embeddings/text_embeddings/" target="_blank">mistral-embed</a>, un modèle développé par Mistral. Celui-ci offre une robustesse supérieure, notamment sur des requêtes imprécises ou multilingues. Sa capacité à comprendre l’intention même si la formulation est vague en fait un meilleur choix dans un contexte industriel réel, où les utilisateurs peuvent exprimer leurs besoins de manière non technique.
+    </p>
 
     <p>
       Voici le <strong>schéma de l’architecture du projet en utilisant le RAG</strong>.
@@ -192,14 +211,14 @@ export default defineComponent({
     <CodeBlock language="json" :code="json_output" />
 
     <p>
-      Dans cet exemple, l’IA répond sous forme de JSON avec 4 objets :<br>
+      Dans cet exemple, l’IA répond sous forme de <a href="https://fr.wikipedia.org/wiki/JavaScript_Object_Notation" target="_blank">JSON</a> avec 4 objets :<br>
       - 2 objets de type <strong>function</strong> contenant le nom de la fonction et son code ;<br>
       - 1 objet de type <strong>response</strong> contenant le message de l’IA destiné à l’utilisateur ;<br>
       - 1 objet de type <strong>import</strong> contenant les imports nécessaires à l’exécution du code généré.
     </p>
     <p>
       Ce format permet de <strong>structurer la réponse</strong> de l’IA et de faciliter son traitement par le programme.
-      D’autres formats étaient possibles, comme le <strong>XML</strong>, mais le JSON est plus léger et plus facile à manipuler en Python.
+      D’autres formats étaient possibles, comme le <strong><a href="https://fr.wikipedia.org/wiki/Extensible_Markup_Language" target="_blank">XML</a></strong>, mais le JSON est plus léger et plus facile à manipuler en Python.
     </p>
     <p>
       Il est important de noter que cette couche IA constitue avant tout un <strong>proof of concept</strong>. La démonstration technique fonctionne et a montré que l’IA est capable de produire du code pertinent basé sur des requêtes utilisateur réelles.
