@@ -4,6 +4,12 @@
       <span v-for="i in lineCount" :key="i" class="line-number">{{ i }}</span>
     </div>
     <code ref="codeElement" :class="languageClass" v-html="highlightedCode"></code>
+    <button class="copy-button" @click="copyCode" title="Copier">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+    </button>
   </pre>
 </template>
 
@@ -53,6 +59,14 @@ export default {
       return props.code.split('\n').length;
     });
 
+    const copyCode = () => {
+      navigator.clipboard.writeText(props.code).then(() => {
+        alert('Code copié dans le presse-papier !')
+      }).catch(() => {
+        alert('Échec de la copie du code.')
+      })
+    }
+
     watch(() => props.code, highlight, { immediate: true })
     watch(() => props.language, highlight)
     onMounted(highlight)
@@ -60,7 +74,8 @@ export default {
     return {
       highlightedCode,
       languageClass,
-      lineCount
+      lineCount,
+      copyCode
     }
   }
 }
@@ -129,5 +144,39 @@ export default {
   transform: scale(1.02);
   box-shadow: 0 12px 30px rgba(204, 122, 102, 0.5);
 }
-</style>
 
+.copy-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  color: #f8f8f2;
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.copy-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.copy-button:active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.copy-button .icon {
+  width: 20px;
+  height: 20px;
+  stroke: #f8f8f2;
+}
+
+.copy-button:hover .icon {
+  stroke: #ffffff;
+}
+</style>
