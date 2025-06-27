@@ -10,6 +10,7 @@
         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
       </svg>
     </button>
+    <div v-if="showCopyNotification" class="copy-notification">Copié !</div>
   </pre>
 </template>
 
@@ -17,11 +18,13 @@
 import { ref, watch, onMounted, computed } from 'vue'
 import Prism from 'prismjs'
 import 'prismjs/components/prism-javascript'
-import 'prismjs/components/prism-python'
+import 'prismjs/components/prism-python' // Assurez-vous que ce composant est bien chargé
 import 'prismjs/components/prism-markdown'
 import 'prismjs/components/prism-json'
 import 'prismjs/components/prism-css'
-import 'prismjs/themes/prism-okaidia.css'
+import 'prismjs/plugins/line-numbers/prism-line-numbers' // Plugin pour les numéros de ligne
+import 'prismjs/plugins/line-highlight/prism-line-highlight' // Plugin pour surligner des lignes
+import 'prismjs/themes/prism-tomorrow.css' // Thème plus complet
 
 export default {
   props: {
@@ -36,34 +39,45 @@ export default {
   },
   setup(props) {
     const highlightedCode = ref('')
-    const languageClass = `language-${props.language}`
+    const showCopyNotification = ref(false)
+
+    const languageClass = computed(() => `language-${props.language}`)
 
     const highlight = () => {
-      // Ajoute des span pour chaque ligne pour assurer l'alignement avec les numéros
-      const highlighted = Prism.highlight(
-          props.code,
-          Prism.languages[props.language] || Prism.languages.javascript,
-          props.language
-      );
+      try {
+        const grammar = Prism.languages[props.language] || Prism.languages.javascript;
 
-      // Sépare le code en lignes et ajoute des spans avec la classe 'line' pour chaque ligne
-      // Ajoute également un espacement pour les lignes vides
-      highlightedCode.value = highlighted
-          .split('\n')
-          .map(line => `<span class="line">${line || ' '}</span>`)
-          .join('\n');
+        const highlighted = Prism.highlight(
+            props.code,
+            grammar,
+            props.language
+        );
+
+        highlightedCode.value = highlighted
+            .split('\n')
+            .map(line => `<span class="line">${line || ' '}</span>`)
+            .join('\n');
+      } catch (error) {
+        console.error(`Erreur lors de la coloration syntaxique: ${error.message}`);
+        highlightedCode.value = props.code
+            .split('\n')
+            .map(line => `<span class="line">${line || ' '}</span>`)
+            .join('\n');
+      }
     }
 
-    // Calcule le nombre de lignes pour la numérotation
     const lineCount = computed(() => {
       return props.code.split('\n').length;
     });
 
     const copyCode = () => {
       navigator.clipboard.writeText(props.code).then(() => {
-        alert('Code copié dans le presse-papier !')
-      }).catch(() => {
-        alert('Échec de la copie du code.')
+        showCopyNotification.value = true;
+        setTimeout(() => {
+          showCopyNotification.value = false;
+        }, 2000);
+      }).catch((err) => {
+        console.error('Échec de la copie du code:', err);
       })
     }
 
@@ -75,7 +89,8 @@ export default {
       highlightedCode,
       languageClass,
       lineCount,
-      copyCode
+      copyCode,
+      showCopyNotification
     }
   }
 }
@@ -99,13 +114,14 @@ export default {
   padding: 0;
   display: flex;
   position: relative;
+  overflow: hidden;
 }
 
 .code-block code {
   margin: 0 20px 0 0;
   object-fit: contain;
   display: block;
-  padding: 1em 0 1em 15px; /* Ajout de padding-left pour créer de l'espace */
+  padding: 1em 0 1em 15px;
   overflow-x: auto;
   flex: 1;
   line-height: 1.5;
@@ -115,7 +131,7 @@ export default {
 
 .code-block code .line {
   display: block;
-  height: 1.5em; /* Hauteur fixe au lieu de min-height */
+  height: 1.5em;
   white-space: pre;
 }
 
@@ -127,17 +143,17 @@ export default {
   user-select: none;
   text-align: right;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
-  margin-right: 10px; /* Ajout d'une marge à droite */
-  color: #888;
-  font-family: 'Fira Code', monospace, monospace; /* Même police que le code */
-  font-size: 1rem; /* Même taille que le code */
-  line-height: 1.5; /* Même ligne que le code */
+  margin-right: 10px;
+  color: #aaa;
+  font-family: 'Fira Code', monospace, monospace;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 .line-number {
   display: block;
-  height: 1.5em; /* Hauteur fixe identique aux lignes de code */
-  font-size: 1rem; /* Même taille que le code, pas de réduction */
+  height: 1.5em;
+  font-size: 1rem;
 }
 
 .code-block:hover {
@@ -159,11 +175,18 @@ export default {
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  z-index: 2;
 }
 
-.copy-button:hover {
+.copy-button:hover,
+.copy-button:focus {
   background-color: rgba(255, 255, 255, 0.1);
   transform: scale(1.1);
+  outline: none;
+}
+
+.copy-button:focus-visible {
+  box-shadow: 0 0 0 2px #f8f8f2;
 }
 
 .copy-button:active {
@@ -178,5 +201,88 @@ export default {
 
 .copy-button:hover .icon {
   stroke: #ffffff;
+}
+
+.copy-notification {
+  position: absolute;
+  top: 10px;
+  right: 50px;
+  background-color: rgba(50, 205, 50, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  animation: fadeIn 0.3s, fadeOut 0.5s 1.5s;
+  pointer-events: none;
+  font-size: 0.9rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Ajoutez des styles personnalisés pour les tokens spécifiques */
+.token.keyword {
+  color: #569cd6; /* Couleur pour les mots-clés (comme 'def', 'class') */
+}
+
+.token.string {
+  color: #ce9178; /* Couleur pour les chaînes */
+}
+
+.token.function {
+  color: #dcdcaa; /* Couleur pour les noms de fonctions */
+}
+
+.token.comment {
+  color: #6a9955; /* Couleur pour les commentaires */
+}
+
+.token.variable {
+  color: #9cdcfe; /* Couleur pour les variables */
+}
+
+.token.operator {
+  color: #d4d4d4; /* Couleur pour les opérateurs (comme '=', '+', '-') */
+}
+
+.token.number {
+  color: #b5cea8; /* Couleur pour les nombres */
+}
+
+.token.class-name {
+  color: #4ec9b0; /* Couleur pour les noms de classes */
+}
+
+.token.parameter {
+  color: #9cdcfe; /* Couleur pour les paramètres de fonction */
+}
+
+.token.punctuation {
+  color: #d4d4d4; /* Couleur pour la ponctuation (comme ',', ':', '.') */
+}
+
+.token.constant {
+  color: #4fc1ff; /* Couleur pour les constantes */
+}
+
+.token.boolean {
+  color: #569cd6; /* Couleur pour les valeurs booléennes (True, False) */
+}
+
+/* Ajoutez des styles pour les erreurs ou les avertissements */
+.token.error {
+  color: #f44747; /* Couleur pour les erreurs */
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.token.warning {
+  color: #ff8800; /* Couleur pour les avertissements */
+  background-color: rgba(255, 136, 0, 0.1);
 }
 </style>
