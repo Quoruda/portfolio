@@ -68,10 +68,10 @@
         <h2>Mes Projets</h2>
         <div class="project-list">
           <div class="project-card" v-for="(project, index) in projects" :key="index" @click="select_project(index)">
-            <img :src="project.image" :alt="project.name" />
+            <img :src="project.image" :alt="project.name" class="project-card-img"/>
             <h3>{{ project.name }}</h3>
-            <p>{{ project.description }}
-              <br>
+            <p class="description">{{ project.description }}</p>
+
               <span class="skills-project">
                 <span v-for="skill in project.skills" :key="skill" class="skill-icon">
                   <strong v-if="skill === 1">🛠</strong>
@@ -82,7 +82,17 @@
                   <strong v-else-if="skill === 6">👥</strong>
                 </span>
               </span>
-            </p>
+
+
+              <hr/>
+
+                <span class="technos-project">
+                  <span v-for="techno in project.technos" :key="techno" class="techno-icon" >
+                    <img v-if="techno==='python'" src="/logo/python.png"  alt="python logo" />
+                  </span>
+                </span>
+
+
             <a :href="project.link" target="_blank" class="btn">Voir le projet</a>
           </div>
         </div>
@@ -141,6 +151,7 @@ export default {
           colors: ["#ff9800", "#e74c3c", "#9b59b6"],
           background_color: "#1a1d23",
           links_color: "#3498db",
+          technos: ["python"],
           skills: [1,2,5]
         },
         /*
@@ -258,15 +269,44 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
 
 
-.skills-project{
+.skills-project, .technos-project{
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
 }
 
+
 .skill-icon{
   font-size: 32px;
   font-style: normal;
+  padding-top: 4px;
+}
+
+.techno-icon img{
+  padding-top: 3px;
+  padding-bottom: 5px;
+  width: 38px;
+  height: 38px;
+  object-fit: cover;
+}
+
+.project-card hr {
+  border: none;
+  border-top: 3px double #ffffff;
+  color: rgba(255, 255, 255, 0);
+  overflow: visible;
+  text-align: center;
+  width : 90%;
+  height: 5px;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.project-card .description{
+  margin-bottom: 0;
 }
 
 .navbar {
@@ -455,7 +495,7 @@ p{
   box-shadow: 0 15px 30px rgba(204, 122, 102, 0.3);
 }
 
-.project-card img {
+.project-card .project-card-img {
   width: 100%;
   height: 200px;       /* Fixe une hauteur uniforme */
   object-fit: cover;   /* Zoom + crop pour garder le ratio et remplir */
@@ -466,7 +506,7 @@ p{
 }
 
 
-.project-card:hover img {
+.project-card:hover .project-card-img {
   filter: brightness(1);
 }
 
