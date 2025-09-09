@@ -89,11 +89,14 @@
                 <span class="technos-project">
                   <span v-for="techno in project.technos" :key="techno" class="techno-icon" >
                     <img v-if="techno==='python'" src="/logo/python.png"  alt="python logo" />
+                    <img v-if="techno==='rust'" src="/logo/rust.png"  alt="rust logo" />
+                    <img v-if="techno==='java'" src="/logo/java.webp"  alt="java logo" />
+
                   </span>
                 </span>
 
 
-            <a :href="project.link" target="_blank" class="btn">Voir le projet</a>
+            <a :href="project.link" class="btn">Voir le projet</a>
           </div>
         </div>
       </section>
@@ -102,7 +105,8 @@
         <h2>{{getNameProject}}</h2>
 
         <ProjetStage v-if="getIdProject === 'stage'" />
-        <ProjetLanguage v-else-if="getIdProject === 'programming-language'" />
+        <ProjetKrabLanguage v-else-if="getIdProject === 'krab-language'" />
+        <ProjetLatroncules v-else-if="getIdProject === 'latroncules'" />
         <div v-else-if="selected_project >= 0">
             Nothing to display for this project.
         </div>
@@ -132,11 +136,12 @@
 
 import ParticlesComponent from "@/components/ParticlesComponent.vue";
 import ProjetStage from "@/components/ProjetStage.vue";
-import ProjetLanguage from "@/components/ProjetLanguage.vue";
+import ProjetLatroncules from "@/components/ProjetLatroncules.vue";
+import ProjetKrabLanguage from "@/components/ProjetKrabLanguage.vue";
 
 export default {
   name: 'HomeView',
-  components: {ProjetLanguage, ProjetStage, ParticlesComponent},
+  components: {ProjetKrabLanguage, ProjetStage, ParticlesComponent, ProjetLatroncules},
   data() {
     
     return {
@@ -154,29 +159,31 @@ export default {
           technos: ["python"],
           skills: [1,2,5]
         },
-        /*
+
    {
-     name: "Language de Programmation",
-     id: "programming-language",
-     description: "Un langage de programmation minimaliste avec un interpréteur en Rust.",
-     image: "https://raw.githubusercontent.com/Quoruda/Quoruda/refs/heads/main/images/Krab.png",
+     name: "Latroncules",
+     id: "latroncules",
+     description: "Un jeu d'échecs romain.",
+     image: require('@/assets/images/Latroncules.png'),
      background_color: "#231e2b",
      colors: ["#f48fb1", "#ffd180", "#81ecec"],
      links_color: "#ff8fa3",
-     skills: []
-
+     skills: [1,2,5,6],
+     technos: ["java"],
    },
 
    {
-     name: "Application ToDo",
-     id: "todo-app",
-     description: "Une application de gestion de tâches avec Vuex.",
-     image: "https://placehold.co/300x200",
+     name: "Krab Language",
+     id: "krab-language",
+     description: "Je me suis lancé le défi de créer un langage de programmation interpréter comme Python avec le language RUST",
+     image: require('@/assets/images/Krab.png'),
      link: "#",
      background_color: "#0f1c24",
      colors: ["#00e1ff", "#ffb300", "#5e60ce"],
-     links_color: "#3498db"
-   },
+     technos: ["rust"],
+     links_color: "#3498db",
+     skills: [1]
+   }/*,
    {
      name: "Dashboard Statistiques",
      id: "dashboard",
