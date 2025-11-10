@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    cursor: none !important;
 }
 
 :root {
@@ -16,7 +17,8 @@
 
 body {
     height: 100vh;
-    background: #ffffff;
+    width: 100vw;
+    background: #0a0e27;
     color: black;
 }
 
