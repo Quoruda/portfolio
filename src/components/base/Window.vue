@@ -62,15 +62,15 @@ const isUrl = (value) => {
 <style scoped>
 .window-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  bottom: 50%;
+  right: 50%;
+  width: calc(100vw - min(20px, 2%));
+  height: calc(100vh - min(20px, 2%));
+  transform: translateX(+50%) translateY(+50%);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 100;
-  padding: min(20px, 2vh);
   pointer-events: none;
 }
 
