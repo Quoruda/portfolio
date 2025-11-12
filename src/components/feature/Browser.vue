@@ -2,7 +2,22 @@
 import { ref } from "vue";
 import Application from "../base/Application.vue";
 
-const url = ref("https://www.wikipedia.com");
+const props = defineProps({
+  defaultURL : {
+    type: String,
+    default: "https://www.wikipedia.com"
+  },
+  icon: {
+    type: String,
+    default: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/GNOME_Web_logo_%282021-03%29.svg/2048px-GNOME_Web_logo_%282021-03%29.svg.png"
+  },
+  url_is_viewable: {
+    type: Boolean,
+    default: true
+  }
+});
+
+const url = ref(props.defaultURL);
 const inputUrl = ref(url.value);
 
 function loadUrl() {
@@ -15,9 +30,9 @@ function loadUrl() {
 </script>
 
 <template>
-  <Application name="Browser" icon="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/GNOME_Web_logo_%282021-03%29.svg/2048px-GNOME_Web_logo_%282021-03%29.svg.png">
+  <Application name="Browser" :icon="icon">
     <div class="browser">
-      <div class="toolbar">
+      <div class="toolbar" v-if="url_is_viewable">
         <input
             v-model="inputUrl"
             @keyup.enter="loadUrl"
