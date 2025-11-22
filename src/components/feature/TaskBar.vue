@@ -1,9 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 import Clock from "./Clock.vue";
+import UserProfile from "./UserProfile.vue";
 
 const currentLang = ref('FR');
 const isLangMenuOpen = ref(false);
+const isUserProfileOpen = ref(false);
 
 const languages = [
   { code: 'FR', flag: '🇫🇷', label: 'Français' },
@@ -26,12 +28,20 @@ const getCurrentFlag = () => {
 const closeLangMenu = () => {
   isLangMenuOpen.value = false;
 };
+
+const openUserProfile = () => {
+  isUserProfileOpen.value = true;
+};
+
+const closeUserProfile = () => {
+  isUserProfileOpen.value = false;
+};
 </script>
 
 <template>
   <div class="taskbar">
     <div class="user-section">
-      <button class="user-profile">
+      <button class="user-profile" @click="openUserProfile">
         <span class="profile-icon">👤</span>
         <span class="user-name">Audrick S</span>
         <span class="notification-badge">!</span>
@@ -62,6 +72,9 @@ const closeLangMenu = () => {
       </div>
     </div>
   </div>
+
+  <!-- User Profile Window -->
+  <UserProfile v-if="isUserProfileOpen" @close="closeUserProfile" />
 </template>
 
 <style scoped>
