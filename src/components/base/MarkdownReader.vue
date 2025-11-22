@@ -232,6 +232,7 @@ watch(() => props.markdownContent, () => {
 }
 
 .markdown-content {
+  max-width: 800px;
   margin: 0 auto;
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.7;
@@ -298,14 +299,32 @@ watch(() => props.markdownContent, () => {
   color: rgba(255, 255, 255, 0.8);
 }
 
+/* Code inline */
+.markdown-content :deep(code:not(pre code)) {
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  padding: 0.2em 0.5em;
+  border-radius: 6px;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.9em;
+  color: #7dd3fc;
+}
 
 
 
+.markdown-content :deep(pre code) {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  font-size: 0.95em;
+  font-family: 'Monaco', 'Courier New', monospace;
+  line-height: 1.6;
+  text-shadow: none !important;
+}
 
 /* Citations */
 .markdown-content :deep(blockquote) {
   border-left: 4px solid #3b82f6;
-  padding-left: 1.5em;
   margin: 1.5em 0;
   color: rgba(255, 255, 255, 0.7);
   font-style: italic;
