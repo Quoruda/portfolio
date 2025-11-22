@@ -69,21 +69,20 @@ const userInfo = {
         { name: 'Linux', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg' },
         { name: 'Docker', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
         { name: 'Godot', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg' },
-        { name: 'OpenCV', icon: '👁️' }
+        { name: 'OpenCV', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg' }
       ]
     },
     {
       category: '🤖 IA/ML',
       items: [
         { name: 'PyTorch', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg' },
-        { name: 'Scikit-Learn', icon: '📊' }
+        { name: 'Scikit-Learn', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg' }
       ]
     },
     {
       category: '🎮 Graphique',
       items: [
-        { name: 'WebGL', icon: '🌐' },
-        { name: 'OpenGL', icon: '🎨' }
+        { name: 'OpenGL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opengl/opengl-original.svg' }
       ]
     }
   ]
