@@ -171,7 +171,7 @@ const isUrl = (value) => {
   overflow: hidden;
   border: rgba(30, 41, 59, 0.6) 5px solid;
   color: rgba(255, 255, 255, 0.9);
-  border-radius: 0 0 13px 13px;
+  border-radius: 0 0 20px 20px;
 
 }
 
