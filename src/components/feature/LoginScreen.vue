@@ -31,10 +31,10 @@ const startAutoType = () => {
         isTyping.value = false
         setTimeout(() => {
           login()
-        }, 500)
+        }, 300)
       }
     }, 100)
-  }, 1000)
+  }, 500)
 }
 
 const login = () => {
@@ -43,8 +43,8 @@ const login = () => {
     isVisible.value = false
     setTimeout(() => {
       emit('login-complete')
-    }, 500)
-  }, 800)
+    }, 300)
+  }, 400)
 }
 </script>
 
