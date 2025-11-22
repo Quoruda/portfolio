@@ -22,3 +22,7 @@ body {
     color: black;
 }
 
+body.hide-custom-cursor .custom-cursor {
+    display: none;
+}
+
