@@ -82,10 +82,11 @@ const handleToggleSign = () => {
 
 <template>
   <application icon="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/GNOME_Calculator_icon_2021.svg/1200px-GNOME_Calculator_icon_2021.svg.png" name="Calculator">
-    <div class="calculator">
-      <div class="display">{{ display }}</div>
+    <div class="calculator-wrapper">
+      <div class="calculator">
+        <div class="display">{{ display }}</div>
 
-      <div class="buttons">
+        <div class="buttons">
         <button class="btn btn-function" @click="handleClear">C</button>
         <button class="btn btn-function" @click="handleToggleSign">+/-</button>
         <button class="btn btn-function" @click="handlePercentage">%</button>
@@ -110,23 +111,29 @@ const handleToggleSign = () => {
         <button class="btn" @click="handleDecimal">.</button>
         <button class="btn btn-operator" @click="handleEquals">=</button>
       </div>
+      </div>
     </div>
   </application>
 </template>
 
 <style scoped>
-.calculator {
+.calculator-wrapper {
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calculator {
   background: #1e1e1e;
   border-radius: 20px;
   padding: 20px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
-  max-width: 400px;
-  max-height: 600px;
-  margin: 0 auto;
+  width: 400px;
+  height: 600px;
 }
 
 .display {
