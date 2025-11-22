@@ -168,9 +168,11 @@ const isUrl = (value) => {
 
 .window-content {
   flex: 1;
-  overflow: auto;
-  padding: 5px;
+  overflow: hidden;
+  border: rgba(30, 41, 59, 0.6) 5px solid;
   color: rgba(255, 255, 255, 0.9);
+  border-radius: 0 0 13px 13px;
+
 }
 
 .window-content::-webkit-scrollbar {
