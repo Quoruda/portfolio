@@ -11,8 +11,8 @@ onMounted(() => {
     // Attendre la fin de l'animation de fondu avant d'émettre l'événement
     setTimeout(() => {
       emit('boot-complete')
-    }, 800) // Durée de la transition fade-leave
-  }, 1500)
+    }, 400) // Durée de la transition fade-leave
+  }, 800)
 })
 </script>
 
@@ -116,7 +116,7 @@ onMounted(() => {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: pulse 1.2s ease-in-out;
+  animation: pulse 0.8s ease-in-out;
   filter: drop-shadow(0 0 30px rgba(59, 130, 246, 0.5));
 }
 
@@ -165,7 +165,7 @@ onMounted(() => {
   background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
   background-size: 200% 100%;
   border-radius: 10px;
-  animation: loading 1.2s ease-out forwards, shimmer 0.8s linear infinite;
+  animation: loading 0.7s ease-out forwards, shimmer 0.6s linear infinite;
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
 }
 
@@ -184,7 +184,7 @@ onMounted(() => {
 }
 
 .fade-leave-active {
-  transition: opacity 800ms ease-out, transform 800ms ease-out;
+  transition: opacity 400ms ease-out, transform 400ms ease-out;
 }
 
 .fade-enter-from {
