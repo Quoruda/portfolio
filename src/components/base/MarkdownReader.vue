@@ -3,17 +3,8 @@ import { ref, onMounted, nextTick, watch } from 'vue'
 import Application from "./Application.vue"
 import { marked } from 'marked'
 import Prism from 'prismjs'
+import CodeContainer from './CodeContainer.vue'
 
-// Importer les langages
-import 'prismjs/components/prism-javascript'
-import 'prismjs/components/prism-python'
-import 'prismjs/components/prism-css'
-import 'prismjs/components/prism-markup' // HTML
-import 'prismjs/components/prism-json'
-import 'prismjs/components/prism-bash'
-
-// Importer le thème
-import 'prismjs/themes/prism-tomorrow.css'
 
 // Définir la prop
 const props = defineProps({
@@ -61,7 +52,8 @@ marked.setOptions({
   renderer: renderer
 })
 
-const renderedHtml = ref('')
+// Nouveaux refs : on va construire un tableau de blocs (html | code)
+const renderedBlocks = ref([])
 const loading = ref(false)
 const error = ref(null)
 
@@ -105,11 +97,42 @@ const loadMarkdownFile = async (filePath) => {
   }
 }
 
-const renderMarkdown = async (content) => {
+// Transforme le contenu markdown en blocs : sequences HTML et blocs code séparés
+const buildBlocksFromMarkdown = (content) => {
   if (!content) return
 
-  renderedHtml.value = marked.parse(content)
+  // Lexer les tokens
+  const tokens = marked.lexer(content)
+  const blocks = []
+  let buffer = []
+
+  const flushBuffer = () => {
+    if (buffer.length > 0) {
+      // Convertir la séquence de tokens non-code en HTML
+      const html = marked.parser(buffer)
+      blocks.push({ type: 'html', html })
+      buffer = []
+    }
+  }
+
+  for (const token of tokens) {
+    if (token.type === 'code') {
+      flushBuffer()
+      blocks.push({ type: 'code', code: token.text, lang: token.lang || 'text' })
+    } else {
+      buffer.push(token)
+    }
+  }
+  flushBuffer()
+
+  renderedBlocks.value = blocks
+}
+
+const renderMarkdown = async (content) => {
+  if (!content) return
+  buildBlocksFromMarkdown(content)
   await nextTick()
+  // Highlight global pour éléments restants (au cas où)
   Prism.highlightAll()
 }
 
@@ -149,7 +172,17 @@ watch(() => props.markdownContent, () => {
         <p>{{ error }}</p>
       </div>
 
-      <div v-else class="markdown-content" v-html="renderedHtml"></div>
+      <div v-else class="markdown-content">
+        <template v-for="(block, index) in renderedBlocks">
+          <div v-if="block.type === 'html'" v-html="block.html" :key="`html-${index}`"></div>
+          <CodeContainer
+            v-else-if="block.type === 'code'"
+            :key="`code-${index}`"
+            :code="block.code"
+            :language="block.lang"
+          />
+        </template>
+      </div>
     </div>
   </application>
 </template>
@@ -199,7 +232,6 @@ watch(() => props.markdownContent, () => {
 }
 
 .markdown-content {
-  max-width: 800px;
   margin: 0 auto;
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.7;
@@ -266,37 +298,9 @@ watch(() => props.markdownContent, () => {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* Code inline */
-.markdown-content :deep(code:not(pre code)) {
-  background: rgba(59, 130, 246, 0.15);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  padding: 0.2em 0.5em;
-  border-radius: 6px;
-  font-family: 'Monaco', 'Courier New', monospace;
-  font-size: 0.9em;
-  color: #7dd3fc;
-}
 
-/* Blocs de code - Override Prism styles */
-.markdown-content :deep(pre) {
-  background: rgba(0, 0, 0, 0.4) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px !important;
-  padding: 1.5em !important;
-  overflow-x: auto;
-  margin-bottom: 1.5em;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-}
 
-.markdown-content :deep(pre code) {
-  background: none !important;
-  border: none;
-  padding: 0 !important;
-  font-size: 0.95em;
-  font-family: 'Monaco', 'Courier New', monospace;
-  line-height: 1.6;
-  text-shadow: none !important;
-}
+
 
 /* Citations */
 .markdown-content :deep(blockquote) {
