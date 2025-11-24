@@ -1,6 +1,6 @@
 # Jeu de la vie
 
-![Capture d'écran du simulateur](screen.png)
+![Capture d'écran du simulateur](/GameOfLife/screen.png)
 
 ## Présentation
 Une implémentation simple du célèbre ["Game of Life" (jeu de la vie de Conway)](https://fr.wikipedia.org/wiki/Jeu_de_la_vie) écrite en Java. L'accent est mis sur la simulation interactive et l'observation des [comportements émergents](https://fr.wikipedia.org/wiki/%C3%89mergence) plutôt que sur l'installation ou la configuration.
@@ -15,7 +15,7 @@ Le Game of Life m'intéresse parce qu'il est hypnotisant à regarder : des règl
 ## Points clés
 - Règles standard de Conway par défaut, facilement modifiables pour expérimenter d'autres [automates cellulaires](https://fr.wikipedia.org/wiki/Automate_cellulaire).
 - Édition en temps réel : pause, modification manuelle des cellules, génération aléatoire et remise à zéro.
-- Import de configurations au format [Life 1.06 (`.lif`)](https://conwaylife.com/wiki/Life_1.06) pour rejouer des scènes ou exemples fournis.
+- Import de configurations au format [Life 1.06 (.lif)](https://conwaylife.com/wiki/Life_1.06) pour rejouer des scènes ou exemples fournis.
 
 ## Contrôles
 - G : afficher / cacher la grille
@@ -26,9 +26,9 @@ Le Game of Life m'intéresse parce qu'il est hypnotisant à regarder : des règl
 ## Aperçu
 Cliquez sur la grille (lorsque la simulation est en pause) pour activer/désactiver des cellules.
 
-![Création d'un "glider"](glider_creation.gif)
+![Création d'un "glider"](/GameOfLife/glider_creation.gif)
 
-![Pinball (exemple d'oscillateur / interaction)](pinball.gif)
+![Pinball (exemple d'oscillateur / interaction)](/GameOfLife/pinball.gif)
 
 ## À venir
 Quelques idées et améliorations que je souhaite implémenter :
