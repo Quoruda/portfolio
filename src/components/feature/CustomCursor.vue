@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 
 const x = ref(0)
 const y = ref(0)
+const isTouchDevice = ref(false)
 
 const handleMouseMove = (e) => {
   x.value = e.clientX
@@ -10,16 +11,25 @@ const handleMouseMove = (e) => {
 }
 
 onMounted(() => {
-  window.addEventListener('mousemove', handleMouseMove)
+  // Détecter si c'est un appareil tactile
+  isTouchDevice.value = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0)
+
+  // N'ajouter l'événement que si ce n'est pas un appareil tactile
+  if (!isTouchDevice.value) {
+    window.addEventListener('mousemove', handleMouseMove)
+  }
 })
 
 onUnmounted(() => {
-  window.removeEventListener('mousemove', handleMouseMove)
+  if (!isTouchDevice.value) {
+    window.removeEventListener('mousemove', handleMouseMove)
+  }
 })
 </script>
 
 <template>
   <div
+      v-if="!isTouchDevice"
       class="custom-cursor"
       :style="{ top: y + 'px', left: x + 'px' }"
   >
