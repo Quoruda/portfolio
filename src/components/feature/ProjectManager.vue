@@ -10,7 +10,7 @@ const projects = [
   {
     id: 'magna',
     name: 'MSFR - Assistant IA CATIA',
-    thumbnail: '/magna/catia_app_v3.png',
+    thumbnail: '/magna/magna.jpg',
     markdownFile: '/magna/magnaStage.md',
   },
   {
