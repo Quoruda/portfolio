@@ -1,15 +1,12 @@
 <script setup>
 import { ref } from "vue";
 import Application from "../base/Application.vue";
+import Window from "../base/Window.vue";
 
 const props = defineProps({
   defaultURL : {
     type: String,
     default: "https://www.wikipedia.com"
-  },
-  icon: {
-    type: String,
-    default: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/GNOME_Web_logo_%282021-03%29.svg/2048px-GNOME_Web_logo_%282021-03%29.svg.png"
   },
   url_is_viewable: {
     type: Boolean,
@@ -19,18 +16,36 @@ const props = defineProps({
 
 const url = ref(props.defaultURL);
 const inputUrl = ref(url.value);
+const isLoading = ref(true);
+const isMouseOverIframe = ref(false);
 
 function loadUrl() {
   let formatted = inputUrl.value.trim();
   if (!/^https?:\/\//i.test(formatted)) {
     formatted = "https://" + formatted;
   }
+  isLoading.value = true;
   url.value = formatted;
+}
+
+function onIframeLoad() {
+  isLoading.value = false;
+}
+
+function onIframeMouseEnter() {
+  isMouseOverIframe.value = true;
+  // Masquer le curseur custom
+  document.body.classList.add('hide-custom-cursor');
+}
+
+function onIframeMouseLeave() {
+  isMouseOverIframe.value = false;
+  // Réafficher le curseur custom
+  document.body.classList.remove('hide-custom-cursor');
 }
 </script>
 
 <template>
-  <Application name="Browser" :icon="icon">
     <div class="browser">
       <div class="toolbar" v-if="url_is_viewable">
         <input
@@ -42,13 +57,21 @@ function loadUrl() {
         <button @click="loadUrl">Go</button>
       </div>
 
-      <iframe
-          :src="url"
-          frameborder="0"
-          class="webview"
-      ></iframe>
+      <div
+          class="content-wrapper"
+          @mouseenter="onIframeMouseEnter"
+          @mouseleave="onIframeMouseLeave"
+      >
+        <div v-if="isLoading" class="loading-spinner">
+          <div class="spinner"></div>
+        </div>
+        <iframe
+            :src="url"
+            class="webview"
+            @load="onIframeLoad"
+        ></iframe>
+      </div>
     </div>
-  </Application>
 </template>
 
 <style scoped>
@@ -83,9 +106,44 @@ function loadUrl() {
   cursor: pointer;
 }
 
+.content-wrapper {
+  position: relative;
+  flex: 1;
+  width: 100%;
+}
+
+.loading-spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 10;
+  border-radius: 0 0 16px 16px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #0078d4;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .webview {
   flex: 1;
   width: 100%;
+  height: 100%;
   border: none;
   border-radius: 0 0 16px 16px;
 }

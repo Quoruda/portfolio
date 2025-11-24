@@ -1,10 +1,7 @@
 <script setup>
 import TaskBar from "./components/feature/TaskBar.vue";
 import CustomCursor from "./components/feature/CustomCursor.vue";
-import ApplicationIcon from "./components/base/ApplicationIcon.vue";
 import IconsContainer from "./components/base/IconsContainer.vue";
-import Window from "./components/base/Window.vue";
-import Application from "./components/base/Application.vue";
 import Calculator from "./components/feature/Calculator.vue";
 import Notes from "./components/feature/Notes.vue";
 import Browser from "./components/feature/Browser.vue";
@@ -13,6 +10,8 @@ import {ref} from "vue";
 import LoginScreen from "./components/feature/LoginScreen.vue";
 import MarkdownReader from "./components/base/MarkdownReader.vue";
 import Folder from "./components/base/Folder.vue";
+import ProjectManager from "./components/feature/ProjectManager.vue";
+import Application from "./components/base/Application.vue";
 
 const isBootComplete = ref(false);
 const handleBootComplete = () => {
@@ -23,6 +22,8 @@ const isLoginComplete = ref(false);
 const handleLoginComplete = () => {
   isLoginComplete.value = true;
 };
+
+
 
 </script>
 
@@ -37,17 +38,20 @@ const handleLoginComplete = () => {
     </div>
 
     <IconsContainer>
+      <ProjectManager/>
       <Notes/>
       <Calculator/>
-      <Browser/>
-      <Folder name="Projects" icon="https://icons.veryicon.com/png/o/internet--web/flatten-icon/folder-223.png">
-        <MarkdownReader markdown-content="https://raw.githubusercontent.com/Quoruda/Nat2Bool/refs/heads/main/README.md" name="Nat2Bool.md"/>
-        <MarkdownReader markdown-content="/magna/magnaStage.md" name="MSFR.md"/>
-        <Browser defaultURL="https://quoruda.github.io/FractalViewer" name="Fractal Explorer" icon="https://cdn-icons-png.flaticon.com/512/8242/8242994.png" :url_is_viewable="false"/>
-        <MarkdownReader markdown-content="/fractals/fractals.md" name="Fractals.md"/>
-      </Folder>
-      <application name="Games" icon="https://cdn-icons-png.flaticon.com/512/5930/5930147.png"/>
-      <MarkdownReader/>
+      <Application icon="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/GNOME_Web_logo_%282021-03%29.svg/2048px-GNOME_Web_logo_%282021-03%29.svg.png" name="Browser">
+        <Browser/>
+      </Application>
+      <Application icon="https://cdn-icons-png.freepik.com/512/3344/3344379.png" name="readme.md">
+        <MarkdownReader/>
+      </Application>
+      <Application name="Projects" icon="https://icons.veryicon.com/png/o/internet--web/flatten-icon/folder-223.png">
+        <Folder >
+        </Folder>
+      </Application>
+
     </IconsContainer>
 
     <task-bar/>

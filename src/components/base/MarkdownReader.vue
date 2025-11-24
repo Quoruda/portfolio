@@ -1,9 +1,10 @@
 <script setup>
 import { ref, onMounted, nextTick, watch } from 'vue'
-import Application from "./Application.vue"
 import { marked } from 'marked'
 import Prism from 'prismjs'
 import CodeContainer from './CodeContainer.vue'
+import Window from "./Window.vue";
+import Application from "./Application.vue";
 
 
 // Définir la prop
@@ -81,7 +82,6 @@ const loadMarkdownFile = async (filePath) => {
       const fileContent = await window.fs.readFile(filePath, { encoding: 'utf8' })
       return fileContent
     } else {
-      // Fallback: essayer de charger via fetch (si c'est une URL ou un chemin accessible)
       const response = await fetch(filePath)
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)
@@ -160,31 +160,29 @@ watch(() => props.markdownContent, () => {
 </script>
 
 <template>
-  <application icon="https://cdn-icons-png.freepik.com/512/3344/3344379.png" name="readme.md">
-    <div class="markdown-viewer">
-      <div v-if="loading" class="loading-state">
-        <div class="spinner"></div>
-        <p>Chargement du fichier...</p>
-      </div>
-
-      <div v-else-if="error" class="error-state">
-        <div class="error-icon">⚠️</div>
-        <p>{{ error }}</p>
-      </div>
-
-      <div v-else class="markdown-content">
-        <template v-for="(block, index) in renderedBlocks">
-          <div v-if="block.type === 'html'" v-html="block.html" :key="`html-${index}`"></div>
-          <CodeContainer
-            v-else-if="block.type === 'code'"
-            :key="`code-${index}`"
-            :code="block.code"
-            :language="block.lang"
-          />
-        </template>
-      </div>
+  <div class="markdown-viewer">
+    <div v-if="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Chargement du fichier...</p>
     </div>
-  </application>
+
+    <div v-else-if="error" class="error-state">
+      <div class="error-icon">⚠️</div>
+      <p>{{ error }}</p>
+    </div>
+
+    <div v-else class="markdown-content">
+      <template v-for="(block, index) in renderedBlocks">
+        <div v-if="block.type === 'html'" v-html="block.html" :key="`html-${index}`"></div>
+        <CodeContainer
+          v-else-if="block.type === 'code'"
+          :key="`code-${index}`"
+          :code="block.code"
+          :language="block.lang"
+        />
+      </template>
+    </div>
+  </div>
 </template>
 
 <style scoped>
