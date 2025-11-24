@@ -1,29 +1,20 @@
-# 🖥️ Portfolio Interactif - Style OS
+# Portfolio
 
-Un portfolio web unique et immersif inspiré d'une interface de système d'exploitation, construit avec Vue 3 et Vite.
+My personal portfolio disguised as an operating system. Built with Vue 3 and Vite.
 
-🌐 **[Voir le site](https://Quoruda.github.io/portfolio)**
+**[Live demo](https://Quoruda.github.io/portfolio)**
 
-## ✨ Caractéristiques
+## What's inside
 
-- 🎨 **Interface OS Interactive** : Expérience utilisateur complète avec écran de démarrage, connexion et bureau
-- 🪟 **Système de Fenêtres** : Fenêtres draggables avec gestion multi-applications
-- 📁 **Explorateur de Projets** : Organisation hiérarchique des projets
-- 📝 **Lecteur Markdown** : Documentation avec coloration syntaxique
-- 🧮 **Applications Intégrées** : Calculatrice, Notes, Navigateur
-- 🎯 **Curseur Personnalisé** : Expérience utilisateur unique
+The whole thing works like a desktop OS - boot screen, login, and a draggable window system. You can browse my projects, read documentation with syntax highlighting, or mess around with the calculator and notes app.
 
-## 🌐 Projets Présentés
+## Tech
 
-- **[Fractal Explorer](https://quoruda.github.io/FractalViewer)** : Visualiseur de fractales interactif
-- **Stage MSFR** : Documentation de stage chez Magna
+Vue 3, Vite, Marked, Prism.js
 
-
-## 🛠️ Stack Technique
-
-Vue 3 • Vite • Marked • Prism.js • GitHub Pages
+Hosted on GitHub Pages.
 
 ---
 
-**Audrick** - [GitHub](https://github.com/Quoruda)
+[GitHub](https://github.com/Quoruda)
 
