@@ -86,7 +86,7 @@ Plusieurs optimisations et extensions pourraient enrichir ce visualisateur :
 
 **Animation et interpolation** : Ajouter la possibilité d'enregistrer des "parcours" à travers les fractales avec animations fluides, créant ainsi des vidéos explorant les détails fractals.
 
-**Performance WebGPU** : Migrer de WebGL à [WebGPU](https://developer.mozilla.org/fr/docs/Web/API/WebGPU_API) lorsque celui-ci sera plus stable, offrant de meilleures performances et une meilleure compatibilité cross-platform.
+**Performance WebGPU** : Migrer de WebGL à [WebGPU](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API) lorsque celui-ci sera plus stable, offrant de meilleures performances et une meilleure compatibilité cross-platform.
 
 **Plus de fractales 3D** : Implémenter d'autres fractales 3D comme le [Mandelbulb](https://en.wikipedia.org/wiki/Mandelbulb) ou les fractales de Julia 3D pour enrichir l'expérience d'exploration.
 
