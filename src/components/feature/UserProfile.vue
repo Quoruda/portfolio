@@ -158,6 +158,8 @@ const userInfo = {
   gap: 24px;
   padding-bottom: 24px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  isolation: isolate;
 }
 
 .avatar {
@@ -180,6 +182,8 @@ const userInfo = {
 
 .header-info {
   flex: 1;
+  position: relative;
+  isolation: isolate;
 }
 
 .profile-name {
@@ -194,6 +198,9 @@ const userInfo = {
   min-height: 40px;
   transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   display: inline-block;
+  position: relative;
+  will-change: transform;
+  isolation: isolate;
 }
 
 .profile-name.glitch {
