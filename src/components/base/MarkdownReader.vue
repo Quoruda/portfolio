@@ -15,8 +15,17 @@ const props = defineProps({
   }
 })
 
-// Configuration du renderer personnalisé pour les vidéos
+// Configuration du renderer personnalisé pour les vidéos et liens
 const renderer = new marked.Renderer()
+
+// Renderer pour les liens - ouvrir dans un nouvel onglet
+renderer.link = function(token) {
+  const href = token.href || ''
+  const title = token.title ? ` title="${token.title}"` : ''
+  const text = token.text || ''
+
+  return `<a href="${href}"${title} target="_blank" rel="noopener noreferrer">${text}</a>`
+}
 
 renderer.image = function(token) {
   const href = token.href || token

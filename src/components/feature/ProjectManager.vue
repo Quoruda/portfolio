@@ -52,15 +52,24 @@ const closeProject = (projectId) => {
 }
 
 const openDemo = (project) => {
-  if (project.url) window.open(project.url, '_blank')
+  if (project.url) {
+    const newWindow = window.open(project.url, '_blank')
+    if (newWindow) newWindow.opener = null
+  }
 }
 
 const openRelease = (project) => {
-  if (project.releaseUrl) window.open(project.releaseUrl, '_blank')
+  if (project.releaseUrl) {
+    const newWindow = window.open(project.releaseUrl, '_blank')
+    if (newWindow) newWindow.opener = null
+  }
 }
 
 const openCode = (project) => {
-  if (project.githubUrl) window.open(project.githubUrl, '_blank')
+  if (project.githubUrl) {
+    const newWindow = window.open(project.githubUrl, '_blank')
+    if (newWindow) newWindow.opener = null
+  }
 }
 
 const getProjectById = (id) => projects.find(p => p.id === id)

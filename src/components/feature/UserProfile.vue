@@ -28,9 +28,9 @@ setInterval(() => {
 const userInfo = {
   name: 'Audrick Soltner',
   role: 'Développeur Full Stack',
-  location: '📍 Valdoie, France',
-  email: '📧 audrick.soltner@edu.univ-fcomte.fr',
-  github: '🐙 github.com/Quoruda',
+  location: 'Belfort, France',
+  email: 'audrick.soltner@edu.univ-fcomte.fr',
+  github: 'github.com/Quoruda',
   portfolio: '🌐 asoltner-portfolio.fr',
   shortBio: 'Développeur passionné par la technologie et l\'innovation. Spécialisé en développement web et applications, avec un intérêt particulier pour l\'IA et l\'algorithmique.',
   skills: [
@@ -113,10 +113,10 @@ const userInfo = {
           <a href="mailto:audrick.soltner@edu.univ-fcomte.fr">{{ userInfo.email }}</a>
         </div>
         <div class="contact-item">
-          <a href="https://github.com/Quoruda" target="_blank">{{ userInfo.github }}</a>
+          <a href="https://github.com/Quoruda" target="_blank" rel="noopener noreferrer">{{ userInfo.github }}</a>
         </div>
         <div class="contact-item">
-          <a href="https://asoltner-portfolio.fr" target="_blank">{{ userInfo.portfolio }}</a>
+          <a href="https://asoltner-portfolio.fr" target="_blank" rel="noopener noreferrer">{{ userInfo.portfolio }}</a>
         </div>
       </div>
 
