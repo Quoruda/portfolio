@@ -26,12 +26,15 @@ const projects = [
     name: 'Jeu de la Vie',
     thumbnail: '/GameOfLife/screen.png',
     markdownFile: '/GameOfLife/GameOfLife.md',
+    githubUrl: 'https://github.com/Quoruda/GameOfLife',
+    releaseUrl: 'https://github.com/Quoruda/GameOfLife/releases',
   },
   {
     id: 'nodalpy',
     name: 'NodalPy',
     thumbnail: '/nodalpy/concept.png',
     markdownFile: '/nodalpy/nodalpy.md',
+    githubUrl: 'https://github.com/Quoruda/NodalPy',
   },
 ]
 
@@ -50,6 +53,10 @@ const closeProject = (projectId) => {
 
 const openDemo = (project) => {
   if (project.url) window.open(project.url, '_blank')
+}
+
+const openRelease = (project) => {
+  if (project.releaseUrl) window.open(project.releaseUrl, '_blank')
 }
 
 const openCode = (project) => {
@@ -74,6 +81,9 @@ const getProjectById = (id) => projects.find(p => p.id === id)
               </button>
               <button v-if="project.url" class="btn btn-demo" @click="openDemo(project)">
                 🚀 Demo
+              </button>
+              <button v-if="project.releaseUrl" class="btn btn-release" @click="openRelease(project)">
+                📦 Download
               </button>
               <button v-if="project.githubUrl" class="btn btn-code" @click="openCode(project)">
                 💻 Code
@@ -148,12 +158,12 @@ const getProjectById = (id) => projects.find(p => p.id === id)
   display: flex;
   flex-wrap: wrap;
   gap: clamp(6px, 1.5vw, 8px);
+  align-items: center;
+  justify-content: center;
 }
 
 .btn {
-  flex: 1;
-  min-width: clamp(70px, 25%, 100px);
-  padding: clamp(6px, 1.5vw, 9px);
+  padding: clamp(6px, 1.5vw, 9px) clamp(10px, 2vw, 14px);
   background: rgba(139, 92, 246, 0.3);
   color: white;
   border: none;
@@ -163,6 +173,7 @@ const getProjectById = (id) => projects.find(p => p.id === id)
   font-size: clamp(0.8rem, 2vw, 0.9rem);
   text-align: center;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .btn:hover {
@@ -180,6 +191,10 @@ const getProjectById = (id) => projects.find(p => p.id === id)
 
 .btn-demo {
   background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.btn-release {
+  background: linear-gradient(135deg, #ec4899, #db2777);
 }
 
 .btn-code {
