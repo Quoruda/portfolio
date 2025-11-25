@@ -36,6 +36,13 @@ const projects = [
     markdownFile: '/nodalpy/nodalpy.md',
     githubUrl: 'https://github.com/Quoruda/NodalPy',
   },
+  {
+    id: '3dengine',
+    name: 'Moteur 3D',
+    thumbnail: '/3D_engine/demonstration.gif',
+    markdownFile: '/3D_engine/3D_engine.md',
+    githubUrl: 'https://github.com/Quoruda/3D-Engine',
+  },
 ]
 
 // IDs des projets actuellement ouverts (affichés avec MarkdownReader)
