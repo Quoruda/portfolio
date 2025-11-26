@@ -42,6 +42,12 @@ const projects = [
     thumbnail: '/3D_engine/demonstration.gif',
     markdownFile: '/3D_engine/3D_engine.md',
     githubUrl: 'https://github.com/Quoruda/3D-Engine',
+  },
+  {
+    id: "VideoScrambler",
+    name: "Video Scrambler",
+    markdownFile: '/VideoScrambler/videoscrambler.md',
+    thumbnail: "/VideoScrambler/demonstration.gif",
   }
 ]
 
