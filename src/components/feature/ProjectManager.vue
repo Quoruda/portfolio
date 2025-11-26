@@ -24,7 +24,7 @@ const projects = [
   {
     id: 'gameoflife',
     name: 'Jeu de la Vie',
-    thumbnail: '/GameOfLife/screen.png',
+    thumbnail: '/GameOfLife/demonstration.gif',
     markdownFile: '/GameOfLife/GameOfLife.md',
     githubUrl: 'https://github.com/Quoruda/GameOfLife',
     releaseUrl: 'https://github.com/Quoruda/GameOfLife/releases',
@@ -42,7 +42,7 @@ const projects = [
     thumbnail: '/3D_engine/demonstration.gif',
     markdownFile: '/3D_engine/3D_engine.md',
     githubUrl: 'https://github.com/Quoruda/3D-Engine',
-  },
+  }
 ]
 
 // IDs des projets actuellement ouverts (affichés avec MarkdownReader)
@@ -83,7 +83,7 @@ const getProjectById = (id) => projects.find(p => p.id === id)
 </script>
 
 <template>
-  <application name="Projects" icon="https://cdn-icons-png.flaticon.com/512/1090/1090985.png">
+  <application name="Projects" icon="/icons/projects.png">
     <div class="portfolio-container">
       <!-- Liste des projets en cartes verticales -->
       <div class="projects-list">

@@ -81,7 +81,7 @@ const handleToggleSign = () => {
 </script>
 
 <template>
-  <application icon="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/GNOME_Calculator_icon_2021.svg/1200px-GNOME_Calculator_icon_2021.svg.png" name="Calculator">
+  <application icon="/icons/calculator.png" name="Calculator">
     <div class="calculator-wrapper">
       <div class="calculator">
         <div class="display">{{ display }}</div>

@@ -41,13 +41,13 @@ const handleLoginComplete = () => {
       <ProjectManager/>
       <Notes/>
       <Calculator/>
-      <Application icon="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/GNOME_Web_logo_%282021-03%29.svg/2048px-GNOME_Web_logo_%282021-03%29.svg.png" name="Browser">
+      <Application icon="/icons/browser.png" name="Browser">
         <Browser/>
       </Application>
-      <Application icon="https://cdn-icons-png.freepik.com/512/3344/3344379.png" name="readme.md">
+      <Application icon="/icons/file.png" name="readme.md">
         <MarkdownReader/>
       </Application>
-      <Application name="Projects" icon="https://icons.veryicon.com/png/o/internet--web/flatten-icon/folder-223.png">
+      <Application name="Projects" icon="/icons/folder.png">
         <Folder >
         </Folder>
       </Application>

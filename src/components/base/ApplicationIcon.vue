@@ -5,12 +5,7 @@ defineProps({
 })
 
 const isUrl = (value) => {
-  try {
-    new URL(value);
-    return true;
-  } catch {
-    return false;
-  }
+  return value.startsWith('http') || value.startsWith('/') || value.startsWith('./');
 };
 </script>
 

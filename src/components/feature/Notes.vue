@@ -70,7 +70,7 @@ const getPreview = (content) => {
 </script>
 
 <template>
-  <application icon="https://images.icon-icons.com/1381/PNG/512/gnomestickynotesapplet_93762.png" name="Notes">
+  <application icon="/icons/notes.png" name="Notes">
     <div class="notes-app">
       <!-- Sidebar -->
       <div class="sidebar" :class="{ 'sidebar-visible': showSidebar }">
