@@ -6,6 +6,7 @@ const notes = ref([
   {
     id: 1,
     title: 'Idées de Projets',
+    readonly: true,
     content: `# Idées de Projets
 
 ## Intelligence Artificielle
@@ -44,6 +45,7 @@ const notes = ref([
   {
     id: 2,
     title: 'Setup & Configuration',
+    readonly: true,
     content: `# Mon Setup de Développement
 
 ## Philosophie Open Source
@@ -122,6 +124,7 @@ const createNote = () => {
 
 const deleteNote = () => {
   if (notes.value.length === 1) return;
+  if (selectedNote.value?.readonly) return;
 
   const index = notes.value.findIndex(n => n.id === selectedNoteId.value);
   notes.value.splice(index, 1);
@@ -134,14 +137,14 @@ const selectNote = (id) => {
 };
 
 const updateContent = (e) => {
-  if (selectedNote.value) {
+  if (selectedNote.value && !selectedNote.value.readonly) {
     selectedNote.value.content = e.target.value;
     selectedNote.value.date = new Date();
   }
 };
 
 const updateTitle = (e) => {
-  if (selectedNote.value) {
+  if (selectedNote.value && !selectedNote.value.readonly) {
     selectedNote.value.title = e.target.value || 'Untitled';
     selectedNote.value.date = new Date();
   }
@@ -203,7 +206,7 @@ const getPreview = (content) => {
           <button class="btn-menu" @click="showSidebar = true">☰</button>
 
           <input
-              v-if="editingTitle"
+              v-if="editingTitle && !selectedNote.readonly"
               type="text"
               class="title-input"
               :value="selectedNote.title"
@@ -213,19 +216,21 @@ const getPreview = (content) => {
               ref="titleInput"
               autofocus
           />
-          <h1 v-else class="editor-title" @click="editingTitle = true">
+          <h1 v-else class="editor-title" @click="!selectedNote.readonly && (editingTitle = true)">
             {{ selectedNote.title }}
           </h1>
 
-          <button class="btn-delete" @click="deleteNote" :disabled="notes.length === 1">
+          <button class="btn-delete" @click="deleteNote" :disabled="notes.length === 1 || selectedNote.readonly">
             <span class="icon">🗑️</span>
           </button>
         </div>
 
         <textarea
             class="editor-content"
+            :class="{ 'readonly': selectedNote.readonly }"
             :value="selectedNote.content"
             @input="updateContent"
+            :readonly="selectedNote.readonly"
             placeholder="Start writing..."
         ></textarea>
       </div>
@@ -459,6 +464,19 @@ const getPreview = (content) => {
 
 .editor-content::placeholder {
   color: #999;
+}
+
+.editor-content.readonly {
+  background: #f8f9fa;
+  cursor: default;
+}
+
+.editor-title {
+  cursor: text;
+}
+
+.readonly + .editor-title {
+  cursor: default;
 }
 
 /* Scrollbar */
