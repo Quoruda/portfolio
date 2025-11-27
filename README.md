@@ -1,8 +1,10 @@
 # Portfolio
 
+![Portfolio Screenshot](/public/thumbnail.png)
+
 My personal portfolio disguised as an operating system. Built with Vue 3 and Vite.
 
-**[Live demo](https://Quoruda.github.io/portfolio)**
+**[Live demo](https://asoltner-portfolio.fr/)**
 
 ## What's inside
 
