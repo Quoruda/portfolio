@@ -47,11 +47,6 @@ const handleLoginComplete = () => {
       <Application icon="/icons/file.png" name="readme.md">
         <MarkdownReader/>
       </Application>
-      <Application name="Projects" icon="/icons/folder.png">
-        <Folder >
-        </Folder>
-      </Application>
-
     </IconsContainer>
 
     <task-bar/>
