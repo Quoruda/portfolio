@@ -48,6 +48,8 @@ const projects = [
     name: "Video Scrambler",
     markdownFile: '/VideoScrambler/videoscrambler.md',
     thumbnail: "/VideoScrambler/demonstration.gif",
+    githubUrl: "https://github.com/Quoruda/VideoScrambler",
+    releaseUrl: "https://github.com/Quoruda/VideoScrambler/releases"
   }
 ]
 
