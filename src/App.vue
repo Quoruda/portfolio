@@ -42,7 +42,7 @@ const handleLoginComplete = () => {
       <Notes/>
       <Calculator/>
       <Application icon="/icons/browser.png" name="Browser">
-        <Browser/>
+        <Browser url="https://fr.wikipedia.org/wiki/Compression_de_données"/>
       </Application>
       <Application icon="/icons/file.png" name="readme.md">
         <MarkdownReader/>
