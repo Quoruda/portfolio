@@ -201,6 +201,7 @@ const getProjectName = (projectId) => {
   color: #60a5fa;
   margin: 0 0 clamp(8px, 1.5vw, 10px) 0;
   font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+  text-align: center;
 }
 
 .project-actions {
