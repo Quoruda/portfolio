@@ -2,6 +2,9 @@
 import { ref, onMounted} from 'vue'
 
 const isLoading = ref(true)
+import {useI18n} from "vue-i18n";
+const {t} = useI18n();
+
 
 const emit = defineEmits(['boot-complete'])
 
@@ -27,7 +30,7 @@ onMounted(() => {
 
       <div class="boot-content">
         <div class="boot-logo">◆</div>
-        <div class="boot-text">Démarrage du système...</div>
+        <div class="boot-text">{{ t('app.boot.loading') }}</div>
         <div class="loading-bar">
           <div class="loading-progress"></div>
         </div>

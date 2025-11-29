@@ -4,5 +4,8 @@
     "notes": "Notes",
     "calculator": "Calculatrice",
     "browser": "Navigateur"
+  },
+  "boot": {
+    "loading": "Démarrage du système..."
   }
 }
