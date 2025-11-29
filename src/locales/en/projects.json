@@ -1,0 +1,32 @@
+{
+  "title": "Project Manager",
+  "projects": {
+    "magna": {
+      "name": "MSFR - CATIA AI Assistant"
+    },
+    "fractals": {
+      "name": "Fractal Viewer"
+    },
+    "gameoflife": {
+      "name": "Game of Life"
+    },
+    "nodalpy": {
+      "name": "NodalPy"
+    },
+    "3dengine": {
+      "name": "3D Engine"
+    },
+    "videoscrambler": {
+      "name": "Video Scrambler"
+    }
+  },
+  "buttons": {
+    "info": "📖 Info",
+    "demo": "🚀 Demo",
+    "download": "📦 Download",
+    "code": "💻 Code"
+  },
+  "window": {
+    "title": "Information"
+  }
+}

@@ -12,16 +12,14 @@ const { t, locale } = useI18n()
 const projects = [
   {
     id: 'magna',
-    name: 'MSFR - Assistant IA CATIA',
     thumbnail: '/magna/magna.jpg',
     markdownFiles: {
       fr: '/magna/magnaStage_fr.md',
-      en: '/magna/magnaStage_en.md.md',
+      en: '/magna/magnaStage_en.md',
     },
   },
   {
     id: 'fractals',
-    name: 'Visualisateur de Fractales',
     thumbnail: '/fractals/mandelbrot.png',
     url: 'https://quoruda.github.io/FractalViewer',
     githubUrl: 'https://github.com/Quoruda/FractalViewer',
@@ -32,7 +30,6 @@ const projects = [
   },
   {
     id: 'gameoflife',
-    name: 'Jeu de la Vie',
     thumbnail: '/GameOfLife/demonstration.gif',
     markdownFiles: {
       fr: '/GameOfLife/GameOfLife_fr.md',
@@ -43,7 +40,6 @@ const projects = [
   },
   {
     id: 'nodalpy',
-    name: 'NodalPy',
     thumbnail: '/nodalpy/concept.png',
     markdownFiles: {
       fr: '/nodalpy/nodalpy_fr.md',
@@ -53,7 +49,6 @@ const projects = [
   },
   {
     id: '3dengine',
-    name: 'Moteur 3D',
     thumbnail: '/3D_engine/demonstration.gif',
     markdownFiles: {
       fr: '/3D_engine/3D_engine_fr.md',
@@ -62,8 +57,7 @@ const projects = [
     githubUrl: 'https://github.com/Quoruda/3D-Engine',
   },
   {
-    id: "VideoScrambler",
-    name: "Video Scrambler",
+    id: "videoscrambler",
     markdownFiles: {
       fr: '/VideoScrambler/videoscrambler_fr.md',
       en: '/VideoScrambler/videoscrambler_en.md',
@@ -114,6 +108,11 @@ const getMarkdownFile = (project) => {
   if (!project || !project.markdownFiles) return ''
   return project.markdownFiles[locale.value] || project.markdownFiles['en'] || project.markdownFiles['fr'] || ''
 }
+
+// Obtenir le nom traduit du projet
+const getProjectName = (projectId) => {
+  return t(`projects.projects.${projectId}.name`)
+}
 </script>
 
 <template>
@@ -122,21 +121,21 @@ const getMarkdownFile = (project) => {
       <!-- Liste des projets en cartes verticales -->
       <div class="projects-list">
         <div v-for="project in projects" :key="project.id" class="project-card">
-          <img :src="project.thumbnail" :alt="project.name" class="project-thumb"/>
+          <img :src="project.thumbnail" :alt="getProjectName(project.id)" class="project-thumb"/>
           <div class="project-content">
-            <h3 class="project-name">{{ project.name }}</h3>
+            <h3 class="project-name">{{ getProjectName(project.id) }}</h3>
             <div class="project-actions">
               <button class="btn btn-info" @click="openProject(project)">
-                📖 Info
+                {{ t('projects.buttons.info') }}
               </button>
               <button v-if="project.url" class="btn btn-demo" @click="openDemo(project)">
-                🚀 Demo
+                {{ t('projects.buttons.demo') }}
               </button>
               <button v-if="project.releaseUrl" class="btn btn-release" @click="openRelease(project)">
-                📦 Download
+                {{ t('projects.buttons.download') }}
               </button>
               <button v-if="project.githubUrl" class="btn btn-code" @click="openCode(project)">
-                💻 Code
+                {{ t('projects.buttons.code') }}
               </button>
             </div>
           </div>
@@ -145,7 +144,7 @@ const getMarkdownFile = (project) => {
 
       <!-- Lecteurs Markdown ouverts directement dans des Windows -->
       <div v-for="id in openReaders" :key="id">
-        <Window name="Informations" icon="ℹ️" :id="id" @close="closeProject(id)">
+        <Window :name="t('projects.window.title')" icon="ℹ️" :id="id" @close="closeProject(id)">
           <MarkdownReader :markdown-content="getMarkdownFile(getProjectById(id))" />
         </Window>
       </div>
