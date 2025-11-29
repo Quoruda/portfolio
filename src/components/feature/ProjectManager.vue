@@ -1,11 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Application from '../base/Application.vue'
 import MarkdownReader from '../base/MarkdownReader.vue'
 import Window from '../base/Window.vue'
 import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 
 // Liste des projets intégrée (remplace projects.js)
@@ -14,7 +14,10 @@ const projects = [
     id: 'magna',
     name: 'MSFR - Assistant IA CATIA',
     thumbnail: '/magna/magna.jpg',
-    markdownFile: '/magna/magnaStage.md',
+    markdownFiles: {
+      fr: '/magna/magnaStage_fr.md',
+      en: '/magna/magnaStage_en.md.md',
+    },
   },
   {
     id: 'fractals',
@@ -22,13 +25,19 @@ const projects = [
     thumbnail: '/fractals/mandelbrot.png',
     url: 'https://quoruda.github.io/FractalViewer',
     githubUrl: 'https://github.com/Quoruda/FractalViewer',
-    markdownFile: '/fractals/fractals.md',
+    markdownFiles: {
+      fr: '/fractals/fractals_fr.md',
+      en: '/fractals/fractals_en.md',
+    },
   },
   {
     id: 'gameoflife',
     name: 'Jeu de la Vie',
     thumbnail: '/GameOfLife/demonstration.gif',
-    markdownFile: '/GameOfLife/GameOfLife.md',
+    markdownFiles: {
+      fr: '/GameOfLife/GameOfLife_fr.md',
+      en: '/GameOfLife/GameOfLife_en.md',
+    },
     githubUrl: 'https://github.com/Quoruda/GameOfLife',
     releaseUrl: 'https://github.com/Quoruda/GameOfLife/releases',
   },
@@ -36,20 +45,29 @@ const projects = [
     id: 'nodalpy',
     name: 'NodalPy',
     thumbnail: '/nodalpy/concept.png',
-    markdownFile: '/nodalpy/nodalpy.md',
+    markdownFiles: {
+      fr: '/nodalpy/nodalpy_fr.md',
+      en: '/nodalpy/nodalpy_en.md',
+    },
     githubUrl: 'https://github.com/Quoruda/NodalPy',
   },
   {
     id: '3dengine',
     name: 'Moteur 3D',
     thumbnail: '/3D_engine/demonstration.gif',
-    markdownFile: '/3D_engine/3D_engine.md',
+    markdownFiles: {
+      fr: '/3D_engine/3D_engine_fr.md',
+      en: '/3D_engine/3D_engine_en.md',
+    },
     githubUrl: 'https://github.com/Quoruda/3D-Engine',
   },
   {
     id: "VideoScrambler",
     name: "Video Scrambler",
-    markdownFile: '/VideoScrambler/videoscrambler.md',
+    markdownFiles: {
+      fr: '/VideoScrambler/videoscrambler_fr.md',
+      en: '/VideoScrambler/videoscrambler_en.md',
+    },
     thumbnail: "/VideoScrambler/demonstration.gif",
     githubUrl: "https://github.com/Quoruda/VideoScrambler",
   }
@@ -90,6 +108,12 @@ const openCode = (project) => {
 }
 
 const getProjectById = (id) => projects.find(p => p.id === id)
+
+// Obtenir le fichier markdown selon la langue courante
+const getMarkdownFile = (project) => {
+  if (!project || !project.markdownFiles) return ''
+  return project.markdownFiles[locale.value] || project.markdownFiles['en'] || project.markdownFiles['fr'] || ''
+}
 </script>
 
 <template>
@@ -122,7 +146,7 @@ const getProjectById = (id) => projects.find(p => p.id === id)
       <!-- Lecteurs Markdown ouverts directement dans des Windows -->
       <div v-for="id in openReaders" :key="id">
         <Window name="Informations" icon="ℹ️" :id="id" @close="closeProject(id)">
-          <MarkdownReader :markdown-content="getProjectById(id)?.markdownFile" />
+          <MarkdownReader :markdown-content="getMarkdownFile(getProjectById(id))" />
         </Window>
       </div>
 
