@@ -1,28 +1,34 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import Clock from "./Clock.vue";
 import UserProfile from "./UserProfile.vue";
 
-const currentLang = ref('FR');
+const { locale } = useI18n();
 const isLangMenuOpen = ref(false);
 const isUserProfileOpen = ref(false);
 
 const languages = [
-  { code: 'FR', flag: '🇫🇷', label: 'Français' },
-  { code: 'EN', flag: '🇬🇧', label: 'English' }
+  { code: 'fr', flag: '🇫🇷', label: 'Français' },
+  { code: 'en', flag: '🇬🇧', label: 'English' }
 ];
+
+const currentLang = computed(() => {
+  return locale.value.toUpperCase();
+});
 
 const toggleLangMenu = () => {
   isLangMenuOpen.value = !isLangMenuOpen.value;
 };
 
 const selectLanguage = (lang) => {
-  currentLang.value = lang.code;
+  locale.value = lang.code;
+  localStorage.setItem('locale', lang.code);
   isLangMenuOpen.value = false;
 };
 
 const getCurrentFlag = () => {
-  return languages.find(l => l.code === currentLang.value)?.flag || '🇫🇷';
+  return languages.find(l => l.code === locale.value)?.flag || '🇬🇧';
 };
 
 const closeLangMenu = () => {
@@ -60,7 +66,7 @@ const closeUserProfile = () => {
               v-for="lang in languages"
               :key="lang.code"
               class="language-option"
-              :class="{ active: currentLang === lang.code }"
+              :class="{ active: lang.code === locale }"
               @click="selectLanguage(lang)"
           >
             {{ lang.flag }} {{ lang.label }}
