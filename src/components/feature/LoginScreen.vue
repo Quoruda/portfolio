@@ -64,7 +64,7 @@ const login = () => {
           </div>
         </div>
 
-        <div class="user-name">Utilisateur</div>
+        <div class="user-name">Audrick</div>
 
         <div class="password-container">
           <div class="password-input" :class="{ 'typing': isTyping }">
