@@ -1,0 +1,19 @@
+{
+  "title": "À propos",
+  "name": "Audrick Soltner",
+  "altName": "Quoruda",
+  "role": "Développeur Full Stack",
+  "location": "Belfort, France",
+  "shortBio": "Développeur passionné par la technologie et l'innovation. Spécialisé en développement web et applications, avec un intérêt particulier pour l'IA et l'algorithmique.",
+  "skills": {
+    "title": "🛠️ Compétences",
+    "categories": {
+      "frontend": "💻 Frontend",
+      "backend": "⚙️ Backend",
+      "data": "🗄️ Données",
+      "tools": "🛠️ Outils",
+      "ai": "🤖 IA/ML",
+      "graphics": "🎮 Graphique"
+    }
+  }
+}

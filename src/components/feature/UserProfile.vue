@@ -1,6 +1,9 @@
 <script setup>
 import Window from '../base/Window.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const emit = defineEmits(['close']);
 
@@ -14,28 +17,32 @@ const isImageUrl = (icon) => {
       icon.includes('.png') || icon.includes('.jpg') || icon.includes('.svg') || icon.includes('.webp');
 };
 
-const displayName = ref('Audrick Soltner');
+const isAltName = ref(false);
 const isGlitching = ref(false);
+
+const displayName = computed(() => {
+  return isAltName.value ? t('profile.altName') : t('profile.name');
+});
 
 setInterval(() => {
   isGlitching.value = true;
   setTimeout(() => {
-    displayName.value = displayName.value === 'Audrick Soltner' ? 'Quoruda' : 'Audrick Soltner';
+    isAltName.value = !isAltName.value;
     isGlitching.value = false;
   }, 300);
 }, 2000);
 
-const userInfo = {
-  name: 'Audrick Soltner',
-  role: 'Développeur Full Stack',
-  location: 'Belfort, France',
+const userInfo = computed(() => ({
+  name: t('profile.name'),
+  role: t('profile.role'),
+  location: t('profile.location'),
   email: 'audrick.soltner@edu.univ-fcomte.fr',
   github: 'github.com/Quoruda',
   portfolio: '🌐 asoltner-portfolio.fr',
-  shortBio: 'Développeur passionné par la technologie et l\'innovation. Spécialisé en développement web et applications, avec un intérêt particulier pour l\'IA et l\'algorithmique.',
+  shortBio: t('profile.shortBio'),
   skills: [
     {
-      category: '💻 Frontend',
+      category: t('profile.skills.categories.frontend'),
       items: [
         { name: 'Vue.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
         { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
@@ -44,7 +51,7 @@ const userInfo = {
       ]
     },
     {
-      category: '⚙️ Backend',
+      category: t('profile.skills.categories.backend'),
       items: [
         { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
         { name: 'PHP', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg' },
@@ -54,7 +61,7 @@ const userInfo = {
       ]
     },
     {
-      category: '🗄️ Données',
+      category: t('profile.skills.categories.data'),
       items: [
         { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
         { name: 'MongoDB', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
@@ -63,7 +70,7 @@ const userInfo = {
       ]
     },
     {
-      category: '🛠️ Outils',
+      category: t('profile.skills.categories.tools'),
       items: [
         { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
         { name: 'Linux', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg' },
@@ -73,24 +80,23 @@ const userInfo = {
       ]
     },
     {
-      category: '🤖 IA/ML',
+      category: t('profile.skills.categories.ai'),
       items: [
         { name: 'PyTorch', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg' },
         { name: 'Scikit-Learn', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg' }
       ]
     },
     {
-      category: '🎮 Graphique',
+      category: t('profile.skills.categories.graphics'),
       items: [
         { name: 'OpenGL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opengl/opengl-original.svg' }
       ]
     }
   ]
-};
-</script>
+}));</script>
 
 <template>
-  <Window name="À propos" icon="👤" @close="closeProfile">
+  <Window :name="t('profile.title')" icon="👤" @close="closeProfile">
     <div class="profile-container">
       <!-- Header -->
       <div class="profile-header">
@@ -122,7 +128,7 @@ const userInfo = {
 
       <!-- Compétences -->
       <div class="skills-section">
-        <h2 class="section-title">🛠️ Compétences</h2>
+        <h2 class="section-title">{{ t('profile.skills.title') }}</h2>
         <div class="skills-grid">
           <div v-for="skillGroup in userInfo.skills" :key="skillGroup.category" class="skill-group">
             <h3 class="skill-category">{{ skillGroup.category }}</h3>
