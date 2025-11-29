@@ -44,9 +44,6 @@ const handleLoginComplete = () => {
       <Application icon="/icons/browser.png" name="Browser">
         <Browser url="https://fr.wikipedia.org/wiki/Compression_de_données"/>
       </Application>
-      <Application icon="/icons/file.png" name="readme.md">
-        <MarkdownReader/>
-      </Application>
     </IconsContainer>
 
     <task-bar/>
