@@ -1,6 +1,9 @@
 <script setup>
 import { ref, computed } from 'vue';
 import Application from "../base/Application.vue";
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const display = ref('0');
 const previousValue = ref(null);
@@ -81,7 +84,7 @@ const handleToggleSign = () => {
 </script>
 
 <template>
-  <application icon="/icons/calculator.png" name="Calculator">
+  <application icon="/icons/calculator.png" :name="t('app.desktop.calculator')">
     <div class="calculator-wrapper">
       <div class="calculator">
         <div class="display">{{ display }}</div>

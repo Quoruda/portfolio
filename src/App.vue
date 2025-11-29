@@ -10,8 +10,11 @@ import {ref} from "vue";
 import LoginScreen from "./components/feature/LoginScreen.vue";
 import MarkdownReader from "./components/base/MarkdownReader.vue";
 import Folder from "./components/base/Folder.vue";
-import ProjectManager from "./components/feature/ProjectManager.vue";
 import Application from "./components/base/Application.vue";
+import {useI18n} from "vue-i18n";
+import ProjectManager from "./components/feature/ProjectManager.vue";
+
+const {t} = useI18n();
 
 const isBootComplete = ref(false);
 const handleBootComplete = () => {
@@ -41,7 +44,7 @@ const handleLoginComplete = () => {
       <ProjectManager/>
       <Notes/>
       <Calculator/>
-      <Application icon="/icons/browser.png" name="Browser">
+      <Application icon="/icons/browser.png" :name="t('app.desktop.browser')">
         <Browser url="https://fr.wikipedia.org/wiki/Compression_de_données"/>
       </Application>
     </IconsContainer>

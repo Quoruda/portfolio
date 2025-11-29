@@ -3,6 +3,9 @@ import { ref } from 'vue'
 import Application from '../base/Application.vue'
 import MarkdownReader from '../base/MarkdownReader.vue'
 import Window from '../base/Window.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 
 // Liste des projets intégrée (remplace projects.js)
@@ -90,7 +93,7 @@ const getProjectById = (id) => projects.find(p => p.id === id)
 </script>
 
 <template>
-  <application name="Projects" icon="/icons/projects.png">
+  <application :name="t('app.desktop.projectManager')" icon="/icons/projects.png">
     <div class="portfolio-container">
       <!-- Liste des projets en cartes verticales -->
       <div class="projects-list">

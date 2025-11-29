@@ -1,6 +1,9 @@
 <script setup>
 import { ref, computed } from 'vue';
 import Application from "../base/Application.vue";
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const notes = ref([
   {
@@ -168,7 +171,7 @@ const getPreview = (content) => {
 </script>
 
 <template>
-  <application icon="/icons/notes.png" name="Notes">
+  <application icon="/icons/notes.png" :name="t('app.desktop.notes')">
     <div class="notes-app">
       <!-- Sidebar -->
       <div class="sidebar" :class="{ 'sidebar-visible': showSidebar }">
