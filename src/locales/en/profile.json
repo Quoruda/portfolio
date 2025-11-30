@@ -5,6 +5,36 @@
   "role": "Full Stack Developer",
   "location": "Belfort, France",
   "shortBio": "Developer passionate about technology and innovation. Specialized in web development and applications, with a particular interest in AI and algorithmics.",
+  "downloadCV": "📄 Download my Resume",
+  "education": {
+    "title": "🎓 Education",
+    "items": [
+      {
+        "degree": "Bachelor of Technology in Computer Science",
+        "school": "IUT Belfort-Montbéliard",
+        "location": "Belfort, France",
+        "period": "2023 - 2026",
+        "description": "Professional university training in computer science with specialization in application development and artificial intelligence."
+      },
+      {
+        "degree": "High School Diploma",
+        "school": "High School",
+        "location": "France",
+        "period": "2023",
+        "description": "Specializations: Mathematics, Computer Science"
+      }
+    ]
+  },
+  "techWatch": {
+    "title": "🔍 Tech Watch",
+    "description": "I maintain an active watch on new technologies and development trends. I'm particularly interested in generative AI evolution, modern web frameworks, and algorithmic optimization techniques.",
+    "sources": [
+      "Official framework documentation",
+      "GitHub and open-source communities",
+      "Technical conferences and online talks",
+      "Personal experimentation with new technologies"
+    ]
+  },
   "skills": {
     "title": "🛠️ Technical Skills",
     "categories": {

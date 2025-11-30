@@ -5,6 +5,36 @@
   "role": "Développeur Full Stack",
   "location": "Belfort, France",
   "shortBio": "Développeur passionné par la technologie et l'innovation. Spécialisé en développement web et applications, avec un intérêt particulier pour l'IA et l'algorithmique.",
+  "downloadCV": "📄 Télécharger mon CV",
+  "education": {
+    "title": "🎓 Formation",
+    "items": [
+      {
+        "degree": "BUT Informatique",
+        "school": "IUT de Belfort-Montbéliard",
+        "location": "Belfort, France",
+        "period": "2023 - 2026",
+        "description": "Formation universitaire professionnalisante en informatique avec spécialisation en développement d'applications et intelligence artificielle."
+      },
+      {
+        "degree": "Baccalauréat Général",
+        "school": "Lycée",
+        "location": "France",
+        "period": "2023",
+        "description": "Spécialités : Mathématiques, NSI (Numérique et Sciences Informatiques)"
+      }
+    ]
+  },
+  "techWatch": {
+    "title": "🔍 Veille Technologique",
+    "description": "Je maintiens une veille active sur les nouvelles technologies et tendances du développement. Je m'intéresse particulièrement aux évolutions de l'IA générative, aux frameworks web modernes, et aux techniques d'optimisation algorithmique.",
+    "sources": [
+      "Documentation officielle des frameworks",
+      "Communautés GitHub et open-source",
+      "Conférences et talks techniques en ligne",
+      "Expérimentation personnelle de nouvelles technologies"
+    ]
+  },
   "skills": {
     "title": "🛠️ Compétences Techniques",
     "categories": {
