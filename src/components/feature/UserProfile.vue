@@ -3,7 +3,7 @@ import Window from '../base/Window.vue';
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n();
+const { t, tm } = useI18n();
 
 const emit = defineEmits(['close']);
 
@@ -116,6 +116,9 @@ const userInfo = computed(() => ({
           <h1 class="profile-name" :class="{ glitch: isGlitching }">{{ displayName }}</h1>
           <p class="profile-role">{{ userInfo.role }}</p>
           <p class="profile-bio">{{ userInfo.shortBio }}</p>
+          <a href="/audrick_soltner_cv.pdf" download="Audrick_Soltner_CV.pdf" class="cv-button">
+            {{ t('profile.downloadCV') }}
+          </a>
         </div>
       </div>
 
@@ -132,6 +135,32 @@ const userInfo = computed(() => ({
         </div>
         <div class="contact-item">
           <a href="https://asoltner-portfolio.fr" target="_blank" rel="noopener noreferrer">{{ userInfo.portfolio }}</a>
+        </div>
+      </div>
+
+      <!-- Formation -->
+      <div class="education-section">
+        <h2 class="section-title">{{ t('profile.education.title') }}</h2>
+        <div class="education-items">
+          <div v-for="(edu, index) in tm('profile.education.items')" :key="index" class="education-item">
+            <div class="education-header">
+              <h3 class="education-degree">{{ edu.degree }}</h3>
+              <span class="education-period">{{ edu.period }}</span>
+            </div>
+            <p class="education-school">{{ edu.school }} • {{ edu.location }}</p>
+            <p class="education-description">{{ edu.description }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Veille Technologique -->
+      <div class="tech-watch-section">
+        <h2 class="section-title">{{ t('profile.techWatch.title') }}</h2>
+        <p class="tech-watch-description">{{ t('profile.techWatch.description') }}</p>
+        <div class="tech-watch-sources">
+          <span v-for="(source, index) in tm('profile.techWatch.sources')" :key="index" class="source-tag">
+            📚 {{ source }}
+          </span>
         </div>
       </div>
 
@@ -412,6 +441,114 @@ const userInfo = computed(() => ({
 
 .skill-tag:hover .skill-icon {
   transform: scale(1.2) rotate(5deg);
+}
+
+/* Education section */
+.education-section {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.education-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.education-item {
+  background: rgba(59, 130, 246, 0.05);
+  padding: 16px;
+  border-radius: 10px;
+  border-left: 3px solid rgba(59, 130, 246, 0.5);
+  transition: all 0.3s ease;
+}
+
+.education-item:hover {
+  background: rgba(59, 130, 246, 0.1);
+  border-left-color: rgba(59, 130, 246, 0.8);
+  transform: translateX(4px);
+}
+
+.education-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.education-degree {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+  flex: 1;
+}
+
+.education-period {
+  font-size: 13px;
+  color: rgba(59, 130, 246, 0.9);
+  font-weight: 500;
+  background: rgba(59, 130, 246, 0.2);
+  padding: 4px 10px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.education-school {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 8px 0;
+  font-weight: 500;
+}
+
+.education-description {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Tech Watch section */
+.tech-watch-section {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tech-watch-description {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 16px 0;
+  line-height: 1.6;
+}
+
+.tech-watch-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.source-tag {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(59, 130, 246, 0.2));
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  color: rgba(255, 255, 255, 0.85);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.source-tag:hover {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(59, 130, 246, 0.3));
+  border-color: rgba(168, 85, 247, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
 }
 
 /* Soft Skills section */
