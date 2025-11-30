@@ -6,7 +6,7 @@
   "location": "Belfort, France",
   "shortBio": "Developer passionate about technology and innovation. Specialized in web development and applications, with a particular interest in AI and algorithmics.",
   "skills": {
-    "title": "🛠️ Skills",
+    "title": "🛠️ Technical Skills",
     "categories": {
       "frontend": "💻 Frontend",
       "backend": "⚙️ Backend",
@@ -14,6 +14,19 @@
       "tools": "🛠️ Tools",
       "ai": "🤖 AI/ML",
       "graphics": "🎮 Graphics"
+    }
+  },
+  "softSkills": {
+    "title": "✨ Soft Skills",
+    "items": {
+      "communication": "Communication",
+      "teamwork": "Teamwork",
+      "problemSolving": "Problem Solving",
+      "creativity": "Creativity",
+      "adaptability": "Adaptability",
+      "autonomy": "Autonomy",
+      "curiosity": "Curiosity",
+      "rigor": "Rigor"
     }
   }
 }

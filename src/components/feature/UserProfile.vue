@@ -30,7 +30,7 @@ setInterval(() => {
     isAltName.value = !isAltName.value;
     isGlitching.value = false;
   }, 300);
-}, 2000);
+}, 2500);
 
 const userInfo = computed(() => ({
   name: t('profile.name'),
@@ -92,6 +92,15 @@ const userInfo = computed(() => ({
         { name: 'OpenGL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opengl/opengl-original.svg' }
       ]
     }
+  ],
+  softSkills: [
+    { name: t('profile.softSkills.items.teamwork'), icon: '🤝' },
+    { name: t('profile.softSkills.items.problemSolving'), icon: '🧩' },
+    { name: t('profile.softSkills.items.creativity'), icon: '💡' },
+    { name: t('profile.softSkills.items.adaptability'), icon: '🔄' },
+    { name: t('profile.softSkills.items.autonomy'), icon: '🎯' },
+    { name: t('profile.softSkills.items.curiosity'), icon: '🔍' },
+    { name: t('profile.softSkills.items.rigor'), icon: '📐' }
   ]
 }));</script>
 
@@ -126,7 +135,18 @@ const userInfo = computed(() => ({
         </div>
       </div>
 
-      <!-- Compétences -->
+      <!-- Soft Skills -->
+      <div class="soft-skills-section">
+        <h2 class="section-title">{{ t('profile.softSkills.title') }}</h2>
+        <div class="soft-skills-grid">
+          <span v-for="skill in userInfo.softSkills" :key="skill.name" class="soft-skill-tag">
+            <span class="soft-skill-icon">{{ skill.icon }}</span>
+            <span class="soft-skill-name">{{ skill.name }}</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Compétences Techniques -->
       <div class="skills-section">
         <h2 class="section-title">{{ t('profile.skills.title') }}</h2>
         <div class="skills-grid">
@@ -144,6 +164,8 @@ const userInfo = computed(() => ({
           </div>
         </div>
       </div>
+
+
     </div>
   </Window>
 </template>
@@ -361,6 +383,10 @@ const userInfo = computed(() => ({
   justify-content: center;
   width: 18px;
   height: 18px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .skill-icon-img {
@@ -368,6 +394,9 @@ const userInfo = computed(() => ({
   height: 18px;
   object-fit: contain;
   filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.5));
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .skill-name {
@@ -383,6 +412,63 @@ const userInfo = computed(() => ({
 
 .skill-tag:hover .skill-icon {
   transform: scale(1.2) rotate(5deg);
+}
+
+/* Soft Skills section */
+.soft-skills-section {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.soft-skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.soft-skill-tag {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(168, 85, 247, 0.2));
+  border: 1px solid rgba(236, 72, 153, 0.3);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.soft-skill-icon {
+  font-size: 18px;
+  filter: drop-shadow(0 0 4px rgba(236, 72, 153, 0.5));
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.soft-skill-name {
+  line-height: 1;
+}
+
+.soft-skill-tag:hover {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.3), rgba(168, 85, 247, 0.3));
+  border-color: rgba(236, 72, 153, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+}
+
+.soft-skill-tag:hover .soft-skill-icon {
+  transform: scale(1.2) rotate(-5deg);
 }
 
 /* Scrollbar */

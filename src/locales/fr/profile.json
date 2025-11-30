@@ -6,7 +6,7 @@
   "location": "Belfort, France",
   "shortBio": "Développeur passionné par la technologie et l'innovation. Spécialisé en développement web et applications, avec un intérêt particulier pour l'IA et l'algorithmique.",
   "skills": {
-    "title": "🛠️ Compétences",
+    "title": "🛠️ Compétences Techniques",
     "categories": {
       "frontend": "💻 Frontend",
       "backend": "⚙️ Backend",
@@ -14,6 +14,19 @@
       "tools": "🛠️ Outils",
       "ai": "🤖 IA/ML",
       "graphics": "🎮 Graphique"
+    }
+  },
+  "softSkills": {
+    "title": "✨ Compétences Relationnelles",
+    "items": {
+      "communication": "Communication",
+      "teamwork": "Travail d'équipe",
+      "problemSolving": "Résolution de problèmes",
+      "creativity": "Créativité",
+      "adaptability": "Adaptabilité",
+      "autonomy": "Autonomie",
+      "curiosity": "Curiosité",
+      "rigor": "Rigueur"
     }
   }
 }
