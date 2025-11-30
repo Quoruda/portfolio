@@ -85,7 +85,7 @@ Several optimizations and extensions could enrich this viewer:
 
 **Animation and Interpolation**: Add the ability to record "**paths**" through fractals with **smooth animations**, thus creating videos exploring fractal details.
 
-**WebGPU Performance**: Migrate from **WebGL** to **[WebGPU](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API)** when it becomes more stable, offering better performance and better cross-platform compatibility.
+**WebGPU Performance**: Migrate from **WebGL** to [WebGPU](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API) when it becomes more stable, offering better performance and better cross-platform compatibility.
 
 **More 3D Fractals**: Implement other 3D fractals like the **Mandelbulb** or **3D Julia** fractals to enrich the exploration experience.
 

@@ -94,4 +94,4 @@ Le moteur est fonctionnel mais pourrait être enrichi de nombreuses façons :
 
 ## 🎓 Conclusion
 
-Ce projet représente plusieurs semaines de travail intense et m'a donné une base solide pour comprendre les moteurs modernes comme **[Unity](https://unity.com/)**, **[Unreal](https://www.unrealengine.com/)** ou les APIs comme **[Vulkan](https://www.vulkan.org/)** et **[DirectX](https://fr.wikipedia.org/wiki/DirectX)**.
+Ce projet représente plusieurs semaines de travail intense et m'a donné une base solide pour comprendre les moteurs modernes comme [Unity](https://unity.com/), [Unreal](https://www.unrealengine.com/) ou les APIs comme [Vulkan](https://www.vulkan.org/) et [DirectX](https://fr.wikipedia.org/wiki/DirectX).

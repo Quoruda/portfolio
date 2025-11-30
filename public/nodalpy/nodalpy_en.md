@@ -11,10 +11,10 @@ This is where **NodalPy** comes in. NodalPy is a tool that allows **executing co
 ## **Technologies Used**
 
 The project is separated into two main parts:
-* The **backend** in **[Python](https://www.python.org/)**, which handles **node execution** and application logic.
-* The **frontend** in **JavaScript** ([**Vue.js**](https://vuejs.org/)), which provides an **interactive user interface** for creating and managing nodes.
+* The **backend** in [Python](https://www.python.org/), which handles **node execution** and application logic.
+* The **frontend** in **JavaScript** ([Vue.js](https://vuejs.org/)), which provides an **interactive user interface** for creating and managing nodes.
 
-The project was developed to run on a **server** and be accessible via a **web browser**, but thanks to **[Electron](https://www.electronjs.org/)**, the application can also work as a **cross-platform desktop application**.
+The project was developed to run on a **server** and be accessible via a **web browser**, but thanks to [Electron](https://www.electronjs.org/), the application can also work as a **cross-platform desktop application**.
 
 ## **Current Features**
 

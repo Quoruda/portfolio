@@ -160,7 +160,7 @@ In this example, the AI responds in [JSON](https://en.wikipedia.org/wiki/JSON) f
 - 1 **response** type object containing the AI message intended for the user;
 - 1 **import** type object containing imports necessary for executing the generated code.
 
-This format allows **structuring the AI response** and facilitating its processing by the program. Other formats were possible, like **[XML](https://en.wikipedia.org/wiki/XML)**, but JSON is lighter and easier to manipulate in Python.
+This format allows **structuring the AI response** and facilitating its processing by the program. Other formats were possible, like [XML](https://en.wikipedia.org/wiki/XML), but JSON is lighter and easier to manipulate in Python.
 
 It's important to note that this AI layer is primarily a **proof of concept**. The technical demonstration works and has shown that AI is capable of producing relevant code based on real user requests. However, not all **CATIA** functionalities are yet covered by the facade, and AI usage relies on **API keys** requiring an **external subscription** to the company.
 

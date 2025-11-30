@@ -3,7 +3,7 @@
 ![Capture d'écran du simulateur](/GameOfLife/screen.png)
 
 ## **Présentation**
-Une implémentation simple du célèbre ["Game of Life" (jeu de la vie de Conway)](https://fr.wikipedia.org/wiki/Jeu_de_la_vie) écrite en **Java**. L'accent est mis sur la **simulation interactive** et l'observation des [comportements émergents](https://fr.wikipedia.org/wiki/%C3%89mergence) plutôt que sur l'installation ou la configuration.
+Une implémentation simple du célèbre [Game of Life (jeu de la vie de Conway)](https://fr.wikipedia.org/wiki/Jeu_de_la_vie) écrite en **Java**. L'accent est mis sur la **simulation interactive** et l'observation des [comportements émergents](https://fr.wikipedia.org/wiki/%C3%89mergence) plutôt que sur l'installation ou la configuration.
 
 ## **Pourquoi ce projet**
 Le Game of Life m'intéresse parce qu'il est hypnotisant à regarder : des règles très simples peuvent produire des motifs riches et inattendus. C'est aussi un modèle mathématique notable — le jeu est [Turing-complet](https://fr.wikipedia.org/wiki/Universalit%C3%A9_de_Turing) — ce qui en fait un excellent [terrain d'expérimentation](https://fr.wikipedia.org/wiki/Automate_cellulaire) pour tester des règles alternatives et optimiser le rendu.

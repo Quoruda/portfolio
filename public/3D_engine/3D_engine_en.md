@@ -94,5 +94,5 @@ The engine is functional but could be enriched in many ways:
 
 ## 🎓 Conclusion
 
-This project represents several weeks of intense work and has given me a solid foundation to understand modern engines like **[Unity](https://unity.com/)**, **[Unreal](https://www.unrealengine.com/)** or APIs like **[Vulkan](https://www.vulkan.org/)** and **[DirectX](https://en.wikipedia.org/wiki/DirectX)**.
+This project represents several weeks of intense work and has given me a solid foundation to understand modern engines like [Unity](https://unity.com/), [Unreal](https://www.unrealengine.com/) or APIs like [Vulkan](https://www.vulkan.org/) and [DirectX](https://en.wikipedia.org/wiki/DirectX).
 
