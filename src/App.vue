@@ -31,7 +31,7 @@ const handleLoginComplete = () => {
 </script>
 
 <template>
-  <div class="desktop" v-if="isBootComplete">
+  <div class="desktop" v-if="isBootComplete" :hidden="!isLoginComplete">
     <div class="background-pattern">
       <div class="shape shape-1"></div>
       <div class="shape shape-2"></div>
