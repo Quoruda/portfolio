@@ -8,8 +8,6 @@ import Browser from "./components/feature/Browser.vue";
 import BootScreen from "./components/feature/BootScreen.vue";
 import {ref} from "vue";
 import LoginScreen from "./components/feature/LoginScreen.vue";
-import MarkdownReader from "./components/base/MarkdownReader.vue";
-import Folder from "./components/base/Folder.vue";
 import Application from "./components/base/Application.vue";
 import {useI18n} from "vue-i18n";
 import ProjectManager from "./components/feature/ProjectManager.vue";
