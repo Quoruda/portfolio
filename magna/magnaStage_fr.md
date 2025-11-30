@@ -160,7 +160,7 @@ Dans cet exemple, l'IA répond sous forme de [JSON](https://fr.wikipedia.org/wik
 - 1 objet de type **response** contenant le message de l'IA destiné à l'utilisateur ;
 - 1 objet de type **import** contenant les imports nécessaires à l'exécution du code généré.
 
-Ce format permet de **structurer la réponse** de l'IA et de faciliter son traitement par le programme. D'autres formats étaient possibles, comme le **[XML](https://fr.wikipedia.org/wiki/Extensible_Markup_Language)**, mais le JSON est plus léger et plus facile à manipuler en Python.
+Ce format permet de **structurer la réponse** de l'IA et de faciliter son traitement par le programme. D'autres formats étaient possibles, comme le [XML](https://fr.wikipedia.org/wiki/Extensible_Markup_Language), mais le JSON est plus léger et plus facile à manipuler en Python.
 
 Il est important de noter que cette couche IA constitue avant tout un **proof of concept**. La démonstration technique fonctionne et a montré que l'IA est capable de produire du code pertinent basé sur des requêtes utilisateur réelles. Cependant, toutes les fonctionnalités de **CATIA** ne sont pas encore couvertes par la façade, et l'usage de l'IA repose sur des **clés API** nécessitant un **abonnement externe** à l'entreprise.
 
