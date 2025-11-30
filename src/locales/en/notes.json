@@ -1,0 +1,22 @@
+{
+  "sidebar": {
+    "newNote": "New Note"
+  },
+  "editor": {
+    "placeholder": "Start writing...",
+    "untitled": "Untitled"
+  },
+  "dates": {
+    "justNow": "Just now",
+    "minutesAgo": "min ago",
+    "hoursAgo": "h ago"
+  },
+  "defaultNotes": {
+    "projectIdeas": {
+      "title": "Project Ideas"
+    },
+    "setup": {
+      "title": "Setup & Configuration"
+    }
+  }
+}
