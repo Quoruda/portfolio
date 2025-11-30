@@ -13,6 +13,7 @@ import {useI18n} from "vue-i18n";
 import ProjectManager from "./components/feature/ProjectManager.vue";
 
 import { useStore } from './store.js';
+import Avatar from "./components/feature/Avatar.vue";
 const store = useStore()
 
 const {t} = useI18n();
@@ -44,6 +45,8 @@ const handleLoginComplete = () => {
     </IconsContainer>
 
     <task-bar/>
+
+    <Avatar v-if="isLoginComplete  && !store.pixyHasFinishedHisPresentation"  @presentationComplete="store.finishPixyPresentation"/>
   </div>
 
   <boot-screen v-if="! store.hasBooted" @boot-complete="store.boot"/>
