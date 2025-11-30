@@ -107,19 +107,19 @@ L'interface JavaFX permet :
 - Contrôle du processus de chiffrement/déchiffrement
 - Monitoring du processus de cassage de clé
 
-## Apports et Limitations
+## **Apports et Limitations**
 
-### Apports Techniques
-- Implémentation complète d'un système de chiffrement vidéo avec interface graphique interactive
-- Optimisation algorithmique significative (réduction de 98,8 % de l'espace de recherche)
-- Exploration de méthodes de stéganographie et de robustesse face à la compression
-- Analyse comparative de critères de similarité pour l'attaque par force brute
+### **Apports Techniques**
+- **Implémentation complète** d'un système de chiffrement vidéo avec interface graphique interactive
+- **Optimisation algorithmique significative** (**réduction de 98,8 %** de l'espace de recherche)
+- Exploration de méthodes de [stéganographie](https://fr.wikipedia.org/wiki/St%C3%A9ganographie) et de robustesse face à la compression
+- **Analyse comparative** de critères de similarité pour l'[attaque par force brute](https://fr.wikipedia.org/wiki/Attaque_par_force_brute)
 
-### Limitations
-- **Sécurité** : clé de 15 bits insuffisante pour toute application réelle (usage strictement pédagogique)
-- **Robustesse** : l'embarquement de clé dans les LSB reste vulnérable aux codecs avec pertes (H.264, H.265)
+### **Limitations**
+- **Sécurité** : clé de 15 bits insuffisante pour toute application réelle (**usage strictement pédagogique**)
+- **Robustesse** : l'embarquement de clé dans les [LSB](https://fr.wikipedia.org/wiki/Bit_de_poids_faible) reste vulnérable aux [codecs avec pertes](https://fr.wikipedia.org/wiki/Compression_de_donn%C3%A9es_avec_perte) ([H.264](https://fr.wikipedia.org/wiki/H.264), [H.265](https://fr.wikipedia.org/wiki/H.265))
 - **Scalabilité** : traitement image par image limitant les performances sur vidéos haute résolution
 
-### Conclusion
+### **Conclusion**
 
-Ce projet a permis d'explorer des concepts classiques de chiffrement vidéo tout en développant des techniques d'optimisation pour le cassage de clé. L'implémentation en Java avec OpenCV et JavaFX offre une plateforme robuste pour expérimenter avec le traitement vidéo et visualiser en temps réel l'impact des différentes approches cryptographiques.
+Ce projet a permis d'**explorer** des concepts classiques de **chiffrement vidéo** tout en développant des **techniques d'optimisation** pour le **cassage de clé**. L'**implémentation** en [Java](https://fr.wikipedia.org/wiki/Java_(langage)) avec [OpenCV](https://opencv.org/) et [JavaFX](https://fr.wikipedia.org/wiki/JavaFX) offre une **plateforme robuste** pour **expérimenter** avec le **traitement vidéo** et **visualiser** en **temps réel** l'**impact** des différentes **approches cryptographiques**.

@@ -23,14 +23,14 @@ The system uses a permutation of lines in each image based on a symmetric encryp
 
 For a line with index `idLigne`, its new position after encryption is: `(r + (2s+1) × idLigne) % size`
 
-#### Processing by Iterations
+#### **Processing by Iterations**
 
-To handle all image heights (not necessarily powers of 2), the algorithm proceeds through successive iterations:
-1. Iteration #1: processing lines 0 to 2^n-1 (where 2^n is the largest power of 2 ≤ height)
-2. Iteration #2: processing the next residue
-3. Following iterations: until all lines are processed
+To handle **all image heights** (not necessarily **powers of 2**), the algorithm proceeds through **successive iterations**:
+1. **Iteration #1**: processing lines **0 to 2^n-1** (where **2^n** is the **largest power of 2** ≤ height)
+2. **Iteration #2**: processing the **next residue**
+3. **Following iterations**: until **all lines** are processed
 
-This approach creates a distinctive visual effect where the top of the image is heavily scrambled while the bottom is progressively less so.
+This approach creates a **distinctive visual effect** where the **top** of the image is **heavily scrambled** while the **bottom** is **progressively less so**.
 
 ### Decryption with Key
 
@@ -46,15 +46,15 @@ When the key is known, decryption is trivial: simply reverse the line permutatio
 - Key management via command line or text file
 - Key display in the user interface
 
-### Step 2: Key Breaking by Brute Force
+### **Step 2: Key Breaking by Brute Force**
 
-There are 2^15 = 32,768 possible keys (8 bits for r and 7 bits for s). Key breaking consists of testing all possible combinations and evaluating the quality of the obtained decryption.
+There are **2^15 = 32,768 possible keys** (**8 bits** for r and **7 bits** for s). [Key breaking](https://en.wikipedia.org/wiki/Brute-force_attack) consists of **testing all possible combinations** and **evaluating the quality** of the obtained decryption.
 
-The principle is to test each key, decrypt the video, then evaluate the "quality" of the decrypted image using a selection criterion.
-The key that maximizes this criterion is considered the correct key.
+The principle is to **test each key**, **decrypt the video**, then evaluate the **"quality"** of the **decrypted image** using a **selection criterion**.
+The key that **maximizes this criterion** is considered the **correct key**.
 
-32,768 attempts remain manageable for modern computers, allowing breaking in a few minutes.
-However, I managed to optimize the process to achieve a breaking time of a few seconds thanks to a personal observation I made while playing with the keys.
+**32,768 attempts** remain **manageable** for modern computers, allowing breaking in **a few minutes**.
+However, I managed to **optimize the process** to achieve a breaking time of **a few seconds** thanks to a **personal observation** I made while playing with the keys.
 
 #### Key Observation
 
@@ -68,23 +68,23 @@ Thus, I was able to reduce the number of necessary attempts in two steps:
 
 This reduces the number of attempts from 32,768 to only 384, significantly speeding up the breaking process.
 
-#### Implemented Selection Criteria
+#### **Implemented Selection Criteria**
 
-1. Euclidean Distance
+1. **[Euclidean Distance](https://en.wikipedia.org/wiki/Euclidean_distance)**
 ```
 d(x,y) = √(Σ(xi - yi)²)
 ```
-Measures the pixel-by-pixel difference between two consecutive lines.
+Measures the **pixel-by-pixel difference** between **two consecutive lines**.
 
-2. Pearson Correlation
+2. **[Pearson Correlation](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient)**
 ```
 ρ(x,y) = Σ(xi-x̄)(yi-ȳ) / √(Σ(xi-x̄)²) × √(Σ(yi-ȳ)²)
 ```
-More robust to lighting variations, automatically normalizes data.
+More **robust to lighting variations**, **automatically normalizes** data.
 
-The principle: in a correctly decrypted image, consecutive lines are very similar. The overall score is the sum of similarities of all adjacent line pairs.
+The principle: in a **correctly decrypted image**, **consecutive lines are very similar**. The **overall score** is the **sum of similarities** of **all adjacent line pairs**.
 
-Therefore, this is the criterion I chose to evaluate each key tested during breaking.
+Therefore, this is the **criterion I chose** to evaluate **each key tested** during breaking.
  
 ### Step 3: Embedded Dynamic Key
 - 🔐 Periodic or random key change during video
@@ -107,20 +107,20 @@ The JavaFX interface allows:
 - Control of the encryption/decryption process
 - Monitoring of the key breaking process
 
-## Contributions and Limitations
+## **Contributions and Limitations**
 
-### Technical Contributions
-- Complete implementation of a video encryption system with interactive graphical interface
-- Significant algorithmic optimization (98.8% reduction of the search space)
-- Exploration of steganography methods and robustness against compression
-- Comparative analysis of similarity criteria for brute force attack
+### **Technical Contributions**
+- **Complete implementation** of a video encryption system with interactive graphical interface
+- **Significant algorithmic optimization** (**98.8% reduction** of the search space)
+- Exploration of [steganography](https://en.wikipedia.org/wiki/Steganography) methods and robustness against compression
+- **Comparative analysis** of similarity criteria for [brute force attack](https://en.wikipedia.org/wiki/Brute-force_attack)
 
-### Limitations
-- **Security**: 15-bit key insufficient for any real application (strictly educational use)
-- **Robustness**: key embedding in LSBs remains vulnerable to lossy codecs (H.264, H.265)
+### **Limitations**
+- **Security**: 15-bit key insufficient for any real application (**strictly educational use**)
+- **Robustness**: key embedding in [LSBs](https://en.wikipedia.org/wiki/Bit_numbering#Least_significant_bit) remains vulnerable to [lossy codecs](https://en.wikipedia.org/wiki/Lossy_compression) ([H.264](https://en.wikipedia.org/wiki/Advanced_Video_Coding), [H.265](https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding))
 - **Scalability**: frame-by-frame processing limiting performance on high-resolution videos
 
-### Conclusion
+### **Conclusion**
 
-This project allowed exploring classic video encryption concepts while developing optimization techniques for key breaking. The implementation in Java with OpenCV and JavaFX offers a robust platform for experimenting with video processing and visualizing in real time the impact of different cryptographic approaches.
+This project allowed **exploring** classic **video encryption concepts** while developing **optimization techniques** for **key breaking**. The **implementation** in [Java](https://en.wikipedia.org/wiki/Java_(programming_language)) with [OpenCV](https://opencv.org/) and [JavaFX](https://en.wikipedia.org/wiki/JavaFX) offers a **robust platform** for **experimenting** with **video processing** and **visualizing** in **real time** the **impact** of different **cryptographic approaches**.
 
