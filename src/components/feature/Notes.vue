@@ -1,110 +1,66 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import Application from "../base/Application.vue";
 import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const notes = ref([
   {
     id: 1,
-    title: 'Idées de Projets',
+    titleKey: 'projectIdeas',
     readonly: true,
-    content: `# Idées de Projets
-
-## Intelligence Artificielle
-
-### LLM Mathématique from Scratch
-- Objectif : Construire un LLM spécialisé dans la résolution de problèmes mathématiques
-- Stack envisagée : Python, PyTorch, NumPy
-- Défis techniques :
-  * Architecture transformer custom
-  * Dataset de problèmes mathématiques
-  * Tokenization adaptée aux formules
-  * Fine-tuning sur domaines spécifiques
-- Phase : Recherche théorique en cours
-
-## Gaming
-
-### Rogue-like Navigateur
-- Concept : Dungeon crawler procédural jouable dans le browser
-- Stack envisagée : Vue.js, Canvas API / WebGL
-- Features prévues :
-  * Génération procédurale de niveaux
-  * Système de combat tour par tour
-  * Permadeath et progression
-  * Pixel art / ASCII art
-- Phase : Brainstorming gameplay
-
-## En exploration
-
-- Moteur de rendu volumétrique temps réel
-- Synthétiseur audio WebAudio
-- Outil de visualisation de données 3D
-- Éditeur de shaders collaboratif
-`,
+    content: '',
+    markdownFiles: {
+      fr: '/notes/project_ideas_fr.md',
+      en: '/notes/project_ideas_en.md'
+    },
     date: new Date('2025-01-15')
   },
   {
     id: 2,
-    title: 'Setup & Configuration',
+    titleKey: 'setup',
     readonly: true,
-    content: `# Mon Setup de Développement
-
-## Philosophie Open Source
-
-J'utilise principalement des outils open source pour mon workflow de développement. Cela me permet de mieux comprendre les outils que j'utilise, de contribuer aux projets et de personnaliser mon environnement selon mes besoins.
-
-## Système d'Exploitation
-
-### Debian 13 (Trixie)
-- Distribution Linux stable et fiable
-- Gestion de paquets APT
-- Performance et contrôle total du système
-- Environnement de bureau : GNOME / KDE / i3wm (à préciser)
-
-## Navigateurs
-
-### Firefox (principal)
-- Open source et respectueux de la vie privée
-- DevTools puissants pour le développement web
-- Extensions : uBlock Origin, React DevTools, Vue DevTools
-
-### Chromium (tests)
-- Pour tester la compatibilité cross-browser
-- Lighthouse intégré pour l'audit de performance
-
-## IDE & Éditeurs
-
-### VSCodium (principal)
-- Version open source de VS Code sans télémétrie Microsoft
-- Éditeur léger et performant
-- Extensions : Prettier, ESLint, GitLens, Vue Language Features
-- Terminal intégré et personnalisable
-- Idéal pour le développement web quotidien
-
-### IntelliJ IDEA (projets complexes)
-- Suite complète pour projets d'envergure
-- Support multi-langage (Java, JavaScript, Python, etc.)
-- Plugins : Vue.js, GitToolBox, Rainbow Brackets
-- Refactoring puissant et analyse de code avancée
-- Débogage sophistiqué
-- Note : Seul outil propriétaire de mon setup, justifié par ses capacités avancées
-
-## Outils de Développement
-
-### Version Control
-- Git (ligne de commande)
-- GitHub pour l'hébergement de code
-
-### Terminal
-- Bash comme shell principal
-- Aliases personnalisés pour commandes fréquentes
-- Tmux pour multiplexage terminal
-`,
+    content: '',
+    markdownFiles: {
+      fr: '/notes/setup_fr.md',
+      en: '/notes/setup_en.md'
+    },
     date: new Date('2025-01-20')
   }
 ]);
+
+// Charger le contenu des notes depuis les fichiers markdown
+const loadNoteContent = async (note) => {
+  if (!note.markdownFiles) return;
+  const file = note.markdownFiles[locale.value] || note.markdownFiles['en'];
+  try {
+    const response = await fetch(file);
+    if (response.ok) {
+      note.content = await response.text();
+    }
+  } catch (error) {
+    console.error('Error loading note:', error);
+  }
+};
+
+// Charger toutes les notes au montage
+onMounted(async () => {
+  for (const note of notes.value) {
+    if (note.readonly) {
+      await loadNoteContent(note);
+    }
+  }
+});
+
+// Recharger les notes quand la langue change
+watch(locale, async () => {
+  for (const note of notes.value) {
+    if (note.readonly) {
+      await loadNoteContent(note);
+    }
+  }
+});
 const selectedNoteId = ref(1);
 const editingTitle = ref(false);
 const showSidebar = ref(true);
@@ -113,10 +69,18 @@ const selectedNote = computed(() => {
   return notes.value.find(n => n.id === selectedNoteId.value) || null;
 });
 
+// Obtenir le titre d'une note (traduit ou custom)
+const getNoteTitle = (note) => {
+  if (note.titleKey) {
+    return t(`notes.defaultNotes.${note.titleKey}.title`);
+  }
+  return note.title || t('notes.editor.untitled');
+};
+
 const createNote = () => {
   const newNote = {
     id: Date.now(),
-    title: 'New Note',
+    title: t('notes.editor.untitled'),
     content: '',
     date: new Date()
   };
@@ -148,7 +112,7 @@ const updateContent = (e) => {
 
 const updateTitle = (e) => {
   if (selectedNote.value && !selectedNote.value.readonly) {
-    selectedNote.value.title = e.target.value || 'Untitled';
+    selectedNote.value.title = e.target.value || t('notes.editor.untitled');
     selectedNote.value.date = new Date();
   }
 };
@@ -158,11 +122,11 @@ const formatDate = (date) => {
   const now = new Date();
   const diff = now - d;
 
-  if (diff < 60000) return 'Just now';
-  if (diff < 3600000) return `${Math.floor(diff / 60000)} min ago`;
-  if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
+  if (diff < 60000) return t('notes.dates.justNow');
+  if (diff < 3600000) return `${Math.floor(diff / 60000)} ${t('notes.dates.minutesAgo')}`;
+  if (diff < 86400000) return `${Math.floor(diff / 3600000)}${t('notes.dates.hoursAgo')}`;
 
-  return d.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+  return d.toLocaleDateString(locale.value === 'fr' ? 'fr-FR' : 'en-US', { day: 'numeric', month: 'short' });
 };
 
 const getPreview = (content) => {
@@ -178,7 +142,7 @@ const getPreview = (content) => {
         <div class="sidebar-header">
           <button class="btn-new" @click="createNote">
             <span class="icon">+</span>
-            New Note
+            {{ t('notes.sidebar.newNote') }}
           </button>
           <button class="btn-close" @click="showSidebar = false">×</button>
         </div>
@@ -192,7 +156,7 @@ const getPreview = (content) => {
               @click="selectNote(note.id)"
           >
             <div class="note-item-header">
-              <h3>{{ note.title }}</h3>
+              <h3>{{ getNoteTitle(note) }}</h3>
               <span class="note-date">{{ formatDate(note.date) }}</span>
             </div>
             <p class="note-preview">{{ getPreview(note.content) }}</p>
@@ -220,7 +184,7 @@ const getPreview = (content) => {
               autofocus
           />
           <h1 v-else class="editor-title" @click="!selectedNote.readonly && (editingTitle = true)">
-            {{ selectedNote.title }}
+            {{ getNoteTitle(selectedNote) }}
           </h1>
 
           <button class="btn-delete" @click="deleteNote" :disabled="notes.length === 1 || selectedNote.readonly">
@@ -234,7 +198,7 @@ const getPreview = (content) => {
             :value="selectedNote.content"
             @input="updateContent"
             :readonly="selectedNote.readonly"
-            placeholder="Start writing..."
+            :placeholder="t('notes.editor.placeholder')"
         ></textarea>
       </div>
     </div>
