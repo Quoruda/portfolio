@@ -86,6 +86,22 @@ const isUrl = (value) => {
   font-weight: 500;
   text-align: center;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+
+  /* Limite la largeur pour forcer le passage sur plusieurs lignes */
+  max-width: 90px; /* correspond à la largeur .icon-image */
+  width: 100%;
+
+  /* Autorise le wrapping et coupe proprement après 2 lignes */
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* nombre de lignes visibles */
+  -webkit-box-orient: vertical;
+
+  /* Sécurité pour les mots très longs / URLs */
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .icon-img {
