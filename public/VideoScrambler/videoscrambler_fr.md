@@ -1,6 +1,6 @@
 # Video Scrambler
 
-![Video Scrambler](/VideoScrambler/demonstration.gif)
+![Capture d'écran de l'application](/VideoScrambler/screenshot.png)
 
 Ceci est un projet universitaire réalisé en Java visant à implémenter un système de chiffrement et de déchiffrement vidéo basé sur des techniques d'échange de lignes. Le but principal est de protéger le contenu vidéo contre les accès non autorisés en rendant la vidéo illisible sans la clé appropriée.
 
@@ -9,26 +9,26 @@ Ceci est un projet universitaire réalisé en Java visant à implémenter un sys
 Dans les années 80/90, les systèmes de télévision payante utilisaient des techniques de chiffrement analogique simples mais efficaces pour protéger leur contenu. En raison des capacités de traitement limitées des décodeurs de l'époque, le chiffrement reposait sur le mélange des lignes d'images - une méthode élégante qui nécessitait peu de puissance de calcul pour être déchiffrée.
 
 ## Technologies Utilisées
-- **Langage** : Java
-- **Interface** : JavaFX pour l'interface utilisateur graphique
-- **Traitement Vidéo** : OpenCV pour la manipulation des flux vidéo et traitement d'images
+- Langage : Java
+- Interface : JavaFX pour l'interface utilisateur graphique
+- Traitement Vidéo : OpenCV pour la manipulation des flux vidéo et traitement d'images
 
 ## Principe de Fonctionnement
 
 ### Algorithme de Chiffrement
 
 Le système utilise une permutation des lignes de chaque image basée sur une clé de chiffrement symétrique composée de deux paramètres :
-- **r** (offset) : un décalage codé sur 8 bits
-- **s** (step) : un pas codé sur 7 bits
+- `r` (offset) : un décalage codé sur 8 bits
+- `s` (step) : un pas codé sur 7 bits
 
 Pour une ligne d'indice `idLigne`, sa nouvelle position après chiffrement est : `(r + (2s+1) × idLigne) % size`
 
 #### Traitement par Itérations
 
 Pour gérer toutes les hauteurs d'image (pas nécessairement des puissances de 2), l'algorithme procède par itérations successives :
-1. **Itération #1** : traitement des lignes 0 à 2^n-1 (où 2^n est la plus grande puissance de 2 ≤ hauteur)
-2. **Itération #2** : traitement du résidu suivant
-3. **Itérations suivantes** : jusqu'à traiter toutes les lignes
+1. Itération #1 : traitement des lignes 0 à 2^n-1 (où 2^n est la plus grande puissance de 2 ≤ hauteur)
+2. Itération #2 : traitement du résidu suivant
+3. Itérations suivantes : jusqu'à traiter toutes les lignes
 
 Cette approche crée un effet visuel distinctif où le haut de l'image est fortement brouillé tandis que le bas l'est progressivement moins.
 
@@ -39,12 +39,12 @@ Lorsque la clé est connue, le déchiffrement est trivial : il suffit d'inverser
 ## Fonctionnalités Implémentées
 
 ### Étape 1 : Chiffrement/Déchiffrement de Base
-- ✅ Lecture et écriture de fichiers vidéo
-- ✅ Chiffrement des lignes image par image
-- ✅ Déchiffrement avec clé connue
-- ✅ Visualisation simultanée de deux vidéos côte à côte dans l'interface JavaFX
-- ✅ Gestion de la clé via ligne de commande ou fichier texte
-- ✅ Affichage de la clé dans l'interface utilisateur
+- Lecture et écriture de fichiers vidéo
+- Chiffrement des lignes image par image
+- Déchiffrement avec clé connue
+- Visualisation simultanée de deux vidéos côte à côte dans l'interface JavaFX
+- Gestion de la clé via ligne de commande ou fichier texte
+- Affichage de la clé dans l'interface utilisateur
 
 ### Étape 2 : Cassage de Clé par Force Brute
 
@@ -54,29 +54,29 @@ Le principe est de tester chaque clé, déchiffrer la vidéo, puis évaluer la "
 La clé qui maximise ce critère est considérée comme la clé correcte.
 
 32 768 essais reste abordable pour les ordinateurs modernes, permettant un cassage en quelques minutes.
-Cependant, j'ai réussi à optimiser le processus pour atteindre un temps de cassage en quelques secondes grâce à une observation personnelle que j'ai eu en jouant avec les clés.
+Cependant, j'ai réussi à optimiser le processus pour atteindre un temps de cassage en quelques secondes grâce à une observation personnelle que j'ai eue en jouant avec les clés.
 
 #### Observation Clé
 
-Parmis les deux paramètres de la clé, `s` (le pas) a un impact plus significatif sur le mélange des lignes que `r` (l'offset). En effet, `s` détermine la "distance" entre les lignes échangées, tandis que `r` ne fait que décaler cette permutation.
-Ce que cala signifie en pratique, c'est que si on trouve la bonne valeur de `s`, le contenu de l'image devient compréhensible à l'œil quelque soit la valeur de `r`.
+Parmi les deux paramètres de la clé, `s` (le pas) a un impact plus significatif sur le mélange des lignes que `r` (l'offset). En effet, `s` détermine la "distance" entre les lignes échangées, tandis que `r` ne fait que décaler cette permutation.
+Ce que cela signifie en pratique, c'est que si on trouve la bonne valeur de `s`, le contenu de l'image devient compréhensible à l'œil quelle que soit la valeur de `r`.
 
 Ainsi, j'ai pu réduire le nombre d'essais nécessaires en deux étapes :
-1. **Trouver le bon `s`** : tester les 128 valeurs possibles de 's' avec r=0, et sélectionner le meilleur selon le critère de sélection.
-2. **Trouver le bon `r`** : une fois `s` connu, tester les 256 valeurs possibles de 'r' pour ce `s` et sélectionner la meilleure.
-3. **Combinaison finale** : la clé finale est la combinaison des meilleurs `r` et `s` trouvés.
+1. Trouver le bon `s` : tester les 128 valeurs possibles de `s` avec r=0, et sélectionner le meilleur selon le critère de sélection.
+2. Trouver le bon `r` : une fois `s` connu, tester les 256 valeurs possibles de `r` pour ce `s` et sélectionner la meilleure.
+3. Combinaison finale : la clé finale est la combinaison des meilleurs `r` et `s` trouvés.
 
 Cela réduit le nombre d'essais de 32 768 à seulement 384, accélérant considérablement le processus de cassage.
 
 #### Critères de Sélection Implémentés
 
-**1. Distance Euclidienne**
+1. Distance Euclidienne
 ```
 d(x,y) = √(Σ(xi - yi)²)
 ```
 Mesure la différence pixel par pixel entre deux lignes consécutives.
 
-**2. Corrélation de Pearson**
+2. Corrélation de Pearson
 ```
 ρ(x,y) = Σ(xi-x̄)(yi-ȳ) / √(Σ(xi-x̄)²) × √(Σ(yi-ȳ)²)
 ```
@@ -107,6 +107,19 @@ L'interface JavaFX permet :
 - Contrôle du processus de chiffrement/déchiffrement
 - Monitoring du processus de cassage de clé
 
-## Conclusion
+## Apports et Limitations
 
-Ce projet m'a permis de revisiter des concepts classiques de chiffrement vidéo tout en explorant des techniques d'optimisation pour le cassage de clé. L'implémentation en Java avec OpenCV et JavaFX a offert une plateforme robuste pour le traitement vidéo et l'interaction utilisateur. Les résultats obtenus démontrent l'efficacité des méthodes employées, tant pour le chiffrement que pour le cassage de clé.
+### Apports Techniques
+- Implémentation complète d'un système de chiffrement vidéo avec interface graphique interactive
+- Optimisation algorithmique significative (réduction de 98,8 % de l'espace de recherche)
+- Exploration de méthodes de stéganographie et de robustesse face à la compression
+- Analyse comparative de critères de similarité pour l'attaque par force brute
+
+### Limitations
+- **Sécurité** : clé de 15 bits insuffisante pour toute application réelle (usage strictement pédagogique)
+- **Robustesse** : l'embarquement de clé dans les LSB reste vulnérable aux codecs avec pertes (H.264, H.265)
+- **Scalabilité** : traitement image par image limitant les performances sur vidéos haute résolution
+
+### Conclusion
+
+Ce projet a permis d'explorer des concepts classiques de chiffrement vidéo tout en développant des techniques d'optimisation pour le cassage de clé. L'implémentation en Java avec OpenCV et JavaFX offre une plateforme robuste pour expérimenter avec le traitement vidéo et visualiser en temps réel l'impact des différentes approches cryptographiques.
