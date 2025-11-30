@@ -1,10 +1,12 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useStore } from '../../store.js';
 import Clock from "./Clock.vue";
 import UserProfile from "./UserProfile.vue";
 
 const { locale } = useI18n();
+const store = useStore();
 const isLangMenuOpen = ref(false);
 const isUserProfileOpen = ref(false);
 
@@ -37,6 +39,7 @@ const closeLangMenu = () => {
 
 const openUserProfile = () => {
   isUserProfileOpen.value = true;
+  store.markProfileAsClicked();
 };
 
 const closeUserProfile = () => {
@@ -50,7 +53,7 @@ const closeUserProfile = () => {
       <button class="user-profile" @click="openUserProfile">
         <span class="profile-icon">👤</span>
         <span class="user-name">Audrick S</span>
-        <span class="notification-badge">!</span>
+        <span v-if="!store.hasClickedProfile" class="notification-badge">!</span>
       </button>
     </div>
 
