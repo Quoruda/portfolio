@@ -12,6 +12,8 @@
   "homepage": "https://Quoruda.github.io/portfolio",
   "dependencies": {
     "marked": "^17.0.1",
+    "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1",
     "prismjs": "^1.30.0",
     "prismjs-themes": "^2.0.0",
     "vue": "^3.5.22",

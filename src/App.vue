@@ -12,24 +12,20 @@ import Application from "./components/base/Application.vue";
 import {useI18n} from "vue-i18n";
 import ProjectManager from "./components/feature/ProjectManager.vue";
 
-const {t} = useI18n();
+import { useStore } from './store.js';
+const store = useStore()
 
-const isBootComplete = ref(false);
-const handleBootComplete = () => {
-  isBootComplete.value = true;
-};
+const {t} = useI18n();
 
 const isLoginComplete = ref(false);
 const handleLoginComplete = () => {
   isLoginComplete.value = true;
 };
 
-
-
 </script>
 
 <template>
-  <div class="desktop" v-if="isBootComplete" :hidden="!isLoginComplete">
+  <div class="desktop" v-if="store.hasBooted" :hidden="!isLoginComplete">
     <div class="background-pattern">
       <div class="shape shape-1"></div>
       <div class="shape shape-2"></div>
@@ -48,11 +44,10 @@ const handleLoginComplete = () => {
     </IconsContainer>
 
     <task-bar/>
-
   </div>
 
-  <boot-screen v-if="! isBootComplete" @boot-complete="handleBootComplete"/>
-  <login-screen @login-complete="handleLoginComplete"  v-if="isBootComplete && ! isLoginComplete"/>
+  <boot-screen v-if="! store.hasBooted" @boot-complete="store.boot"/>
+  <login-screen @login-complete="handleLoginComplete"  v-if="store.hasBooted && ! isLoginComplete"/>
   <CustomCursor/>
 </template>
 
