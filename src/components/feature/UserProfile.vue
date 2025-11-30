@@ -122,13 +122,13 @@ const userInfo = computed(() => ({
       <!-- Contact rapide -->
       <div class="contact-section">
         <div class="contact-item">
-          <span>{{ userInfo.location }}</span>
+          <span>📍{{ userInfo.location }}</span>
         </div>
         <div class="contact-item">
-          <a href="mailto:audrick.soltner@edu.univ-fcomte.fr">{{ userInfo.email }}</a>
+          ✉️ <a href="mailto:audrick.soltner@edu.univ-fcomte.fr">{{ userInfo.email }}</a>
         </div>
         <div class="contact-item">
-          <a href="https://github.com/Quoruda" target="_blank" rel="noopener noreferrer">{{ userInfo.github }}</a>
+          📂 <a href="https://github.com/Quoruda" target="_blank" rel="noopener noreferrer">{{ userInfo.github }}</a>
         </div>
         <div class="contact-item">
           <a href="https://asoltner-portfolio.fr" target="_blank" rel="noopener noreferrer">{{ userInfo.portfolio }}</a>
