@@ -211,6 +211,8 @@ const closeContactForm = async () => {
   align-items: flex-start;
   gap: 15px;
   outline: none;
+  /* Ajout d'une propriété transform-origin pour que l'échelle se fasse depuis le centre du robot */
+  transform-origin: center center;
   transition: transform 0.3s ease;
 }
 
@@ -293,10 +295,37 @@ const closeContactForm = async () => {
 
 @keyframes pulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; } 50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; } }
 
-.avatar-slide-enter-active { animation: slideInRight 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
-.avatar-slide-leave-active { animation: slideOutRight 0.5s ease-in-out; }
-@keyframes slideInRight { 0% { transform: translateX(150px) translateY(50px); opacity: 0; } 100% { transform: translateX(0) translateY(0); opacity: 1; } }
-@keyframes slideOutRight { 0% { transform: translateX(0) scale(1); opacity: 1; } 100% { transform: translateX(150px) scale(0.8); opacity: 0; } }
+/* TRANSITIONS */
+
+/* On utilise une animation custom 'slideInLeft' plus sophistiquée */
+/* Durée augmentée à 1.2s et courbe 'spring' douce */
+.avatar-slide-enter-active {
+  animation: slideInLeft 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.avatar-slide-leave-active {
+  animation: slideOutLeft 0.5s ease-in-out;
+}
+
+/* Animation plus organique :
+  - Vient de la gauche (-120px)
+  - Part d'une taille réduite (scale 0.5)
+  - Légère rotation initiale (-20deg) pour simuler un "envol" vers l'écran
+*/
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-120px) scale(0.5) rotate(-20deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutLeft {
+  0% { transform: translateX(0) scale(1); opacity: 1; }
+  100% { transform: translateX(-150px) scale(0.8); opacity: 0; }
+}
 
 .bubble-enter-active { animation: bubbleIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
 .bubble-leave-active { animation: bubbleOut 0.2s ease-in-out; }
