@@ -1,55 +1,99 @@
-# **Game of Life**
+# Simulator: The Game of Life
 
-![Simulator screenshot](/GameOfLife/screen.png)
+> An interactive version of Conway's famous mathematical experiment, designed to understand how to create a smooth and well-organized simulation.
 
-## **Overview**
-A simple implementation of the famous [Game of Life (Conway's Game of Life)](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) written in **Java**. The focus is on **interactive simulation** and observing [emergent behaviors](https://en.wikipedia.org/wiki/Emergence) rather than installation or configuration.
+![Simulator Screenshot](./GameOfLife/screen.png)
 
-## **Why This Project**
-The Game of Life interests me because it's mesmerizing to watch: very simple rules can produce rich and unexpected patterns. It's also a notable mathematical model — the game is [Turing-complete](https://en.wikipedia.org/wiki/Turing_completeness) — making it an excellent [experimentation ground](https://en.wikipedia.org/wiki/Cellular_automaton) for testing alternative rules and optimizing rendering.
+## What is the "Game of Life"?
 
-On a technical level, this project allowed me to consolidate my Java skills (user interface, event handling) while working on interactive editing ergonomics and organizing shareable configurations (`.lif`).
+It's not a traditional video game where you win or lose. It's a **simulation** on a grid where each cell is a **"cell"** that can be **alive** (colored) or **dead** (empty).
 
-## **Technology**
-- Language: [Java](https://en.wikipedia.org/wiki/Java_(programming_language))
-- Interface: interactive simulation with real-time editing and control
+At each step (like the tick of a clock), cells are born or die according to very simple [**neighborhood rules**](https://en.wikipedia.org/wiki/Moore_neighborhood). Despite this simplicity, **complex patterns** and fascinating behaviors emerge on their own: shapes that move, oscillate, or grow infinitely. It's a classic example of a [**cellular automaton**](https://en.wikipedia.org/wiki/Cellular_automaton).
 
-## **Key Features**
-- Conway's standard rules by default, easily modifiable to experiment with other [cellular automata](https://en.wikipedia.org/wiki/Cellular_automaton).
-- **Interactive editing**: pause, manual cell modification, random generation and reset.
-- **Configuration import** in [Life 1.06 (.lif)](https://conwaylife.com/wiki/Life_1.06) format to replay scenes or provided examples.
+My goal was to create a program capable of simulating this "world" in a **smooth** way, even with thousands of cells.
 
-## **Controls**
-Navigate and interact with the simulation using these commands:
+## A concrete example: The Pinball oscillator
 
-- **Mouse click**: activate/deactivate cells (when paused)
-- **G**: show / hide grid
-- **Space**: pause / resume
-- **Arrow keys**: move the view
-- **Mouse wheel**: zoom
+![Pinball](./GameOfLife/pinball.gif)
 
-## **Visual Examples**
-### Creating a Glider
-A "glider" is a pattern that moves diagonally across the grid. Here's how to create one manually:
+To illustrate the power of these simple rules, take the structure called "Pinball". It was only created from a few starting cells, but it became an oscillator: a miniature machine that repeats a complex interaction cycle forever, without dying out or growing. It's particularly interesting because it's composed of fixed structures that serve as walls and mobile structures (like the famous glider) that bounce and are reflected to maintain the cycle. This shows how simple rules can lead to emergent behaviors that weren't planned from the start.
 
-![Creating a "glider"](/GameOfLife/glider_creation.gif)
+## How it works
 
-### Pinball Oscillator
-An example of a complex oscillator pattern imported from a `.lif` file, showing fascinating interactions between structures:
+To make the experience enjoyable, I had to structure the program like a miniature video game engine:
 
-![Pinball (oscillator / interaction example)](/GameOfLife/pinball.gif)
+### ⚙️ The Engine (The brain)
 
-## **Coming Soon**
-Some ideas and improvements I wish to implement:
+* **The heartbeat**: I created an internal **loop** that calculates births and deaths at a regular pace, independent of the screen's display speed (the [**framerate**](https://en.wikipedia.org/wiki/Frame_rate)).
 
-- **Customizable rules** from the interface (editing/saving rules and [neighborhoods](https://conwaylife.com/wiki/Neighbourhood)).
-- **Pattern editor** and integrated library to organize and share `.lif` files.
-- **Undo/redo** and history management to facilitate experimentation.
-- **Accelerations** ([multi-threading](https://en.wikipedia.org/wiki/Multithreading_(computer_architecture)), [GPU](https://en.wikipedia.org/wiki/Graphics_processing_unit) or [HashLife](https://conwaylife.com/wiki/HashLife) algorithm) to handle large grids, advance many simulation steps and improve performance.
+* **Memory**: To prevent the computer from slowing down, I optimized how the grid is stored in **memory**. Access to each cell is **instantaneous**, allowing for very large grids without slowdown (algorithmic complexity in [**O(1)**](https://en.wikipedia.org/wiki/Big_O_notation)).
 
-## **Learn More**
-- **Source code**: https://github.com/Quoruda/GameOfLife
-- **Release** (portable executable): https://github.com/Quoruda/GameOfLife/releases/tag/v1.0.0
+* **The rules**: The program scrupulously applies Conway's rules: a cell dies if it's too alone (**underpopulation**) or too crowded (**overpopulation**), and is born if it has exactly 3 neighbors.
 
-Download the portable executable from the release if you want to test quickly without compiling. The repository also contains `.lif` examples and source code for the curious or contributors.
+### 🎨 Display (The eyes)
+
+* **Fluidity**: I used a technique called [**Double Buffering**](https://en.wikipedia.org/wiki/Multiple_buffering). Imagine that while you're looking at an image, the program is already drawing the next one behind the scenes to display it all at once. This prevents the image from **flickering** or jumping.
+
+* **Organization ([MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller))**: I separated the code into three distinct parts to respect the **Model-View-Controller** pattern:
+
+    1.  The **Data** (cell positions).
+
+    2.  The **Display** (drawing on screen).
+
+    3.  The **Controls** (mouse and keyboard).
+
+  It's like in a restaurant kitchen: the chef (data) doesn't do the table service (display), which makes everything more efficient and maintainable.
+
+## Importing and Creating patterns
+
+You can spend hours observing patterns. I added a system to **import** existing creations in the standard [**Life 1.06 (.lif)**](https://conwaylife.com/wiki/Life_1.06) format.
+
+The program is capable of **parsing** (reading and understanding) these files, interpreting the **coordinates** of living cells and placing them correctly on your screen to replay known scenes.
+
+### Creation example: the Glider
+
+A "**glider**" is the most famous pattern in the Game of Life; it moves diagonally across the grid. Here's how you can create it manually with a few clicks:
+
+### Imported pattern example: Pinball
+
+Here's "**Pinball**", a complex imported pattern. You can clearly see the structures interacting with each other indefinitely:
+
+## Features
+
+For the user, everything was designed to be simple:
+
+| **Action** | **Description** |
+| ----- | ----- |
+| **Draw** | You can click to give life to or kill cells **manually**. |
+| **Control** | Pause at any time to analyze the situation or modify the grid calmly. |
+| **Explore** | Zoom and move around the grid like on a GPS map (**Pan & Zoom**). |
+| **Random Mode** | Fill the grid **procedurally** (randomly) to see what survives the chaos. |
+
+## What I learned
+
+This project allowed me to understand essential concepts in computer science:
+
+* **Multitasking ([Concurrency](https://en.wikipedia.org/wiki/Concurrent_computing))**: Making the computer calculate the next step of the game *at the same time* as it handles your mouse clicks, without the application freezing (managing [**Threads**](https://en.wikipedia.org/wiki/Thread_(computing))).
+
+* **Code Cleanliness**: By properly separating tasks (the "Chef" and the "Server"), the code is easier to fix and improve (**Software Architecture**).
+
+* **Optimization**: Learning not to waste the computer's resources to keep a fast simulation.
+
+## Ideas for the future
+
+Several directions are being considered to enrich the project:
+
+1.  **Customizable rules**: Being able to modify birth/survival rules and neighborhoods directly from the interface.
+
+2.  **Complete editor**: Add an integrated library to organize, save and share your own `.lif` files.
+
+3.  **User comfort**: Add "Undo/Redo" functions and history to experiment without fear of making mistakes.
+
+4.  **Extreme speed**: Use advanced techniques like [**Multi-threading**](https://en.wikipedia.org/wiki/Multithreading_(computer_architecture)), computing on [**GPU**](https://en.wikipedia.org/wiki/Graphics_processing_unit) or the [**HashLife**](https://en.wikipedia.org/wiki/Hashlife) algorithm to simulate immense grids and advance much faster in time.
+
+## Resources
+
+* **View the code**: [GitHub - GameOfLife](https://github.com/Quoruda/GameOfLife)
+
+* **Download the application**: [Release v1.0.0](https://github.com/Quoruda/GameOfLife/releases/tag/v1.0.0)
 
