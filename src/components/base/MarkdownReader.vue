@@ -22,7 +22,10 @@ const renderer = new marked.Renderer()
 renderer.link = function(token) {
   const href = token.href || ''
   const title = token.title ? ` title="${token.title}"` : ''
-  const text = token.text || ''
+
+  // CORRECTION : On demande au parser de traiter le contenu du lien (pour gérer le gras/italique imbriqué)
+  // Au lieu de prendre 'token.text' brut.
+  const text = this.parser.parseInline(token.tokens)
 
   return `<a href="${href}"${title} target="_blank" rel="noopener noreferrer">${text}</a>`
 }
@@ -287,6 +290,7 @@ watch(() => props.markdownContent, () => {
   text-decoration: none;
   border-bottom: 1px solid rgba(59, 130, 246, 0.3);
   transition: all 0.2s;
+  font-weight: inherit;
 }
 
 .markdown-content :deep(a:hover) {
@@ -357,6 +361,10 @@ watch(() => props.markdownContent, () => {
   font-weight: 600;
   color: rgba(255, 255, 255, 0.95);
   border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+}
+
+.markdown-content :deep(a strong) {
+  color: inherit;
 }
 
 .markdown-content :deep(td) {
