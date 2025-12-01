@@ -1,13 +1,13 @@
 {
   "messages": [
     "👋 Hello! I'm Pixy, Audrick's virtual assistant!",
-    "Audrick is not available right now.",
-    "But I'll give you access to his computer to discover his work!",
+    "Audrick is not available right now but I'll give you access to his computer !",
     "Feel free to explore the applications and his profile 💻",
+    "If you want to contact him, just click on me !",
     "🚀 Enjoy your discovery!"
   ],
   "contactButton": "💬 Contact me",
-  "welcomeBack": "Nice to see you again!",
+  "welcomeBack": "Nice to see you again! ",
   "thankYou": "Thank you for your message! I will reply very soon."
 }
 
