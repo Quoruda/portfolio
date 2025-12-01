@@ -28,8 +28,22 @@ const shouldShowBubble = ref(false)
 const showContactForm = ref(false)
 const isPresentationComplete = ref(false)
 
+// Nouvel état pour le survol
+const isHovered = ref(false)
+
 // Nouvel état pour savoir si un message a été envoyé
 const messageSent = ref(false)
+
+// --- Gestion des Smileys Aléatoires ---
+const smileys = ['❤️', '👋',  '😊', '😄', '🤖', '🌟', '✨', '👍', '🎉', '💬']
+const currentSmiley = ref(smileys[0])
+
+const handleMouseEnter = () => {
+  isHovered.value = true
+  // Choisir un smiley au hasard
+  const randomIndex = Math.floor(Math.random() * smileys.length)
+  currentSmiley.value = smileys[randomIndex]
+}
 
 const defaultMessages = computed(() => tm('avatar.messages') || [])
 
@@ -179,13 +193,17 @@ const closeContactForm = async () => {
         :class="[currentMood, { clickable: isPresentationComplete }]"
         @click="handleInteraction"
         @keydown.enter="handleInteraction"
+        @mouseenter="handleMouseEnter"
+        @mouseleave="isHovered = false"
         role="button"
         tabindex="0"
         aria-label="Assistant virtuel"
     >
       <Transition name="bubble">
-        <div v-if="shouldShowBubble" class="speech-bubble">
-          <p>{{ displayedText }}<span v-if="isTyping" class="cursor">|</span></p>
+        <!-- Affiche la bulle si on doit parler OU si on survole (et que Pixy est dispo et sans formulaire ouvert) -->
+        <div v-if="shouldShowBubble || (isHovered && isPresentationComplete && !showContactForm)" class="speech-bubble">
+          <p v-if="shouldShowBubble">{{ displayedText }}<span v-if="isTyping" class="cursor">|</span></p>
+          <p v-else class="smiley">{{ currentSmiley }}</p>
         </div>
       </Transition>
 
@@ -268,6 +286,20 @@ const closeContactForm = async () => {
 
 .cursor { display: inline-block; animation: blink 0.8s infinite; margin-left: 2px; font-weight: bold; }
 @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
+/* Style du smiley */
+.smiley {
+  font-size: 24px;
+  text-align: center;
+  margin: 0;
+  line-height: 1;
+  animation: pulse-smiley 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-smiley {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
 
 .robot-container { position: relative; width: 200px; height: 200px; }
 .robot { position: relative; width: 100%; height: 100%; z-index: 2; }
