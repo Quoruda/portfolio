@@ -15,7 +15,6 @@ const props = defineProps({
   }
 })
 
-// Ajout de 't' pour les traductions simples
 const { tm, t } = useI18n()
 const emit = defineEmits(['presentation-complete', 'interaction'])
 
@@ -28,6 +27,9 @@ const displayedText = ref('')
 const shouldShowBubble = ref(false)
 const showContactForm = ref(false)
 const isPresentationComplete = ref(false)
+
+// Nouvel état pour savoir si un message a été envoyé
+const messageSent = ref(false)
 
 const defaultMessages = computed(() => tm('avatar.messages') || [])
 
@@ -98,13 +100,8 @@ const startPresentation = async () => {
   emit('presentation-complete')
 }
 
-/**
- * Action : Accueille l'utilisateur qui revient
- */
 const welcomeBack = async () => {
-  // On marque la présentation comme faite pour débloquer les clics
   isPresentationComplete.value = true
-
   await wave()
   const message = t('avatar.welcomeBack')
   await say(message, 4000)
@@ -116,7 +113,7 @@ defineExpose({
   setMood,
   openContact,
   startPresentation,
-  welcomeBack, // Nouvelle méthode exposée
+  welcomeBack,
   currentMood
 })
 
@@ -144,15 +141,35 @@ const handleInteraction = async () => {
   }
 }
 
-const closeContactForm = () => {
+// Fonction appelée quand le contact form émet 'success'
+const handleMessageSuccess = () => {
+  messageSent.value = true
+}
+
+// Fermeture du formulaire + Remerciement si nécessaire
+const closeContactForm = async () => {
   showContactForm.value = false
-  currentMood.value = 'idle'
+
+  if (messageSent.value) {
+    // Si un message a été envoyé, on remercie
+    messageSent.value = false // Reset
+    currentMood.value = 'excited'
+    await wave()
+    await say(t('avatar.thankYou'), 4000)
+    currentMood.value = 'idle'
+  } else {
+    currentMood.value = 'idle'
+  }
 }
 </script>
 
 <template>
   <Transition name="fade">
-    <ContactForm v-if="showContactForm" @close="closeContactForm" />
+    <ContactForm
+        v-if="showContactForm"
+        @close="closeContactForm"
+        @success="handleMessageSuccess"
+    />
   </Transition>
 
   <Transition name="avatar-slide">
@@ -183,6 +200,7 @@ const closeContactForm = () => {
 </template>
 
 <style scoped>
+/* Le style reste inchangé */
 .avatar-wrapper {
   position: fixed;
   bottom: 20px;
@@ -196,7 +214,6 @@ const closeContactForm = () => {
   transition: transform 0.3s ease;
 }
 
-/* MOODS */
 .avatar-wrapper.idle .robot { animation: float 4s ease-in-out infinite; }
 .avatar-wrapper.idle .glow-effect { background: radial-gradient(circle, rgba(102, 126, 234, 0.4) 0%, transparent 70%); }
 
@@ -218,7 +235,6 @@ const closeContactForm = () => {
 
 .avatar-wrapper.contact .robot { transform: scale(0.8); }
 
-/* BULLE */
 .speech-bubble {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -251,7 +267,6 @@ const closeContactForm = () => {
 .cursor { display: inline-block; animation: blink 0.8s infinite; margin-left: 2px; font-weight: bold; }
 @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
 
-/* ROBOT */
 .robot-container { position: relative; width: 200px; height: 200px; }
 .robot { position: relative; width: 100%; height: 100%; z-index: 2; }
 .robot-image {
@@ -278,7 +293,6 @@ const closeContactForm = () => {
 
 @keyframes pulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; } 50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; } }
 
-/* TRANSITIONS */
 .avatar-slide-enter-active { animation: slideInRight 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
 .avatar-slide-leave-active { animation: slideOutRight 0.5s ease-in-out; }
 @keyframes slideInRight { 0% { transform: translateX(150px) translateY(50px); opacity: 0; } 100% { transform: translateX(0) translateY(0); opacity: 1; } }

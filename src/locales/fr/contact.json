@@ -13,7 +13,7 @@
     "messagePlaceholder": "Votre message...",
     "send": "Envoyer",
     "sending": "Envoi en cours...",
-    "success": "Message envoye avec succes ! Je vous repondrai bientot.",
-    "error": "Erreur lors de l'envoi. Veuillez reessayer ou me contacter directement par email."
+    "success": "Message envoyé avec succès ! Je vous répondrai bientôt.",
+    "error": "Erreur lors de l'envoi. Veuillez réessayer ou me contacter directement par email."
   }
 }
