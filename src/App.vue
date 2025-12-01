@@ -6,7 +6,7 @@ import Calculator from "./components/feature/Calculator.vue";
 import Notes from "./components/feature/Notes.vue";
 import Browser from "./components/feature/Browser.vue";
 import BootScreen from "./components/feature/BootScreen.vue";
-import {ref} from "vue";
+import {ref, nextTick} from "vue"; // Import de nextTick nécessaire
 import LoginScreen from "./components/feature/LoginScreen.vue";
 import Application from "./components/base/Application.vue";
 import {useI18n} from "vue-i18n";
@@ -18,9 +18,25 @@ const store = useStore()
 
 const {t} = useI18n();
 
+// 1. Créer la référence pour l'avatar
+const avatarRef = ref(null);
+
 const isLoginComplete = ref(false);
-const handleLoginComplete = () => {
+
+const handleLoginComplete = async () => {
   isLoginComplete.value = true;
+
+  await nextTick();
+
+  // 3. Lancer la présentation manuellement
+  if (avatarRef.value) {
+    if (store.pixyHasFinishedHisPresentation) {
+      avatarRef.value.welcomeBack();
+    } else {
+      avatarRef.value.startPresentation();
+    }
+
+  }
 };
 
 </script>
@@ -46,7 +62,12 @@ const handleLoginComplete = () => {
 
     <task-bar/>
 
-    <Avatar v-if="isLoginComplete" @presentation-complete="store.finishPixyPresentation"/>
+    <!-- Ajout de la ref="avatarRef" ici -->
+    <Avatar
+        ref="avatarRef"
+        v-if="isLoginComplete"
+        @presentation-complete="store.finishPixyPresentation"
+    />
   </div>
 
   <boot-screen v-if="! store.hasBooted" @boot-complete="store.boot"/>
