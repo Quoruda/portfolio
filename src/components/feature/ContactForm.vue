@@ -4,7 +4,8 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-const emit = defineEmits(['close']);
+// Ajout de l'événement 'success'
+const emit = defineEmits(['close', 'success']);
 
 const closeForm = () => {
   emit('close');
@@ -24,7 +25,6 @@ const errorMessage = ref(''); // Message d'erreur
 
 // 3. Propriété calculée pour vérifier la validité du formulaire
 const isFormValid = computed(() => {
-  // Suppression de la vérification name, ajout de subject
   return email.value.trim() !== '' &&
       subject.value.trim() !== '' &&
       message.value.trim() !== '';
@@ -33,21 +33,16 @@ const isFormValid = computed(() => {
 
 // 2. Fonction de soumission asynchrone
 const handleSubmit = async () => {
-  // Garde pour empêcher l'envoi si le formulaire n'est pas valide via la logique JS
   if (!isFormValid.value) {
     return;
   }
 
-  // Réinitialisation des messages et activation du chargement
   isSubmitting.value = true;
   successMessage.value = '';
   errorMessage.value = '';
 
-  // Données à envoyer
   const formData = {
-    // Suppression de name
     email: email.value,
-    // Formspree utilise _subject pour l'objet de l'email
     _subject: subject.value,
     message: message.value,
   };
@@ -57,30 +52,32 @@ const handleSubmit = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json' // C'est crucial pour éviter la redirection !
+        'Accept': 'application/json'
       },
       body: JSON.stringify(formData),
     });
 
     if (response.ok) {
-      // Succès : Affiche le message et réinitialise les champs
+      // Succès
       successMessage.value = t('contact.form.success');
+
+      // On prévient le parent (l'Avatar) que le message est parti
+      emit('success');
+
       email.value = '';
       subject.value = '';
       message.value = '';
 
-      // Fermer le formulaire après un petit délai (optionnel)
+      // Délai réduit pour une fermeture plus rapide (1.5s au lieu de 3s)
       setTimeout(() => {
         closeForm();
-      }, 3000);
+      }, 1500);
     } else {
-      // Échec : Formspree a refusé la soumission (champs manquants, spam, etc.)
       const errorData = await response.json();
       errorMessage.value = errorData.error || t('contact.form.error');
       console.error('Formspree Error:', errorData);
     }
   } catch (error) {
-    // Échec de la connexion (problème réseau)
     errorMessage.value = t('contact.form.networkError');
     console.error('Network Error:', error);
   } finally {
@@ -104,12 +101,7 @@ const handleSubmit = async () => {
         <a href="mailto:audrick.soltner@edu.univ-fcomte.fr" class="email-link">audrick.soltner@edu.univ-fcomte.fr</a>
       </p>
 
-      <!-- Formulaire - REMPLACER action/method par la gestion en Vue -->
-      <!-- On utilise @submit.prevent et on appelle handleSubmit -->
       <form @submit.prevent="handleSubmit" class="contact-form">
-
-        <!-- Suppression du champ Name -->
-
         <div class="form-group">
           <label for="email">{{ t('contact.form.email') }}</label>
           <input
@@ -122,7 +114,6 @@ const handleSubmit = async () => {
           />
         </div>
 
-        <!-- Réintroduction du champ Subject -->
         <div class="form-group">
           <label for="subject">{{ t('contact.form.subject') }}</label>
           <input
@@ -147,7 +138,6 @@ const handleSubmit = async () => {
           ></textarea>
         </div>
 
-        <!-- Affichage des messages d'état (Succès/Erreur) -->
         <p v-if="successMessage" class="status-message success-message">
           {{ successMessage }}
         </p>
@@ -155,7 +145,6 @@ const handleSubmit = async () => {
           {{ errorMessage }}
         </p>
 
-        <!-- Mise à jour de la condition de désactivation -->
         <button
             type="submit"
             class="submit-btn"
@@ -174,10 +163,7 @@ const handleSubmit = async () => {
 </template>
 
 <style scoped>
-/* Styles existants conservés pour l'esthétique */
-/* ... (Votre CSS existant) ... */
-
-/* Ajout des styles pour les messages d'état */
+/* Styles existants conservés */
 .status-message {
   padding: 12px;
   border-radius: 8px;
@@ -187,24 +173,22 @@ const handleSubmit = async () => {
 }
 
 .success-message {
-  background-color: rgba(96, 165, 250, 0.2); /* Bleu clair/vert */
+  background-color: rgba(96, 165, 250, 0.2);
   color: #60a5fa;
   border: 1px solid rgba(96, 165, 250, 0.4);
 }
 
 .error-message {
-  background-color: rgba(255, 99, 71, 0.2); /* Rouge/Orange clair */
+  background-color: rgba(255, 99, 71, 0.2);
   color: tomato;
   border: 1px solid rgba(255, 99, 71, 0.4);
 }
 
-/* Style pour le bouton désactivé */
 .submit-btn:disabled {
   opacity: 0.6;
-  cursor: not-allowed; /* Changement du curseur pour l'état de chargement */
+  cursor: not-allowed;
 }
 
-/* Vos styles existants */
 .contact-overlay {
   position: fixed;
   top: 0;
@@ -222,12 +206,8 @@ const handleSubmit = async () => {
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .contact-form-container {
@@ -244,14 +224,8 @@ const handleSubmit = async () => {
 }
 
 @keyframes slideUp {
-  from {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .form-header {
@@ -355,7 +329,6 @@ const handleSubmit = async () => {
   resize: vertical;
   min-height: 100px;
 }
-
 
 .submit-btn {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
