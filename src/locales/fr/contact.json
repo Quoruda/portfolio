@@ -1,0 +1,19 @@
+{
+  "title": "Me Contacter",
+  "description": "N'hésitez pas à me contacter pour toute question, opportunité ou collaboration !",
+  "directLink": "Si vous préférez un lien direct, vous pouvez cliquer sur mon adresse :",
+  "form": {
+    "name": "Nom",
+    "namePlaceholder": "Votre nom",
+    "email": "Email",
+    "emailPlaceholder": "votre.email@exemple.com",
+    "subject": "Sujet",
+    "subjectPlaceholder": "Objet de votre message",
+    "message": "Message",
+    "messagePlaceholder": "Votre message...",
+    "send": "Envoyer",
+    "sending": "Envoi en cours...",
+    "success": "Message envoye avec succes ! Je vous repondrai bientot.",
+    "error": "Erreur lors de l'envoi. Veuillez reessayer ou me contacter directement par email."
+  }
+}

@@ -46,7 +46,7 @@ const handleLoginComplete = () => {
 
     <task-bar/>
 
-    <Avatar v-if="isLoginComplete  && !store.pixyHasFinishedHisPresentation"  @presentationComplete="store.finishPixyPresentation"/>
+    <Avatar v-if="isLoginComplete" @presentation-complete="store.finishPixyPresentation"/>
   </div>
 
   <boot-screen v-if="! store.hasBooted" @boot-complete="store.boot"/>

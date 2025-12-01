@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import ContactForm from './ContactForm.vue'
 
 const { tm } = useI18n()
 
@@ -12,6 +13,8 @@ const currentMessageIndex = ref(0)
 const isTyping = ref(false)
 const displayedText = ref('')
 const shouldShowBubble = ref(false)
+const showContactForm = ref(false)
+const isPresentationComplete = ref(false)
 
 const messages = computed(() => tm('avatar.messages'))
 
@@ -33,15 +36,12 @@ onMounted(() => {
 
 const showNextMessage = () => {
   if (currentMessageIndex.value >= messages.value.length) {
-    // Fin des messages, on cache doucement
+    // Fin des messages, Pixy devient cliquable
     setTimeout(() => {
       shouldShowBubble.value = false
       setTimeout(() => {
-        isVisible.value = false
-        // Émettre l'événement après la disparition complète
-        setTimeout(() => {
-          emit('presentation-complete')
-        }, 500)
+        isPresentationComplete.value = true
+        emit('presentation-complete')
       }, 500)
     }, 3000)
     return
@@ -52,7 +52,6 @@ const showNextMessage = () => {
   displayedText.value = ''
 
   const message = messages.value[currentMessageIndex.value]
-  console.log('Message à afficher:', message)
   let charIndex = 0
 
   const typeInterval = setInterval(() => {
@@ -73,16 +72,35 @@ const showNextMessage = () => {
 }
 
 const handleClick = () => {
-  isWaving.value = true
-  setTimeout(() => {
-    isWaving.value = false
-  }, 600)
+  if (isPresentationComplete.value) {
+    // Ouvrir le formulaire de contact
+    isWaving.value = true
+    setTimeout(() => {
+      isWaving.value = false
+      showContactForm.value = true
+    }, 300)
+  } else {
+    // Animation simple pendant la présentation
+    isWaving.value = true
+    setTimeout(() => {
+      isWaving.value = false
+    }, 600)
+  }
+}
+
+const closeContactForm = () => {
+  showContactForm.value = false
 }
 </script>
 
 <template>
+  <!-- Formulaire de contact -->
+  <Transition name="fade">
+    <ContactForm v-if="showContactForm" @close="closeContactForm" />
+  </Transition>
+
   <Transition name="avatar-slide">
-    <div v-if="isVisible" class="avatar-container" @click="handleClick">
+    <div v-if="isVisible" class="avatar-container" :class="{ clickable: isPresentationComplete }" @click="handleClick">
       <!-- Bulle de dialogue -->
       <Transition name="bubble">
         <div v-if="shouldShowBubble" class="speech-bubble">
@@ -105,12 +123,11 @@ const handleClick = () => {
 .avatar-container {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  left: 20px;
   z-index: 9999;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 15px;
 }
 
@@ -131,7 +148,7 @@ const handleClick = () => {
   content: '';
   position: absolute;
   bottom: -8px;
-  right: 25px;
+  left: 25px;
   width: 0;
   height: 0;
   border-left: 10px solid transparent;
@@ -144,7 +161,7 @@ const handleClick = () => {
   content: '';
   position: absolute;
   bottom: -6px;
-  right: 25px;
+  left: 25px;
   width: 0;
   height: 0;
   border-left: 9px solid transparent;
@@ -184,6 +201,7 @@ const handleClick = () => {
   object-fit: contain;
   filter: drop-shadow(0 10px 25px rgba(102, 126, 234, 0.3));
   transition: transform 0.3s ease;
+  transform: scaleX(-1);
 }
 
 .robot.waving .robot-image {
@@ -191,9 +209,9 @@ const handleClick = () => {
 }
 
 @keyframes wave {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-15deg); }
-  75% { transform: rotate(15deg); }
+  0%, 100% { transform: scaleX(-1) rotate(0deg); }
+  25% { transform: scaleX(-1) rotate(-15deg); }
+  75% { transform: scaleX(-1) rotate(15deg); }
 }
 
 @keyframes float {
@@ -264,6 +282,20 @@ const handleClick = () => {
   }
 }
 
+/* Avatar cliquable après présentation */
+.avatar-container.clickable {
+  cursor: pointer;
+}
+
+.avatar-container.clickable:hover .robot-image {
+  transform: scaleX(-1) scale(1.05);
+}
+
+.avatar-container.clickable:hover .glow-effect {
+  opacity: 1;
+}
+
+/* Animations bulles */
 .bubble-enter-active {
   animation: bubbleIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
@@ -294,11 +326,22 @@ const handleClick = () => {
   }
 }
 
+/* Transition fade */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .avatar-container {
     bottom: 80px;
-    right: 10px;
+    left: 10px;
   }
 
   .speech-bubble {
@@ -318,3 +361,4 @@ const handleClick = () => {
   }
 }
 </style>
+
