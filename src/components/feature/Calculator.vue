@@ -9,8 +9,16 @@ const display = ref('0');
 const previousValue = ref(null);
 const operation = ref(null);
 const waitingForOperand = ref(false);
+const specialMode = ref(''); // '' | 'hacker' | 'panic'
 
 const handleNumber = (num) => {
+  // Reset panic mode on new input if needed
+  if (display.value === 'ERR' || display.value === "DON'T PANIC") {
+    display.value = String(num);
+    waitingForOperand.value = false;
+    return;
+  }
+
   if (waitingForOperand.value) {
     display.value = String(num);
     waitingForOperand.value = false;
@@ -48,7 +56,19 @@ const calculate = (a, b, op) => {
     case '+': return a + b;
     case '-': return a - b;
     case '×': return a * b;
-    case '÷': return b !== 0 ? a / b : 0;
+    case '÷':
+      if (b === 0) {
+        specialMode.value = 'panic'; // Easter egg division zero
+        // Le mode panique ne dure que 1.5 secondes
+        setTimeout(() => {
+          if (specialMode.value === 'panic') {
+            specialMode.value = '';
+            display.value = '0'; // On reset l'affichage
+          }
+        }, 1500);
+        return 'ERR';
+      }
+      return a / b;
     default: return b;
   }
 };
@@ -57,7 +77,25 @@ const handleEquals = () => {
   const inputValue = parseFloat(display.value);
 
   if (operation.value && previousValue.value !== null) {
-    const result = calculate(previousValue.value, inputValue, operation.value);
+    let result = calculate(previousValue.value, inputValue, operation.value);
+
+    // Logic Easter Eggs
+    if (result === 1337) {
+      specialMode.value = 'hacker';
+    } else if (result === 42) {
+      display.value = "DON'T PANIC";
+      // On reset pour que le prochain chiffre reparte à zéro
+      previousValue.value = null;
+      operation.value = null;
+      waitingForOperand.value = true;
+      return;
+    } else if (specialMode.value === 'panic' && result !== 'ERR') {
+      // Reset panic si on a réussi un calcul
+      specialMode.value = '';
+    } else if (specialMode.value === 'hacker' && result !== 1337) {
+      // On reste en hacker tant qu'on n'efface pas tout via 'C'
+    }
+
     display.value = String(result);
     previousValue.value = null;
     operation.value = null;
@@ -70,6 +108,7 @@ const handleClear = () => {
   previousValue.value = null;
   operation.value = null;
   waitingForOperand.value = false;
+  specialMode.value = ''; // Reset des modes spéciaux
 };
 
 const handlePercentage = () => {
@@ -86,34 +125,34 @@ const handleToggleSign = () => {
 <template>
   <application icon="/icons/calculator.png" :name="t('app.desktop.calculator')">
     <div class="calculator-wrapper">
-      <div class="calculator">
+      <div class="calculator" :class="specialMode">
         <div class="display">{{ display }}</div>
 
         <div class="buttons">
-        <button class="btn btn-function" @click="handleClear">C</button>
-        <button class="btn btn-function" @click="handleToggleSign">+/-</button>
-        <button class="btn btn-function" @click="handlePercentage">%</button>
-        <button class="btn btn-operator" @click="handleOperation('÷')">÷</button>
+          <button class="btn btn-function" @click="handleClear">C</button>
+          <button class="btn btn-function" @click="handleToggleSign">+/-</button>
+          <button class="btn btn-function" @click="handlePercentage">%</button>
+          <button class="btn btn-operator" @click="handleOperation('÷')">÷</button>
 
-        <button class="btn" @click="handleNumber(7)">7</button>
-        <button class="btn" @click="handleNumber(8)">8</button>
-        <button class="btn" @click="handleNumber(9)">9</button>
-        <button class="btn btn-operator" @click="handleOperation('×')">×</button>
+          <button class="btn" @click="handleNumber(7)">7</button>
+          <button class="btn" @click="handleNumber(8)">8</button>
+          <button class="btn" @click="handleNumber(9)">9</button>
+          <button class="btn btn-operator" @click="handleOperation('×')">×</button>
 
-        <button class="btn" @click="handleNumber(4)">4</button>
-        <button class="btn" @click="handleNumber(5)">5</button>
-        <button class="btn" @click="handleNumber(6)">6</button>
-        <button class="btn btn-operator" @click="handleOperation('-')">-</button>
+          <button class="btn" @click="handleNumber(4)">4</button>
+          <button class="btn" @click="handleNumber(5)">5</button>
+          <button class="btn" @click="handleNumber(6)">6</button>
+          <button class="btn btn-operator" @click="handleOperation('-')">-</button>
 
-        <button class="btn" @click="handleNumber(1)">1</button>
-        <button class="btn" @click="handleNumber(2)">2</button>
-        <button class="btn" @click="handleNumber(3)">3</button>
-        <button class="btn btn-operator" @click="handleOperation('+')">+</button>
+          <button class="btn" @click="handleNumber(1)">1</button>
+          <button class="btn" @click="handleNumber(2)">2</button>
+          <button class="btn" @click="handleNumber(3)">3</button>
+          <button class="btn btn-operator" @click="handleOperation('+')">+</button>
 
-        <button class="btn btn-zero" @click="handleNumber(0)">0</button>
-        <button class="btn" @click="handleDecimal">.</button>
-        <button class="btn btn-operator" @click="handleEquals">=</button>
-      </div>
+          <button class="btn btn-zero" @click="handleNumber(0)">0</button>
+          <button class="btn" @click="handleDecimal">.</button>
+          <button class="btn btn-operator" @click="handleEquals">=</button>
+        </div>
       </div>
     </div>
   </application>
@@ -137,8 +176,56 @@ const handleToggleSign = () => {
   flex-direction: column;
   width: 400px;
   height: 600px;
+  transition: all 0.3s ease;
 }
 
+/* --- Easter Egg: Hacker Mode (1337) --- */
+.calculator.hacker {
+  background: #000;
+  box-shadow: 0 0 20px #0f0;
+  border: 1px solid #0f0;
+  font-family: 'Courier New', Courier, monospace;
+}
+.calculator.hacker .display {
+  background: #000;
+  color: #0f0;
+  text-shadow: 0 0 5px #0f0;
+  border: 1px solid #0f0;
+  font-size: 2.2rem; /* Reduced font size for hacker mode */
+}
+.calculator.hacker .btn {
+  background: #001100;
+  color: #0f0;
+  border: 1px solid #004400;
+  font-family: 'Courier New', Courier, monospace;
+}
+.calculator.hacker .btn:hover {
+  background: #003300;
+}
+.calculator.hacker .btn-operator,
+.calculator.hacker .btn-function {
+  background: #002200;
+  color: #0f0;
+}
+
+/* --- Easter Egg: Panic Mode (Division by Zero) --- */
+.calculator.panic {
+  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both infinite;
+  box-shadow: 0 0 30px red;
+}
+.calculator.panic .display {
+  color: #ff3333;
+  font-weight: bold;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* --- Standard Styles --- */
 .display {
   background: #2d2d2d;
   color: #fff;
@@ -154,6 +241,7 @@ const handleToggleSign = () => {
   justify-content: flex-end;
   overflow: hidden;
   word-break: break-all;
+  transition: all 0.3s ease;
 }
 
 .buttons {
