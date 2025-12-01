@@ -35,7 +35,7 @@ const isHovered = ref(false)
 const messageSent = ref(false)
 
 // --- Gestion des Smileys Aléatoires ---
-const smileys = ['❤️', '👋',  '😊', '😄', '🤖', '🌟', '✨', '👍', '🎉', '💬']
+const smileys = ['❤️', '👋',  '😊', '😄', '🤖', '🌟', '💬']
 const currentSmiley = ref(smileys[0])
 
 const handleMouseEnter = () => {
@@ -223,7 +223,7 @@ const closeContactForm = async () => {
   position: fixed;
   bottom: 20px;
   left: 20px;
-  z-index: 9999;
+  z-index: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
