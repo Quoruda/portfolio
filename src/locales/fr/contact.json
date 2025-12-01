@@ -6,7 +6,7 @@
     "name": "Nom",
     "namePlaceholder": "Votre nom",
     "email": "Email",
-    "emailPlaceholder": "votre.email@exemple.com",
+    "emailPlaceholder": "votre.email{'@'}exemple.com",
     "subject": "Sujet",
     "subjectPlaceholder": "Objet de votre message",
     "message": "Message",
