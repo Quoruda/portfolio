@@ -1,33 +1,39 @@
-# **NodalPy**
+# NodalPy
 
-![Application screenshot](/nodalpy/concept.png)
+![Licence MIT](https://img.shields.io/badge/License-MIT-green.svg)
+![Python](https://img.shields.io/badge/Python-3.x-blue.svg)
+![Node.js](https://img.shields.io/badge/Node.js-20-brightgreen.svg)
+![React](https://img.shields.io/badge/React-18-blue.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.95-teal.svg)
 
-The idea for this project came to me while using **[Automatic1111](https://github.com/AUTOMATIC1111/stable-diffusion-webui)**, an interface for generating images/videos with **[Stable Diffusion](https://en.wikipedia.org/wiki/Stable_Diffusion)**. NodalPy allows, through **nodes**, to create **modular workflows** for generating custom images. Other tools, like **[Unreal Engine](https://www.unrealengine.com/)**, also offer node-based languages ([**visual programming**](https://en.wikipedia.org/wiki/Visual_programming_language)).
+**NodalPy** is a node-based visual development environment for real-time Python code execution in the browser. It combines the flexibility of Python scripting with an intuitive nodal interface for creating data processing workflows, algorithm prototypes, and visualizations.
 
-This approach is interesting: it provides a **clear vision** of the program through small blocks that take advantage of the screen's **verticality** and **horizontality**. However, most existing interfaces are **limited** and don't allow creating **custom nodes**.
+## Key Features
 
-This is where **NodalPy** comes in. NodalPy is a tool that allows **executing code** from **editable nodes**. Each node can be **customized** with its own code, its **input and output variables**, which facilitates the creation and organization of **modular workflows**.
+*   **FastNodes**: Automatic and reactive execution. Updates to code or inputs trigger instant recalculation (debounced).
+*   **Custom Nodes**: Designed for heavy tasks or precise control. Execution is triggered manually and is isolated from upstream parents.
+*   **Value Nodes**: Ready-to-use typed inputs including Integer, Float, Boolean, String, and File (supports file uploads and relative paths).
+*   **Observer Node**: Rich result visualization supporting Text, Numbers, Images (Matplotlib, PIL, base64), and interactive JSON formatting for Tables/Dictionaries.
+*   **Project Persistence**:
+    *   Native JSON Save/Load functionality.
+    *   Automatic local backup via IndexedDB.
+    *   Session-based file isolation.
+*   **Security & Stability**:
+    *   Infinite loop detection and prevention.
+    *   Configurable execution timeouts.
+    *   Robust WebSocket error handling.
 
-## **Technologies Used**
+## Project Structure
 
-The project is separated into two main parts:
-* The **backend** in [Python](https://www.python.org/), which handles **node execution** and application logic.
-* The **frontend** in **JavaScript** ([Vue.js](https://vuejs.org/)), which provides an **interactive user interface** for creating and managing nodes.
+*   `back-api/`: FastAPI Backend. Manages Python code execution, WebSockets, and file system operations.
+*   `front-editor/`: React Frontend. Node-based interface using ReactFlow, CodeMirror editor, and global state management.
+*   `build/`: Automatically generated distribution folder containing the backend and compiled frontend.
+*   `build.py`: Orchestration script for building and local deployment.
 
-The project was developed to run on a **server** and be accessible via a **web browser**, but thanks to [Electron](https://www.electronjs.org/), the application can also work as a **cross-platform desktop application**.
+## Contribution
 
-## **Current Features**
-
-For now, for **security** and **budget** reasons, NodalPy is limited to **local** use ([**localhost**](https://en.wikipedia.org/wiki/Localhost)) and doesn't yet support advanced features like **user authentication** or **deployment on a remote server**.
-
-There are currently two types of nodes:
-- **Code**: allows writing **custom Python code**. It's possible to connect **output variables** from other nodes to **input variables** of this node.
-- **Observer**: allows **visualizing** variable values in **real-time**. Useful for **debugging** and **monitoring** data flows.
-
-## **Upcoming Features**
-
-The following nodes are planned:
-- **File**: allows **reading and writing** files.
-- **Library**: allows using **external libraries**.
-- **Ghost**: allows having a **copy** of a Code node with **synchronized** code but **different inputs and outputs**.
-
+Contributions are welcome.
+1.  Fork the project.
+2.  Create a branch (`git checkout -b feature/my-feature`).
+3.  Commit your changes.
+4.  Push and create a Pull Request.
