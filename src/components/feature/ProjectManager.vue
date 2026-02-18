@@ -64,6 +64,14 @@ const projects = [
     },
     thumbnail: "/VideoScrambler/demonstration.gif",
     githubUrl: "https://github.com/Quoruda/VideoScrambler",
+  },
+  {
+    id: "fractal_compressor",
+    markdownFiles: {
+      fr: '/fractal_compressor/fractal_compressor_fr.md',
+      en: '/fractal_compressor/fractal_compressor_en.md',
+    },
+    thumbnail: "/fractal_compressor/thumbnail.png",
   }
 ]
 
