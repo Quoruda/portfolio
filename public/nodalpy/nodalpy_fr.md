@@ -1,32 +1,39 @@
-# **NodalPy**
+# NodalPy
 
-![Capture d'écran de l'application](/nodalpy/concept.png)
+![Licence MIT](https://img.shields.io/badge/License-MIT-green.svg)
+![Python](https://img.shields.io/badge/Python-3.x-blue.svg)
+![Node.js](https://img.shields.io/badge/Node.js-20-brightgreen.svg)
+![React](https://img.shields.io/badge/React-18-blue.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.95-teal.svg)
 
-L'idée de ce projet m'est venue en utilisant **[Automatic1111](https://github.com/AUTOMATIC1111/stable-diffusion-webui)**, une interface pour la génération d'images/vidéos avec **[Stable Diffusion](https://fr.wikipedia.org/wiki/Stable_Diffusion)**. NodalPy permet, grâce à des **nœuds**, de créer des **workflows modulaires** pour générer des images personnalisées. D'autres outils, comme **[Unreal Engine](https://www.unrealengine.com/)**, proposent également des langages basés sur des nœuds ([**programmation visuelle**](https://fr.wikipedia.org/wiki/Programmation_visuelle)).
+**NodalPy** est un environnement de développement visuel nodal pour l'exécution de code Python en temps réel dans le navigateur. Il combine la flexibilité du script Python avec une interface nodale intuitive pour créer des flux de traitement de données, des prototypes d'algorithmes et des visualisations.
 
-Cette approche est intéressante : elle offre une **vision claire** du programme via de petits blocs qui tirent avantage de la **verticalité** et de l'**horizontalité** de l'écran. Cependant, la plupart des interfaces existantes sont **limitées** et ne permettent pas de créer des **nœuds personnalisés**.
+## Fonctionnalités Clés
 
-C'est là que **NodalPy** intervient. NodalPy est un outil permettant d'**exécuter du code** à partir de **nœuds éditables**. Chaque nœud peut être **personnalisé** avec son propre code, ses **variables d'entrée et de sortie**, ce qui facilite la création et l'organisation de **workflows modulaires**.
+*   **FastNodes** : Exécution automatique et réactive. Les mises à jour du code ou des entrées déclenchent un recalcul instantané (avec "debounce").
+*   **Custom Nodes** : Conçus pour les tâches lourdes ou un contrôle précis. L'exécution est déclenchée manuellement et est isolée des parents en amont.
+*   **Value Nodes** : Entrées typées prêtes à l'emploi incluant Entier, Flottant, Booléen, Chaîne de caractères et Fichier (supporte le téléchargement de fichiers et les chemins relatifs).
+*   **Observer Node** : Visualisation riche des résultats supportant Texte, Nombres, Images (Matplotlib, PIL, base64), et formatage JSON interactif pour Tableaux/Dictionnaires.
+*   **Persistance de Projet** :
+    *   Fonctionnalité native de Sauvegarde/Chargement JSON.
+    *   Sauvegarde locale automatique via IndexedDB.
+    *   Isolation des fichiers basée sur la session.
+*   **Sécurité & Stabilité** :
+    *   Détection et prévention des boucles infinies.
+    *   Délais d'exécution configurables.
+    *   Gestion robuste des erreurs WebSocket.
 
-## **Technologies utilisées**
+## Structure du Projet
 
-Le projet est séparé en deux parties principales :
-* Le **backend** en [Python](https://www.python.org/), qui gère l'**exécution des nœuds** et la logique de l'application.
-* Le **frontend** en **JavaScript** ([Vue.js](https://vuejs.org/)), qui fournit une **interface utilisateur interactive** pour créer et gérer les nœuds.
+*   `back-api/` : Backend FastAPI. Gère l'exécution du code Python, les WebSockets et les opérations sur le système de fichiers.
+*   `front-editor/` : Frontend React. Interface nodale utilisant ReactFlow, l'éditeur CodeMirror et une gestion d'état globale.
+*   `build/` : Dossier de distribution généré automatiquement contenant le backend et le frontend compilé.
+*   `build.py` : Script d'orchestration pour la construction et le déploiement local.
 
-Le projet a été développé pour être exécuté sur un **serveur** et accessible via un **navigateur web**, mais grâce à [Electron](https://www.electronjs.org/), l'application peut aussi fonctionner comme une **application de bureau multiplateforme**.
+## Contribution
 
-## **Fonctionnalités actuelles**
-
-Pour l'instant, pour des raisons de **sécurité** et de **budget**, NodalPy est limité à une utilisation **locale** ([**localhost**](https://fr.wikipedia.org/wiki/Localhost)) et ne supporte pas encore les fonctionnalités avancées comme l'**authentification utilisateur** ou le **déploiement sur un serveur distant**.
-
-Il existe actuellement deux types de nœuds :
-- **Code** : permet d'écrire du **code Python personnalisé**. Il est possible de connecter les **variables de sortie** d'autres nœuds aux **variables d'entrée** de ce nœud.
-- **Observateur** : permet de **visualiser** les valeurs des variables en **temps réel**. Utile pour le **débogage** et la **surveillance** des flux de données.
-
-## **Fonctionnalités à venir**
-
-Les nœuds suivants sont prévus :
-- **Fichier** : permet de **lire et d'écrire** des fichiers.
-- **Librairie** : permet d'utiliser des **bibliothèques externes**.
-- **Fantôme** : permet d'avoir une **copie** d'un nœud Code avec le code **synchronisé** mais des **entrées et sorties différentes**.
+Les contributions sont les bienvenues.
+1.  Forkez le projet.
+2.  Créez une branche (`git checkout -b feature/ma-fonctionnalite`).
+3.  Commitez vos changements.
+4.  Poussez et créez une Pull Request.
