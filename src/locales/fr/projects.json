@@ -18,6 +18,9 @@
     },
     "videoscrambler": {
       "name": "Video Scrambler"
+    },
+    "fractal_compressor": {
+      "name": "The Fractal Compressor"
     }
   },
   "buttons": {
