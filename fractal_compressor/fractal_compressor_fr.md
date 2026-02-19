@@ -1,49 +1,38 @@
-# The Fractal Compressor
-
-![Python](https://img.shields.io/badge/Python-3.x-blue.svg)
-![Numba](https://img.shields.io/badge/Numba-Optimisé-orange.svg)
-![Tkinter](https://img.shields.io/badge/GUI-Tkinter-green.svg)
+# **Le Compresseur Fractal**
 
 ![Capture d'écran de l'interface](/fractal_compressor/screenshot.png)
 
-**The Fractal Compressor** est une expérimentation avancée sur la compression d'image fractale (PIFS - Partitioned Iterated Function Systems). Ce projet démontre comment remplacer le stockage de pixels par des équations mathématiques auto-référentielles, stockant ainsi la *recette* pour recréer l'image plutôt que l'image elle-même.
+> "Et si l'on pouvait stocker la *recette* d'une image plutôt que ses pixels ?"
 
-## Fonctionnalités Clés
+## **Le Concept**
 
-*   **Moteur de Compression Fractale** : Analyse l'image pour trouver des motifs auto-similaires (fractales).
-*   **Haute Performance** : Fortement optimisé avec `numba` (@njit) pour compiler les boucles critiques en code machine.
-*   **Traitement Parallèle** : Répartit l'analyse de l'image sur plusieurs cœurs CPU pour plus de vitesse.
-*   **Format de Fichier Personnalisé (.frac)** : Un conteneur binaire hybride utilisant le "Bit Packing" et la compression LZMA pour une efficacité maximale.
-*   **Interface Visuelle** : Une interface graphique moderne (ttkbootstrap) offrant une visualisation en temps réel du processus de compression.
+J'ai toujours été fasciné par la **beauté mathématique** et l'optimisation algorithmique. En étudiant la compression d'image, je suis tombé sur un concept qui ressemblait à de la science-fiction : la **Compression Fractale** (PIFS).
 
-## Architecture Technique
+Contrairement au JPEG ou au PNG qui rejettent certaines données ou utilisent des statistiques, la compression fractale part du principe que chaque partie d'une image ressemble à une autre partie de la même image, mais à une échelle différente. C'est comme trouver une version miniature d'un nuage à l'intérieur d'un plus gros nuage.
 
-Le projet est structuré en quatre composants principaux isolant la logique mathématique de l'interface utilisateur :
+Mon objectif était de construire un programme capable de **regarder une image** et de **découvrir de manière autonome les équations mathématiques** capables de la redessiner à partir de zéro.
 
-### 1. Moteur de Compression (`src/fractal_compressor.py`)
-Le cœur du système. Il gère les tâches lourdes :
-- **Classification de Blocs** : Catégorise les blocs d'image pour accélérer la recherche de correspondances.
-- **Recherche Vectorisée** : Trouve rapidement le meilleur bloc de domaine pour chaque bloc de plage.
-- **Compilation JIT** : Utilise Numba pour atteindre des performances proches du C++ sur les calculs intensifs.
+## **Comment ça marche ?**
 
-### 2. Gestionnaire de Flux (`src/compression_manager.py`)
-Agit comme chef d'orchestre entre l'UI et le Moteur :
-- **Pré-traitement** : Convertit les images en YCbCr et gère le sous-échantillonnage de la chrominance (4:2:0).
-- **Quantification** : Convertit les coefficients de transformation (flottants) en entiers compacts pour le stockage.
+Imaginez devoir décrire un tableau à quelqu'un au téléphone.
+- **Méthode traditionnelle (Bitmap) :** Vous décrivez chaque point couleur par couleur. "Le pixel 1 est rouge, le pixel 2 est rouge..." C'est interminable.
+- **Méthode fractale :** Vous décrivez des relations. "Tu vois cet arbre dans le coin ? Il ressemble exactement au grand arbre au centre, mais en moitié moins grand et tourné de 90 degrés."
 
-### 3. Gestionnaire de Données (`src/compressed_data.py`)
-   - Gère la sérialisation du modèle fractal.
-   - Applique une couche finale de compression LZMA au fichier `.frac` pour gagner 20-30% d'espace supplémentaire.
+Mon moteur découpe l'image en milliers de petits blocs (Ranges) et fouille le reste de l'image (Domaines) pour trouver une correspondance. Il ne cherche pas une correspondance parfaite, mais une **similitude mathématique** après avoir appliqué des transformations (rotation, miroir, luminosité, contraste).
 
-### 4. Interface Graphique (`src/gui.py`)
-   - Construite avec `tkinter` et stylisée avec `ttkbootstrap` pour un look moderne.
-   - Utilise le threading pour garder l'interface réactive pendant les tâches de compression intensives.
+## **Le Défi : La Performance**
 
-## Stack Technique
+Le principal défaut de la compression fractale est le **temps d'encodage**. Comparer chaque bloc avec tous les autres blocs nécessite des milliards de calculs.
 
-*   **Langage** : Python 3.10+
-*   **Mathématiques** : NumPy, Numba
-*   **GUI** : Tkinter, ttkbootstrap
-*   **Traitement d'Image** : Pillow (PIL)
+Pour rendre l'outil utilisable, j'ai dû optimiser agressivement :
+*   **Parallélisme** : Le moteur découpe l'image en bandes et répartit la charge de travail sur tous les **cœurs du processeur** disponibles.
+*   **Compilation JIT** : J'ai utilisé **[Numba](https://numba.pydata.org/)** pour compiler les fonctions Python en code machine à la volée. Cela permet aux boucles mathématiques critiques de tourner à des vitesses comparables au **C++**.
+*   **Vectorisation** : Utilisation de **NumPy** pour traiter des blocs entiers de données simultanément plutôt que pixel par pixel.
 
-> Ce projet a été créé pour explorer les limites des algorithmes de compression d'image et la beauté des mathématiques fractales.
+## **Le Résultat**
+
+Le résultat est une application fonctionnelle qui vous permet d'ouvrir une image et de regarder l'ordinateur "l'apprendre" en temps réel.
+
+On peut voir le moteur trouver les correspondances, et à mesure qu'il progresse, l'image se reconstruit à partir de pures mathématiques. J'ai également conçu un format de fichier personnalisé, **`.frac`**, qui stocke ces équations en utilisant des techniques de "bit-packing" et de compression LZMA, atteignant des ratios de compression impressionnants sur les images adaptées.
+
+> Ce projet a été une plongée profonde dans l'**optimisation**, l'**algèbre linéaire** et le **design d'interface** avec Python. Il fait le pont entre les mathématiques abstraites et l'art visuel.
