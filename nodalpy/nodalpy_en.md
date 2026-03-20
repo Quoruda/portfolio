@@ -2,7 +2,7 @@
 
 ![Application Screenshot](/nodalpy/concept.png)
 
-The idea for this project came to me while using **[Automatic1111](https://github.com/AUTOMATIC1111/stable-diffusion-webui)**, an interface for image/video generation with **[Stable Diffusion](https://en.wikipedia.org/wiki/Stable_Diffusion)**. NodalPy uses **nodes** to create **modular workflows** for custom image generation or data processing. Other tools, like **[Unreal Engine](https://www.unrealengine.com/)**, also offer node-based languages ([**visual programming**](https://en.wikipedia.org/wiki/Visual_programming_language)).
+The idea for this project came to me while using **[ComfyUI](https://github.com/comfyanonymous/ComfyUI)**, a node-based interface for image/video generation with **[Stable Diffusion](https://en.wikipedia.org/wiki/Stable_Diffusion)**. NodalPy uses **nodes** to create **modular workflows** for custom image generation or data processing. Other tools, like **[Unreal Engine](https://www.unrealengine.com/)**, also offer node-based languages ([**visual programming**](https://en.wikipedia.org/wiki/Visual_programming_language)).
 
 This approach is interesting: it offers a **clear vision** of the program via small blocks that take advantage of the screen's **verticality** and **horizontality**. However, most existing interfaces are **limited** and do not allow for creating **custom nodes** easily.
 

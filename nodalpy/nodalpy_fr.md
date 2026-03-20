@@ -2,7 +2,7 @@
 
 ![Capture d'écran de l'application](/nodalpy/concept.png)
 
-L'idée de ce projet m'est venue en utilisant **[Automatic1111](https://github.com/AUTOMATIC1111/stable-diffusion-webui)**, une interface pour la génération d'images/vidéos avec **[Stable Diffusion](https://fr.wikipedia.org/wiki/Stable_Diffusion)**. NodalPy permet, grâce à des **nœuds**, de créer des **workflows modulaires** pour générer des images personnalisées ou traiter des données. D'autres outils, comme **[Unreal Engine](https://www.unrealengine.com/)**, proposent également des langages basés sur des nœuds ([**programmation visuelle**](https://fr.wikipedia.org/wiki/Programmation_visuelle)).
+L'idée de ce projet m'est venue en utilisant **[ComfyUI](https://github.com/comfyanonymous/ComfyUI)**, une interface nodale pour la génération d'images/vidéos avec **[Stable Diffusion](https://fr.wikipedia.org/wiki/Stable_Diffusion)**. NodalPy permet, grâce à des **nœuds**, de créer des **workflows modulaires** pour générer des images personnalisées ou traiter des données. D'autres outils, comme **[Unreal Engine](https://www.unrealengine.com/)**, proposent également des langages basés sur des nœuds ([**programmation visuelle**](https://fr.wikipedia.org/wiki/Programmation_visuelle)).
 
 Cette approche est intéressante : elle offre une **vision claire** du programme via de petits blocs qui tirent avantage de la **verticalité** et de l'**horizontalité** de l'écran. Cependant, la plupart des interfaces existantes sont **limitées** et ne permettent pas de créer des **nœuds personnalisés** facilement.
 
