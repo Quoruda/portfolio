@@ -51,7 +51,9 @@ const closeUserProfile = () => {
   <div class="taskbar">
     <div class="user-section">
       <button class="user-profile" @click="openUserProfile">
-        <span class="profile-icon">👤</span>
+        <span class="profile-icon">
+          <img src="/quoruda.png" alt="Quoruda" class="profile-avatar-img" />
+        </span>
         <span class="user-name">Audrick S</span>
         <span v-if="!store.hasClickedProfile" class="notification-badge">!</span>
       </button>
@@ -88,18 +90,17 @@ const closeUserProfile = () => {
 
 <style scoped>
 .taskbar {
-  background: linear-gradient(to top,
-  rgba(15, 23, 42, 0.85),
-  rgba(15, 23, 42, 0.6));
-  backdrop-filter: blur(60px) saturate(200%);
-  padding: 12px 32px;
+  background: rgba(15, 25, 45, 0.45);
+  backdrop-filter: blur(48px) saturate(180%);
+  -webkit-backdrop-filter: blur(48px) saturate(180%);
+  padding: 10px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 60px rgba(0, 0, 0, 0.4),
-  inset 0 1px 0 rgba(255, 255, 255, 0.08),
-  0 0 80px rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.4);
   position: fixed;
   bottom: 20px;
   left: 50%;
@@ -115,15 +116,27 @@ const closeUserProfile = () => {
 }
 
 .user-name {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
   font-size: 15px;
   font-weight: 500;
   letter-spacing: 0.3px;
-  margin-left: 2px;
+  margin-left: 4px;
 }
 
 .profile-icon {
-  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .system-tray {
@@ -139,10 +152,10 @@ const closeUserProfile = () => {
 }
 
 .language-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  color: rgba(255, 255, 255, 0.9);
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.95);
   padding: 6px 12px;
   font-size: 13px;
   font-weight: 500;
@@ -152,28 +165,42 @@ const closeUserProfile = () => {
   display: flex;
   align-items: center;
   gap: 6px;
-  pointer-events: none;
 }
 
 .language-selector:hover .language-btn {
   background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
 }
 
 .language-menu {
   position: absolute;
-  bottom: calc(100%);
+  bottom: calc(100% + 8px);
   left: 50%;
   transform: translateX(-51%);
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.10) 0%,
+    rgba(20, 30, 90, 0.45) 40%,
+    rgba(10, 18, 60, 0.55) 100%
+  );
+  backdrop-filter: blur(32px) saturate(160%) brightness(0.95);
+  -webkit-backdrop-filter: blur(32px) saturate(160%) brightness(0.95);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 12px;
   padding: 8px;
   min-width: 140px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255,255,255,0.1) inset;
   z-index: 10;
+}
+
+/* Pont invisible pour garder le hover actif pendant qu'on passe la souris sur l'espace vide */
+.language-menu::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -20px;
+  right: -20px;
+  height: 20px;
 }
 
 .language-option {
@@ -200,8 +227,8 @@ const closeUserProfile = () => {
 }
 
 .language-option.active {
-  background: rgba(59, 130, 246, 0.2);
-  color: #3b82f6;
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 1);
 }
 
 .clock {
@@ -211,26 +238,22 @@ const closeUserProfile = () => {
 }
 
 .user-profile {
-  height: 45px;
-  padding: 0 18px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
+  background: transparent;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  gap: 8px;
+  transition: background 0.2s ease;
   position: relative;
+  outline: none;
 }
 
 .user-profile:hover {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
-  transform: scale(1.1) translateY(-2px);
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 @keyframes notificationPulse {

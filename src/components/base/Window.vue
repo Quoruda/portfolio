@@ -72,13 +72,21 @@ const isUrl = (value) => {
 .window {
   width: 100%;
   height: 100%;
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(20px);
+  /* Verre : suffisamment opaque pour la lisibilité, assez transparent pour voir le fond */
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.10) 0%,
+    rgba(20, 30, 90, 0.45) 40%,
+    rgba(10, 18, 60, 0.55) 100%
+  );
+  backdrop-filter: blur(32px) saturate(160%) brightness(0.95);
+  -webkit-backdrop-filter: blur(32px) saturate(160%) brightness(0.95);
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
   box-shadow:
-      0 20px 60px rgba(0, 0, 0, 0.5),
-      0 0 1px rgba(255, 255, 255, 0.1) inset;
+    0 24px 64px rgba(0, 0, 0, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.10) inset;
   display: flex;
   flex-direction: column;
   pointer-events: auto;
@@ -100,10 +108,10 @@ const isUrl = (value) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  background: rgba(30, 41, 59, 0.6);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
 }
@@ -120,7 +128,7 @@ const isUrl = (value) => {
 
 .window-icon {
   font-size: 18px;
-  filter: drop-shadow(0 0 4px #3b82f6);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4)) brightness(1.1);
 }
 
 .window-icon img {
@@ -164,10 +172,10 @@ const isUrl = (value) => {
 .window-content {
   flex: 1;
   overflow: hidden;
-  border: rgba(30, 41, 59, 0.6) 5px solid;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: none;
   color: rgba(255, 255, 255, 0.9);
-  border-radius: 0 0 20px 20px;
-
+  border-radius: 0 0 16px 16px;
 }
 
 .window-content::-webkit-scrollbar {

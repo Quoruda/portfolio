@@ -57,7 +57,7 @@ const isUrl = (value) => {
 .icon-image {
   width: 90px;
   height: 90px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 28px;
@@ -81,11 +81,13 @@ const isUrl = (value) => {
 }
 
 .icon-label {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
   font-size: 13px;
   font-weight: 500;
   text-align: center;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.8),
+    0 2px 10px rgba(0, 0, 0, 0.5);
 
   /* Limite la largeur pour forcer le passage sur plusieurs lignes */
   max-width: 90px; /* correspond à la largeur .icon-image */
@@ -114,5 +116,6 @@ const isUrl = (value) => {
 .icon-img.url-icon {
   padding: 10px;
   border-radius: 24px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4)) brightness(1.1);
 }
 </style>

@@ -51,16 +51,12 @@ const login = () => {
 <template>
   <Transition name="fade">
     <div v-if="isVisible" class="login-screen">
-      <div class="login-background">
-        <div class="login-glow login-glow-1"></div>
-        <div class="login-glow login-glow-2"></div>
-        <div class="login-glow login-glow-3"></div>
-      </div>
+
 
       <div class="login-container" :class="{ 'logging-in': isLoggingIn }">
         <div class="user-avatar">
           <div class="avatar-circle">
-            <span class="avatar-icon">👤</span>
+            <img src="/quoruda.png" alt="Quoruda" class="avatar-img" />
           </div>
         </div>
 
@@ -91,63 +87,11 @@ const login = () => {
 .login-screen {
   position: fixed;
   inset: 0;
-  background: #0a0e27;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9998;
-}
-
-.login-background {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.login-glow {
-  position: absolute;
-  filter: blur(120px);
-  animation: loginGlow 4s ease-in-out infinite;
-}
-
-.login-glow-1 {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, #3b82f6 0%, transparent 70%);
-  top: 10%;
-  right: 20%;
-  opacity: 0.25;
-}
-
-.login-glow-2 {
-  width: 450px;
-  height: 450px;
-  background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
-  bottom: 10%;
-  left: 15%;
-  opacity: 0.2;
-  animation-delay: 1.5s;
-}
-
-.login-glow-3 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.15;
-  animation-delay: 0.8s;
-}
-
-@keyframes loginGlow {
-  0%, 100% {
-    opacity: 0.15;
-  }
-  50% {
-    opacity: 0.3;
-  }
 }
 
 .login-container {
@@ -158,11 +102,20 @@ const login = () => {
   align-items: center;
   gap: 24px;
   padding: 48px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.10) 0%,
+    rgba(20, 30, 90, 0.45) 40%,
+    rgba(10, 18, 60, 0.55) 100%
+  );
+  backdrop-filter: blur(32px) saturate(160%) brightness(0.95);
+  -webkit-backdrop-filter: blur(32px) saturate(160%) brightness(0.95);
   border-radius: 32px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.14) inset;
   min-width: 400px;
   transition: all 0.3s ease;
 }
@@ -179,20 +132,20 @@ const login = () => {
 .avatar-circle {
   width: 100px;
   height: 100px;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+  background: rgba(255, 255, 255, 0.05);
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow:
-      0 0 40px rgba(59, 130, 246, 0.3),
-      inset 0 2px 10px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
 }
 
-.avatar-icon {
-  font-size: 48px;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .user-name {

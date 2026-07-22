@@ -29,9 +29,21 @@
     "title": "🔍 Tech Watch",
     "description": "I maintain an active watch on new technologies and development trends. I'm particularly interested in generative AI evolution, modern web frameworks, and algorithmic optimization techniques.",
     "sources": [
-      "GitHub (Trending & Explore) - Proactive monitoring, source code analysis, and major release tracking",
-      "Technical Communities (Reddit) - Trend tracking, best-practice debates, and real-world experience feedback (REX)",
-      "Tech YouTube Channels - Quick news updates, complex concept breakdown, and conference summaries (e.g., Fireship, Computerphile)"
+      {
+        "title": "GitHub",
+        "icon": "🐙",
+        "description": "Proactive monitoring (Trending), source code analysis, and release tracking."
+      },
+      {
+        "title": "Communities (Reddit)",
+        "icon": "🌐",
+        "description": "Trend tracking, best-practice debates, and experience feedback."
+      },
+      {
+        "title": "YouTube Tech",
+        "icon": "▶️",
+        "description": "Quick news updates and concept breakdown (e.g., Fireship, Computerphile)."
+      }
     ]
   },
   "skills": {

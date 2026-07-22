@@ -168,7 +168,8 @@ const handleToggleSign = () => {
 }
 
 .calculator {
-  background: #1e1e1e;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   padding: 20px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
@@ -177,6 +178,7 @@ const handleToggleSign = () => {
   width: 400px;
   height: 600px;
   transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
 /* --- Easter Egg: Hacker Mode (1337) --- */
@@ -227,7 +229,8 @@ const handleToggleSign = () => {
 
 /* --- Standard Styles --- */
 .display {
-  background: #2d2d2d;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   color: #fff;
   font-size: 3rem;
   font-weight: 300;
@@ -253,9 +256,9 @@ const handleToggleSign = () => {
 }
 
 .btn {
-  background: #505050;
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 20px;
   font-size: 1.5rem;
   font-weight: 400;
@@ -280,12 +283,12 @@ const handleToggleSign = () => {
 }
 
 .btn-function {
-  background: #a5a5a5;
-  color: #000;
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
 }
 
 .btn-operator {
-  background: #ff9500;
+  background: rgba(255, 149, 0, 0.8);
   color: #fff;
 }
 

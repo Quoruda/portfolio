@@ -165,7 +165,7 @@ const getProjectName = (projectId) => {
 .portfolio-container {
   height: 100%;
   padding: clamp(12px, 3vw, 20px);
-  background: linear-gradient(135deg, #0f1419 0%, #1a1f35 100%);
+  background: transparent; /* Laisse apparaitre le verre de Window.vue */
   color: #e0e6ff;
   overflow-y: auto;
 }
@@ -206,7 +206,8 @@ const getProjectName = (projectId) => {
 
 .project-name {
   font-weight: 700;
-  color: #60a5fa;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
   margin: 0 0 clamp(8px, 1.5vw, 10px) 0;
   font-size: clamp(0.95rem, 2.5vw, 1.1rem);
   text-align: center;

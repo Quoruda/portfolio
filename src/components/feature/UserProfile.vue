@@ -110,7 +110,7 @@ const userInfo = computed(() => ({
       <!-- Header -->
       <div class="profile-header">
         <div class="avatar">
-          <span class="avatar-icon">👨‍💻</span>
+          <img src="/quoruda.png" alt="Quoruda" class="avatar-img" />
         </div>
         <div class="header-info">
           <h1 class="profile-name" :class="{ glitch: isGlitching }">{{ displayName }}</h1>
@@ -125,7 +125,7 @@ const userInfo = computed(() => ({
       <!-- Contact rapide -->
       <div class="contact-section">
         <div class="contact-item">
-          <span>📍{{ userInfo.location }}</span>
+          <span>📍 {{ userInfo.location }}</span>
         </div>
         <div class="contact-item">
           ✉️ <a href="mailto:audrick.soltner@edu.univ-fcomte.fr">{{ userInfo.email }}</a>
@@ -144,8 +144,8 @@ const userInfo = computed(() => ({
         <div class="education-items">
           <div v-for="(edu, index) in tm('profile.education.items')" :key="index" class="education-item">
             <div class="education-header">
-              <h3 class="education-degree">{{ edu.degree }}</h3>
               <span class="education-period">{{ edu.period }}</span>
+              <h3 class="education-degree">{{ edu.degree }}</h3>
             </div>
             <p class="education-school">{{ edu.school }} • {{ edu.location }}</p>
             <p class="education-description">{{ edu.description }}</p>
@@ -158,9 +158,13 @@ const userInfo = computed(() => ({
         <h2 class="section-title">{{ t('profile.techWatch.title') }}</h2>
         <p class="tech-watch-description">{{ t('profile.techWatch.description') }}</p>
         <div class="tech-watch-sources">
-          <span v-for="(source, index) in tm('profile.techWatch.sources')" :key="index" class="source-tag">
-            📚 {{ source }}
-          </span>
+          <div v-for="(source, index) in tm('profile.techWatch.sources')" :key="index" class="source-card">
+            <span class="source-icon">{{ typeof source === 'object' ? (source.icon || '📚') : '📚' }}</span>
+            <div class="source-details">
+              <h4 class="source-title">{{ typeof source === 'object' ? source.title : source }}</h4>
+              <p v-if="typeof source === 'object' && source.description" class="source-description">{{ source.description }}</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -223,18 +227,20 @@ const userInfo = computed(() => ({
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(16, 185, 129, 0.3));
+  background: rgba(255, 255, 255, 0.05);
   border: 3px solid rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   flex-shrink: 0;
+  overflow: hidden;
 }
 
-.avatar-icon {
-  font-size: 48px;
-  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .header-info {
@@ -245,13 +251,10 @@ const userInfo = computed(() => ({
 
 .profile-name {
   font-size: 32px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.95);
+  font-weight: 800;
+  color: #ffffff;
   margin: 0 0 4px 0;
-  background: linear-gradient(135deg, #3b82f6, #10b981);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.9));
   min-height: 40px;
   transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   display: inline-block;
@@ -301,16 +304,40 @@ const userInfo = computed(() => ({
 
 .profile-role {
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.9);
   margin: 0 0 8px 0;
-  font-weight: 500;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .profile-bio {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.9);
   margin: 0;
   line-height: 1.5;
+}
+
+.cv-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cv-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Contact section */
@@ -321,46 +348,47 @@ const userInfo = computed(() => ({
 }
 
 .contact-item {
-  background: rgba(59, 130, 246, 0.1);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  font-weight: 500;
   padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 13px;
+  border-radius: 20px;
+  font-size: 14px;
   transition: all 0.3s ease;
 }
 
 .contact-item a {
-  color: rgba(255, 255, 255, 0.85);
+  color: white;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .contact-item a:hover {
-  color: rgba(59, 130, 246, 0.9);
+  color: #ffffff;
+  text-decoration: underline;
 }
 
 .contact-item:hover {
-  background: rgba(59, 130, 246, 0.2);
-  border-color: rgba(59, 130, 246, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
-/* Skills section */
 .section-title {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
-  margin: 0 0 16px 0;
+  color: white;
+  margin: 0 0 20px 0;
   display: flex;
   align-items: center;
   gap: 8px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 10px;
 }
 
-.skills-section {
-  background: rgba(255, 255, 255, 0.03);
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.skills-section, .education-section, .tech-watch-section, .soft-skills-section {
+  padding: 0;
+  margin-bottom: 16px;
 }
 
 .skills-grid {
@@ -376,9 +404,9 @@ const userInfo = computed(() => ({
 }
 
 .skill-category {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
+  color: white;
   margin: 0;
 }
 
@@ -389,13 +417,13 @@ const userInfo = computed(() => ({
 }
 
 .skill-tag {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(16, 185, 129, 0.2));
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  color: rgba(255, 255, 255, 0.9);
-  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 6px 14px;
   border-radius: 20px;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   transition: all 0.3s ease;
   cursor: default;
   display: flex;
@@ -433,10 +461,9 @@ const userInfo = computed(() => ({
 }
 
 .skill-tag:hover {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(16, 185, 129, 0.3));
-  border-color: rgba(59, 130, 246, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .skill-tag:hover .skill-icon {
@@ -444,39 +471,32 @@ const userInfo = computed(() => ({
 }
 
 /* Education section */
-.education-section {
-  background: rgba(255, 255, 255, 0.03);
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
 .education-items {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
 }
 
 .education-item {
-  background: rgba(59, 130, 246, 0.05);
-  padding: 16px;
-  border-radius: 10px;
-  border-left: 3px solid rgba(59, 130, 246, 0.5);
+  background: transparent;
+  padding: 0 0 0 16px;
+  border-radius: 0;
+  border-left: 3px solid rgba(255, 255, 255, 0.4);
   transition: all 0.3s ease;
 }
 
 .education-item:hover {
-  background: rgba(59, 130, 246, 0.1);
-  border-left-color: rgba(59, 130, 246, 0.8);
+  border-left-color: rgba(255, 255, 255, 0.8);
   transform: translateX(4px);
 }
 
 .education-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: center;
   gap: 12px;
   margin-bottom: 8px;
+  flex-wrap: wrap;
 }
 
 .education-degree {
@@ -484,80 +504,93 @@ const userInfo = computed(() => ({
   font-weight: 600;
   color: rgba(255, 255, 255, 0.95);
   margin: 0;
-  flex: 1;
 }
 
 .education-period {
   font-size: 13px;
-  color: rgba(59, 130, 246, 0.9);
-  font-weight: 500;
-  background: rgba(59, 130, 246, 0.2);
-  padding: 4px 10px;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 3px 10px;
   border-radius: 12px;
   white-space: nowrap;
 }
 
 .education-school {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.95);
   margin: 0 0 8px 0;
   font-weight: 500;
 }
 
 .education-description {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
   margin: 0;
   line-height: 1.5;
 }
 
 /* Tech Watch section */
-.tech-watch-section {
-  background: rgba(255, 255, 255, 0.03);
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
 
 .tech-watch-description {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.9);
   margin: 0 0 16px 0;
   line-height: 1.6;
 }
 
 .tech-watch-sources {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.source-tag {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(59, 130, 246, 0.2));
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  color: rgba(255, 255, 255, 0.85);
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 500;
+.source-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px 16px;
   transition: all 0.3s ease;
-  cursor: default;
 }
 
-.source-tag:hover {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(59, 130, 246, 0.3));
-  border-color: rgba(168, 85, 247, 0.5);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+.source-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateX(4px);
+}
+
+.source-icon {
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.source-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.source-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+}
+
+.source-description {
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  line-height: 1.5;
 }
 
 /* Soft Skills section */
-.soft-skills-section {
-  background: rgba(255, 255, 255, 0.03);
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
 
 .soft-skills-grid {
   display: flex;
@@ -566,13 +599,13 @@ const userInfo = computed(() => ({
 }
 
 .soft-skill-tag {
-  background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(168, 85, 247, 0.2));
-  border: 1px solid rgba(236, 72, 153, 0.3);
-  color: rgba(255, 255, 255, 0.9);
-  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 8px 16px;
   border-radius: 20px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.3s ease;
   cursor: default;
   display: flex;
@@ -598,10 +631,9 @@ const userInfo = computed(() => ({
 }
 
 .soft-skill-tag:hover {
-  background: linear-gradient(135deg, rgba(236, 72, 153, 0.3), rgba(168, 85, 247, 0.3));
-  border-color: rgba(236, 72, 153, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
 }
 
 .soft-skill-tag:hover .soft-skill-icon {

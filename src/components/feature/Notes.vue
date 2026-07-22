@@ -210,18 +210,19 @@ const getPreview = (content) => {
   width: 100%;
   height: 100%;
   display: flex;
-  background: #ffffff;
+  background: transparent;
   border-radius: 0 0 12px 12px;
   overflow: hidden;
   position: relative;
+  color: white;
 }
 
 /* Sidebar */
 .sidebar {
   width: 300px;
   min-width: 250px;
-  background: #f8f9fa;
-  border-right: 1px solid #e0e0e0;
+  background: rgba(0, 0, 0, 0.2);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -265,16 +266,16 @@ const getPreview = (content) => {
   display: none;
   padding: 8px 12px;
   background: transparent;
-  border: 1px solid #e0e0e0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
-  color: #666;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .btn-close:hover {
-  background: #e8eaed;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .notes-list {
@@ -292,11 +293,11 @@ const getPreview = (content) => {
 }
 
 .note-item:hover {
-  background: #e8eaed;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .note-item.active {
-  background: #e3f2fd;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .note-item-header {
@@ -310,7 +311,7 @@ const getPreview = (content) => {
   margin: 0;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #1f1f1f;
+  color: white;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -319,7 +320,7 @@ const getPreview = (content) => {
 
 .note-date {
   font-size: 0.75rem;
-  color: #666;
+  color: rgba(255, 255, 255, 0.5);
   flex-shrink: 0;
   margin-left: 8px;
 }
@@ -327,7 +328,7 @@ const getPreview = (content) => {
 .note-preview {
   margin: 0;
   font-size: 0.8rem;
-  color: #666;
+  color: rgba(255, 255, 255, 0.7);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -342,12 +343,12 @@ const getPreview = (content) => {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: white;
+  background: transparent;
 }
 
 .editor-header {
   padding: 16px 20px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -359,24 +360,24 @@ const getPreview = (content) => {
   display: none;
   padding: 8px 12px;
   background: transparent;
-  border: 1px solid #e0e0e0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   font-size: 1.3rem;
   line-height: 1;
   cursor: pointer;
-  color: #666;
+  color: rgba(255, 255, 255, 0.6);
   flex-shrink: 0;
 }
 
 .btn-menu:hover {
-  background: #f8f9fa;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .editor-title {
   margin: 0;
   font-size: 1.3rem;
   font-weight: 600;
-  color: #1f1f1f;
+  color: white;
   cursor: text;
   flex: 1;
   overflow: hidden;
@@ -388,7 +389,7 @@ const getPreview = (content) => {
   margin: 0;
   font-size: 1.3rem;
   font-weight: 600;
-  color: #1f1f1f;
+  color: white;
   border: none;
   outline: none;
   background: transparent;
@@ -399,7 +400,7 @@ const getPreview = (content) => {
 .btn-delete {
   padding: 8px 12px;
   background: transparent;
-  border: 1px solid #e0e0e0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s;
@@ -408,8 +409,8 @@ const getPreview = (content) => {
 }
 
 .btn-delete:hover:not(:disabled) {
-  background: #fee;
-  border-color: #fcc;
+  background: rgba(255, 0, 0, 0.2);
+  border-color: rgba(255, 0, 0, 0.5);
 }
 
 .btn-delete:disabled {
@@ -426,15 +427,16 @@ const getPreview = (content) => {
   line-height: 1.6;
   font-family: inherit;
   resize: none;
-  color: #1f1f1f;
+  color: white;
+  background: transparent;
 }
 
 .editor-content::placeholder {
-  color: #999;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .editor-content.readonly {
-  background: #f8f9fa;
+  background: rgba(0, 0, 0, 0.1);
   cursor: default;
 }
 

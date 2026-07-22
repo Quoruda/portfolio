@@ -29,9 +29,21 @@
     "title": "🔍 Veille Technologique",
     "description": "Je maintiens une veille active sur les nouvelles technologies et tendances du développement. Je m'intéresse particulièrement aux évolutions de l'IA générative, aux frameworks web modernes, et aux techniques d'optimisation algorithmique.",
     "sources": [
-      "GitHub (Trending & Explore) - Veille active, analyse de code source et suivi des releases majeures",
-      "Communautés Techniques (Reddit) - Suivi des tendances, débats sur les best-practices et retours d'expérience (REX)",
-      "Chaînes YouTube Tech - Actualités rapides, vulgarisation de concepts complexes et conférences (ex: Fireship, Computerphile)"
+      {
+        "title": "GitHub",
+        "icon": "🐙",
+        "description": "Veille active (Trending), analyse de code source et suivi des releases majeures."
+      },
+      {
+        "title": "Communautés (Reddit)",
+        "icon": "🌐",
+        "description": "Suivi des tendances, débats sur les best-practices et retours d'expérience."
+      },
+      {
+        "title": "YouTube Tech",
+        "icon": "▶️",
+        "description": "Actualités rapides et vulgarisation (ex: Fireship, Computerphile)."
+      }
     ]
   },
   "skills": {
