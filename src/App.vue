@@ -116,8 +116,15 @@ function samplePalette(u) {
 
 function renderPlasma() {
   const canvas = bgCanvas.value;
-  if (!canvas) return;
+  if (!canvas) {
+    animId = requestAnimationFrame(renderPlasma);
+    return;
+  }
   const ctx = canvas.getContext('2d');
+  if (!ctx) {
+    animId = requestAnimationFrame(renderPlasma);
+    return;
+  }
   const W = canvas.width;   // 240
   const H = canvas.height;  // 135
   const img = ctx.createImageData(W, H);
@@ -163,7 +170,8 @@ function renderPlasma() {
 }
 
 onMounted(() => {
-  requestAnimationFrame(renderPlasma);
+  if (animId) cancelAnimationFrame(animId);
+  animId = requestAnimationFrame(renderPlasma);
   window.addEventListener('keydown', handleKeyDown);
 });
 
@@ -176,7 +184,7 @@ onUnmounted(() => {
 
 <template>
   <!-- Le fond est affiché dès le boot, même pendant le login -->
-  <div class="os-background" v-if="store.hasBooted">
+  <div class="os-background" v-if="!isPoweredOff">
     <!-- Canvas plasma animé 240×135px upscalé en CSS -->
     <canvas ref="bgCanvas" class="bg-canvas" width="240" height="135"></canvas>
   </div>
