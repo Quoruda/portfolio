@@ -17,6 +17,10 @@ export const useStore = defineStore('main', {
 
         markProfileAsClicked() {
             this.hasClickedProfile = true
+        },
+
+        shutdown() {
+            this.hasBooted = false
         }
     },
     persist: true

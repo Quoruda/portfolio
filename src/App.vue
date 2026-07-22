@@ -22,6 +22,7 @@ const {t} = useI18n();
 const avatarRef = ref(null);
 
 const isLoginComplete = ref(false);
+const isPoweredOff = ref(false);
 
 const handleLoginComplete = async () => {
   isLoginComplete.value = true;
@@ -36,6 +37,47 @@ const handleLoginComplete = async () => {
       avatarRef.value.startPresentation();
     }
 
+  }
+};
+
+const closeFailed = ref(false);
+
+const handleRestart = () => {
+  isLoginComplete.value = false;
+  store.shutdown();
+};
+
+const handleShutdown = () => {
+  isPoweredOff.value = true;
+  closeFailed.value = false;
+};
+
+const handlePowerOffClick = () => {
+  try {
+    window.close();
+  } catch (e) {
+    // Navigateur bloque window.close()
+  }
+  setTimeout(() => {
+    closeFailed.value = true;
+  }, 150);
+};
+
+const handleCancelPowerOff = () => {
+  isPoweredOff.value = false;
+  closeFailed.value = false;
+};
+
+const handlePowerOn = () => {
+  isPoweredOff.value = false;
+  closeFailed.value = false;
+  isLoginComplete.value = false;
+  store.shutdown();
+};
+
+const handleKeyDown = (e) => {
+  if (e.key === 'Escape' && isPoweredOff.value) {
+    handleCancelPowerOff();
   }
 };
 
@@ -122,10 +164,12 @@ function renderPlasma() {
 
 onMounted(() => {
   requestAnimationFrame(renderPlasma);
+  window.addEventListener('keydown', handleKeyDown);
 });
 
 onUnmounted(() => {
   if (animId) cancelAnimationFrame(animId);
+  window.removeEventListener('keydown', handleKeyDown);
 });
 // ───────────────────────────────────────────────────────
 </script>
@@ -148,7 +192,7 @@ onUnmounted(() => {
       </Application>
     </IconsContainer>
 
-    <task-bar/>
+    <task-bar @lock="handleLock" @restart="handleRestart" @shutdown="handleShutdown"/>
 
     <!-- Ajout de la ref="avatarRef" ici -->
     <Avatar
@@ -158,8 +202,36 @@ onUnmounted(() => {
     />
   </div>
 
-  <boot-screen v-if="! store.hasBooted" @boot-complete="store.boot"/>
-  <login-screen @login-complete="handleLoginComplete"  v-if="store.hasBooted && ! isLoginComplete"/>
+  <boot-screen v-if="! store.hasBooted && !isPoweredOff" @boot-complete="store.boot"/>
+  <login-screen @login-complete="handleLoginComplete"  v-if="store.hasBooted && ! isLoginComplete && !isPoweredOff"/>
+
+  <!-- Écran hors tension (Shutdown Overlay) -->
+  <div v-if="isPoweredOff" class="power-off-screen">
+    <button class="cancel-power-off-corner" @click="handleCancelPowerOff" :title="t('app.power.cancel')">
+      ✕
+    </button>
+    <div class="power-off-content">
+      <!-- Gros bouton d'extinction principal (rouge) -->
+      <button v-if="!closeFailed" class="power-off-main-btn" @click="handlePowerOffClick" :title="t('app.power.powerOffBtn')">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+          <line x1="12" y1="2" x2="12" y2="12"></line>
+        </svg>
+      </button>
+
+      <!-- Bouton de secours (vert) si la fermeture est bloquée par le navigateur -->
+      <button v-else class="power-on-btn" @click="handlePowerOn" :title="t('app.power.powerOn')">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+          <line x1="12" y1="2" x2="12" y2="12"></line>
+        </svg>
+      </button>
+
+      <h2 class="power-off-title">{{ closeFailed ? t('app.power.powerOn') : t('app.power.offTitle') }}</h2>
+      <p v-if="closeFailed" class="power-off-subtitle">{{ t('app.power.closeBlocked') }}</p>
+    </div>
+  </div>
+
   <CustomCursor/>
 </template>
 
@@ -190,4 +262,162 @@ onUnmounted(() => {
   image-rendering: auto;
 }
 
+.power-off-screen {
+  position: fixed;
+  inset: 0;
+  background: #040817;
+  z-index: 99998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.4s ease;
+}
+
+.cancel-power-off-corner {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.8);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.cancel-power-off-corner:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  transform: scale(1.1);
+}
+
+.power-off-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+  max-width: 440px;
+  padding: 0 20px;
+}
+
+.power-off-main-btn {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.15);
+  border: 2px solid rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
+  animation: powerOffPulse 2.5s ease-in-out infinite;
+}
+
+.power-off-main-btn:hover {
+  background: rgba(239, 68, 68, 0.35);
+  border-color: #ef4444;
+  color: #ffffff;
+  transform: scale(1.08);
+  box-shadow: 0 0 45px rgba(239, 68, 68, 0.6);
+}
+
+.power-on-btn {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.15);
+  border: 2px solid rgba(16, 185, 129, 0.5);
+  color: #a7f3d0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+  animation: powerOnPulse 2.5s ease-in-out infinite;
+}
+
+.power-on-btn:hover {
+  background: rgba(16, 185, 129, 0.35);
+  border-color: #10b981;
+  color: #ffffff;
+  transform: scale(1.08);
+  box-shadow: 0 0 45px rgba(16, 185, 129, 0.6);
+}
+
+.power-off-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+}
+
+.power-off-subtitle {
+  font-size: 14.5px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.cancel-power-off-btn {
+  margin-top: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.85);
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-power-off-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+@keyframes powerOffPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 38px rgba(239, 68, 68, 0.45);
+  }
+}
+
+@keyframes powerOnPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 38px rgba(16, 185, 129, 0.45);
+  }
+}
+
+.cancel-power-off-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+@keyframes powerPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(255, 255, 255, 0.25);
+  }
+}
 </style>

@@ -5,10 +5,13 @@ import { useStore } from '../../store.js';
 import Clock from "./Clock.vue";
 import UserProfile from "./UserProfile.vue";
 
-const { locale } = useI18n();
+const { t, locale } = useI18n();
 const store = useStore();
 const isLangMenuOpen = ref(false);
+const isPowerMenuOpen = ref(false);
 const isUserProfileOpen = ref(false);
+
+const emit = defineEmits(['restart', 'shutdown']);
 
 const languages = [
   { code: 'fr', flag: '🇫🇷', label: 'Français' },
@@ -45,6 +48,16 @@ const openUserProfile = () => {
 const closeUserProfile = () => {
   isUserProfileOpen.value = false;
 };
+
+const handleRestart = () => {
+  isPowerMenuOpen.value = false;
+  emit('restart');
+};
+
+const handleShutdown = () => {
+  isPowerMenuOpen.value = false;
+  emit('shutdown');
+};
 </script>
 
 <template>
@@ -80,6 +93,24 @@ const closeUserProfile = () => {
       </div>
       <div class="clock">
         <Clock/>
+      </div>
+      <div class="power-selector"
+           @mouseenter="isPowerMenuOpen = true"
+           @mouseleave="isPowerMenuOpen = false">
+        <button class="power-btn" :title="t('app.power.shutdown')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+            <line x1="12" y1="2" x2="12" y2="12"></line>
+          </svg>
+        </button>
+        <div v-show="isPowerMenuOpen" class="power-menu">
+          <button class="power-option" @click="handleRestart">
+            <span class="power-icon-sm">🔄</span> {{ t('app.power.restart') }}
+          </button>
+          <button class="power-option shutdown-opt" @click="handleShutdown">
+            <span class="power-icon-sm">⏻</span> {{ t('app.power.shutdown') }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -235,6 +266,95 @@ const closeUserProfile = () => {
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.5px;
+}
+
+.power-selector {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.power-btn {
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 6px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.power-selector:hover .power-btn {
+  background: rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+  transform: translateY(-1px);
+}
+
+.power-menu {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.10) 0%,
+    rgba(20, 30, 90, 0.55) 40%,
+    rgba(10, 18, 60, 0.65) 100%
+  );
+  backdrop-filter: blur(32px) saturate(160%) brightness(0.95);
+  -webkit-backdrop-filter: blur(32px) saturate(160%) brightness(0.95);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  padding: 8px;
+  min-width: 190px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.power-menu::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -20px;
+  right: -20px;
+  height: 20px;
+}
+
+.power-option {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.power-option:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.power-option.shutdown-opt:hover {
+  background: rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+}
+
+.power-icon-sm {
+  font-size: 14px;
+  display: inline-flex;
 }
 
 .user-profile {

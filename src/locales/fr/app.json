@@ -7,5 +7,14 @@
   },
   "boot": {
     "loading": "Démarrage du système..."
+  },
+  "power": {
+    "restart": "Redémarrer le système",
+    "shutdown": "Éteindre le système",
+    "offTitle": "Éteindre le système",
+    "powerOffBtn": "Éteindre et fermer la page",
+    "powerOn": "Démarrer le système",
+    "closeBlocked": "La fermeture automatique a été bloquée par le navigateur. Vous pouvez fermer l'onglet ou cliquer sur Démarrer.",
+    "cancel": "Annuler / Revenir au bureau"
   }
 }

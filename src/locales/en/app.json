@@ -7,5 +7,14 @@
   },
   "boot": {
     "loading": "System starting..."
+  },
+  "power": {
+    "restart": "Restart system",
+    "shutdown": "Shut down system",
+    "offTitle": "Shut down system",
+    "powerOffBtn": "Power off and close page",
+    "powerOn": "Power On System",
+    "closeBlocked": "Auto-close was blocked by browser. You can close the tab or click Power On to restart.",
+    "cancel": "Cancel / Back to desktop"
   }
 }
