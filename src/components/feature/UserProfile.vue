@@ -116,7 +116,7 @@ const userInfo = computed(() => ({
           <h1 class="profile-name" :class="{ glitch: isGlitching }">{{ displayName }}</h1>
           <p class="profile-role">{{ userInfo.role }}</p>
           <p class="profile-bio">{{ userInfo.shortBio }}</p>
-          <a href="/audrick_soltner_cv.pdf" download="Audrick_Soltner_CV.pdf" class="cv-button">
+          <a href="https://drive.proton.me/urls/55CQ0MC05M#0AZxN1KxdORc" target="_blank" rel="noopener noreferrer" class="cv-button">
             {{ t('profile.downloadCV') }}
           </a>
         </div>
