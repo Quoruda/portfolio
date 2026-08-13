@@ -202,8 +202,8 @@ watch(() => props.markdownContent, () => {
 .markdown-viewer {
   height: 100%;
   overflow-y: auto;
-  padding: 32px;
-  background: rgba(255, 255, 255, 0.02);
+  padding: clamp(16px, 3vw, 32px);
+  background: transparent;
 }
 
 .loading-state,
@@ -242,10 +242,16 @@ watch(() => props.markdownContent, () => {
 }
 
 .markdown-content {
-  max-width: 800px;
+  max-width: 860px;
   margin: 0 auto;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.75;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: clamp(20px, 4vw, 36px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 /* Titres */

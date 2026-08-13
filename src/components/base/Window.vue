@@ -72,17 +72,17 @@ const isUrl = (value) => {
 .window {
   width: 100%;
   height: 100%;
-  /* Verre : suffisamment opaque pour la lisibilité, assez transparent pour voir le fond */
+  /* Verre teinté équilibré : lumineux et semi-opaque (82% - 88%) avec flou satiné */
   background: linear-gradient(
     160deg,
-    rgba(255, 255, 255, 0.10) 0%,
-    rgba(20, 30, 90, 0.45) 40%,
-    rgba(10, 18, 60, 0.55) 100%
+    rgba(32, 45, 95, 0.82) 0%,
+    rgba(22, 32, 75, 0.86) 50%,
+    rgba(16, 24, 60, 0.89) 100%
   );
-  backdrop-filter: blur(32px) saturate(160%) brightness(0.95);
-  -webkit-backdrop-filter: blur(32px) saturate(160%) brightness(0.95);
+  backdrop-filter: blur(28px) saturate(180%) brightness(1.08);
+  -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(1.08);
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-top: 1px solid rgba(255, 255, 255, 0.22);
   box-shadow:
     0 24px 64px rgba(0, 0, 0, 0.45),

@@ -151,7 +151,7 @@ const getProjectName = (projectId) => {
       </div>
 
       <!-- Lecteurs Markdown ouverts directement dans des Windows -->
-      <div v-for="id in openReaders" :key="id">
+      <div v-for="id in openReaders" :key="id" class="project-modal-wrapper">
         <Window :name="t('projects.window.title')" icon="ℹ️" :id="id" @close="closeProject(id)">
           <MarkdownReader :markdown-content="getMarkdownFile(getProjectById(id))" />
         </Window>
@@ -162,6 +162,13 @@ const getProjectName = (projectId) => {
 </template>
 
 <style scoped>
+.project-modal-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(10, 16, 40, 0.25);
+  backdrop-filter: blur(4px);
+}
 .portfolio-container {
   height: 100%;
   padding: clamp(12px, 3vw, 20px);
